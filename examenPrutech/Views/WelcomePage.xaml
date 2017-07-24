@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+            Title="Registro de agente"
+             x:Class="GMX.Views.WelcomePage">
+    <ContentPage.Content>
+        <StackLayout Padding="20, 40, 20, 0">
+            <Label Text="Solicitud de usuario y contraseña" />
+            <Label Text="Restablecimiento de contraseña" />
+            <Label Text="Permiso para un PVL" />
+            <Label Text="Problema en la emision" />
+            <BoxView HeightRequest="20"/>
+            <Label Text="Contactanos: soporte@gmx.com.mx" FontAttributes="Bold" />
+            <Label Text="Telefonos: (55) 5480 4100" FontAttributes="Bold" />
+            <!--<Label Text="{Binding DisplayName}"/>-->
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

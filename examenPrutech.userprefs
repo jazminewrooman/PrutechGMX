@@ -1,0 +1,29 @@
+﻿<Properties StartupConfiguration="{BA6AB127-05DF-447D-AE76-1287DE2FB771}|Default" GitUserInfo="UsingGIT">
+  <MonoDevelop.Ide.Workbench ActiveDocument="examenPrutech/ViewModels/ListaEstacionesVM.cs">
+    <Files>
+      <File FileName="examenPrutech/ViewModels/ListaEstacionesVM.cs" Line="116" Column="1" />
+      <File FileName="examenPrutech/ViewModels/EcobiciVM.cs" Line="7" Column="2" />
+      <File FileName="examenPrutech/Interfaces/IGeo.cs" Line="2" Column="1" />
+      <File FileName="examenPrutech/ViewModels/DetalleEstacionVM.cs" Line="6" Column="24" />
+      <File FileName="examenPrutech/Views/ListaEstaciones.xaml.cs" Line="16" Column="26" />
+      <File FileName="Droid/Dependencies/GeoDroid.cs" Line="35" Column="14" />
+      <File FileName="Droid/MainActivity.cs" Line="11" Column="1" />
+      <File FileName="examenPrutech/Views/DetalleEstacion.xaml.cs" Line="19" Column="24" />
+      <File FileName="iOS/Main.cs" Line="17" Column="1" />
+      <File FileName="iOS/Renderers/CustomMapRenderer.cs" Line="66" Column="69" />
+      <File FileName="examenPrutech/Views/DetalleEstacion.xaml" Line="31" Column="1" />
+      <File FileName="examenPrutech/App.xaml" Line="36" Column="1" />
+      <File FileName="Droid/Renderers/CustomMapRenderer.cs" Line="11" Column="21" />
+      <File FileName="examenPrutech/Views/ListaEstaciones.xaml" Line="22" Column="1" />
+      <File FileName="Droid/Properties/AndroidManifest.xml" Line="12" Column="114" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|iPhoneSimulator" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MultiItemStartupConfigurations />
+  <MonoDevelop.Ide.ItemProperties.examenPrutech.iOS PreferredExecutionTarget="MonoDevelop.IPhone.IPhoneSimulatorTarget.80676AB0-71CA-4086-9AD3-BE5BA049E362" />
+  <MonoDevelop.Ide.ItemProperties.examenPrutech.Droid PreferredExecutionTarget="Android.ZY32235ZVN" />
+</Properties>

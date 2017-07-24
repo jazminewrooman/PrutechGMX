@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>{0273636C-24B0-4C37-988A-BB849DC79D8F}</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>examenPrutech</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)App.xaml" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)examenPrutechPage.xaml" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\ListaEstaciones.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\DetalleEstacion.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)examenPrutechPage.xaml.cs">
+      <DependentUpon>examenPrutechPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Interfaces\IGeo.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\ListaEstaciones.xaml.cs">
+      <DependentUpon>ListaEstaciones.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ListaEstacionesVM.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\EcobiciVM.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\estaciones.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Interfaces\ISmartBike.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\DetalleEstacion.xaml.cs">
+      <DependentUpon>DetalleEstacion.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\DetalleEstacionVM.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\CustomMap.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="$(MSBuildThisFileDirectory)Interfaces\" />
+    <Folder Include="$(MSBuildThisFileDirectory)Views\" />
+    <Folder Include="$(MSBuildThisFileDirectory)ViewModels\" />
+    <Folder Include="$(MSBuildThisFileDirectory)Models\" />
+  </ItemGroup>
+</Project>

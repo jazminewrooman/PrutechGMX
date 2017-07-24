@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="GMX.Views.RecoverPage">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Color x:Key="bgc">#04b5b5</Color>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <StackLayout Padding="30" Spacing="10">
+            <Image Source="logo.png"/>
+            <Label Text="Email: " />
+            <Entry Text="{Binding Correo, Mode=TwoWay}"/>
+            <Button Text="Recuperar" Command="{Binding RecoverPassCommand}" TextColor="White" BackgroundColor="{StaticResource bgc}"/>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

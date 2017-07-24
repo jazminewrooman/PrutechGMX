@@ -1,0 +1,533 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:tns="http://www.gmx.com.mx/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" targetNamespace="http://www.gmx.com.mx/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://www.gmx.com.mx/">
+      <s:element name="AuthenticateUser">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="User" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Password" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="ApplicationId" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AuthenticateUserResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="AuthenticateUserResult" type="tns:bUsers" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="bUsers">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="UserId" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="CryptPwd" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="ExtId" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="Source" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="UserName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="DisplayName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Email" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="ExpDte" type="s:dateTime" />
+          <s:element minOccurs="1" maxOccurs="1" name="ParentId" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="Roles" type="tns:ArrayOfString" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfString">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="string" nillable="true" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="ValidateAuthCookie">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="User" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="CryptPwd" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="ApplicationId" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ValidateAuthCookieResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ValidateAuthCookieResult" type="tns:bUsers" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetUser">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="User" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="ApplicationId" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetUserResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetUserResult" type="tns:bUsers" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UserExistsByExtId">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="ExtId" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="Source" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UserExistsByExtIdResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="UserExistsByExtIdResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UserExistsByName">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="User" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="Source" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UserExistsByNameResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="UserExistsByNameResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="NewUser">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="UserName" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="ExtId" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="Source" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="Password" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Email" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="ExpiryDte" type="s:dateTime" />
+            <s:element minOccurs="1" maxOccurs="1" name="AppId" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="NewUserResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="NewUserResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UpdateUser">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="UserId" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="UserName" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Email" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="ExtId" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="Source" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="ParentId" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="ExpiryDte" type="s:dateTime" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UpdateUserResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="UpdateUserResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AddRoleToUser">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="UserName" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="Source" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="Role" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="AppId" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AddRoleToUserResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="AddRoleToUserResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetAppAdmin">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="AppId" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetAppAdminResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="GetAppAdminResult" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SendPwdRecoveryMail">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="UserName" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="Source" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SendPwdRecoveryMailResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="SendPwdRecoveryMailResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetChilds">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="UserId" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="ApplicationId" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetChildsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetChildsResult" type="tns:ArrayOfBUsers" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfBUsers">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="bUsers" nillable="true" type="tns:bUsers" />
+        </s:sequence>
+      </s:complexType>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="AuthenticateUserSoapIn">
+    <wsdl:part name="parameters" element="tns:AuthenticateUser" />
+  </wsdl:message>
+  <wsdl:message name="AuthenticateUserSoapOut">
+    <wsdl:part name="parameters" element="tns:AuthenticateUserResponse" />
+  </wsdl:message>
+  <wsdl:message name="ValidateAuthCookieSoapIn">
+    <wsdl:part name="parameters" element="tns:ValidateAuthCookie" />
+  </wsdl:message>
+  <wsdl:message name="ValidateAuthCookieSoapOut">
+    <wsdl:part name="parameters" element="tns:ValidateAuthCookieResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetUserSoapIn">
+    <wsdl:part name="parameters" element="tns:GetUser" />
+  </wsdl:message>
+  <wsdl:message name="GetUserSoapOut">
+    <wsdl:part name="parameters" element="tns:GetUserResponse" />
+  </wsdl:message>
+  <wsdl:message name="UserExistsByExtIdSoapIn">
+    <wsdl:part name="parameters" element="tns:UserExistsByExtId" />
+  </wsdl:message>
+  <wsdl:message name="UserExistsByExtIdSoapOut">
+    <wsdl:part name="parameters" element="tns:UserExistsByExtIdResponse" />
+  </wsdl:message>
+  <wsdl:message name="UserExistsByNameSoapIn">
+    <wsdl:part name="parameters" element="tns:UserExistsByName" />
+  </wsdl:message>
+  <wsdl:message name="UserExistsByNameSoapOut">
+    <wsdl:part name="parameters" element="tns:UserExistsByNameResponse" />
+  </wsdl:message>
+  <wsdl:message name="NewUserSoapIn">
+    <wsdl:part name="parameters" element="tns:NewUser" />
+  </wsdl:message>
+  <wsdl:message name="NewUserSoapOut">
+    <wsdl:part name="parameters" element="tns:NewUserResponse" />
+  </wsdl:message>
+  <wsdl:message name="UpdateUserSoapIn">
+    <wsdl:part name="parameters" element="tns:UpdateUser" />
+  </wsdl:message>
+  <wsdl:message name="UpdateUserSoapOut">
+    <wsdl:part name="parameters" element="tns:UpdateUserResponse" />
+  </wsdl:message>
+  <wsdl:message name="AddRoleToUserSoapIn">
+    <wsdl:part name="parameters" element="tns:AddRoleToUser" />
+  </wsdl:message>
+  <wsdl:message name="AddRoleToUserSoapOut">
+    <wsdl:part name="parameters" element="tns:AddRoleToUserResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetAppAdminSoapIn">
+    <wsdl:part name="parameters" element="tns:GetAppAdmin" />
+  </wsdl:message>
+  <wsdl:message name="GetAppAdminSoapOut">
+    <wsdl:part name="parameters" element="tns:GetAppAdminResponse" />
+  </wsdl:message>
+  <wsdl:message name="SendPwdRecoveryMailSoapIn">
+    <wsdl:part name="parameters" element="tns:SendPwdRecoveryMail" />
+  </wsdl:message>
+  <wsdl:message name="SendPwdRecoveryMailSoapOut">
+    <wsdl:part name="parameters" element="tns:SendPwdRecoveryMailResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetChildsSoapIn">
+    <wsdl:part name="parameters" element="tns:GetChilds" />
+  </wsdl:message>
+  <wsdl:message name="GetChildsSoapOut">
+    <wsdl:part name="parameters" element="tns:GetChildsResponse" />
+  </wsdl:message>
+  <wsdl:portType name="SecuritySoap">
+    <wsdl:operation name="AuthenticateUser">
+      <wsdl:input message="tns:AuthenticateUserSoapIn" />
+      <wsdl:output message="tns:AuthenticateUserSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ValidateAuthCookie">
+      <wsdl:input message="tns:ValidateAuthCookieSoapIn" />
+      <wsdl:output message="tns:ValidateAuthCookieSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetUser">
+      <wsdl:input message="tns:GetUserSoapIn" />
+      <wsdl:output message="tns:GetUserSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UserExistsByExtId">
+      <wsdl:input message="tns:UserExistsByExtIdSoapIn" />
+      <wsdl:output message="tns:UserExistsByExtIdSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UserExistsByName">
+      <wsdl:input message="tns:UserExistsByNameSoapIn" />
+      <wsdl:output message="tns:UserExistsByNameSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="NewUser">
+      <wsdl:input message="tns:NewUserSoapIn" />
+      <wsdl:output message="tns:NewUserSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateUser">
+      <wsdl:input message="tns:UpdateUserSoapIn" />
+      <wsdl:output message="tns:UpdateUserSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="AddRoleToUser">
+      <wsdl:input message="tns:AddRoleToUserSoapIn" />
+      <wsdl:output message="tns:AddRoleToUserSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAppAdmin">
+      <wsdl:input message="tns:GetAppAdminSoapIn" />
+      <wsdl:output message="tns:GetAppAdminSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SendPwdRecoveryMail">
+      <wsdl:input message="tns:SendPwdRecoveryMailSoapIn" />
+      <wsdl:output message="tns:SendPwdRecoveryMailSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetChilds">
+      <wsdl:input message="tns:GetChildsSoapIn" />
+      <wsdl:output message="tns:GetChildsSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="SecuritySoap" type="tns:SecuritySoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="AuthenticateUser">
+      <soap:operation soapAction="http://www.gmx.com.mx/AuthenticateUser" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ValidateAuthCookie">
+      <soap:operation soapAction="http://www.gmx.com.mx/ValidateAuthCookie" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetUser">
+      <soap:operation soapAction="http://www.gmx.com.mx/GetUser" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UserExistsByExtId">
+      <soap:operation soapAction="http://www.gmx.com.mx/UserExistsByExtId" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UserExistsByName">
+      <soap:operation soapAction="http://www.gmx.com.mx/UserExistsByName" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="NewUser">
+      <soap:operation soapAction="http://www.gmx.com.mx/NewUser" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateUser">
+      <soap:operation soapAction="http://www.gmx.com.mx/UpdateUser" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddRoleToUser">
+      <soap:operation soapAction="http://www.gmx.com.mx/AddRoleToUser" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAppAdmin">
+      <soap:operation soapAction="http://www.gmx.com.mx/GetAppAdmin" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SendPwdRecoveryMail">
+      <soap:operation soapAction="http://www.gmx.com.mx/SendPwdRecoveryMail" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetChilds">
+      <soap:operation soapAction="http://www.gmx.com.mx/GetChilds" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="SecuritySoap12" type="tns:SecuritySoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="AuthenticateUser">
+      <soap12:operation soapAction="http://www.gmx.com.mx/AuthenticateUser" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ValidateAuthCookie">
+      <soap12:operation soapAction="http://www.gmx.com.mx/ValidateAuthCookie" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetUser">
+      <soap12:operation soapAction="http://www.gmx.com.mx/GetUser" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UserExistsByExtId">
+      <soap12:operation soapAction="http://www.gmx.com.mx/UserExistsByExtId" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UserExistsByName">
+      <soap12:operation soapAction="http://www.gmx.com.mx/UserExistsByName" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="NewUser">
+      <soap12:operation soapAction="http://www.gmx.com.mx/NewUser" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateUser">
+      <soap12:operation soapAction="http://www.gmx.com.mx/UpdateUser" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddRoleToUser">
+      <soap12:operation soapAction="http://www.gmx.com.mx/AddRoleToUser" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAppAdmin">
+      <soap12:operation soapAction="http://www.gmx.com.mx/GetAppAdmin" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SendPwdRecoveryMail">
+      <soap12:operation soapAction="http://www.gmx.com.mx/SendPwdRecoveryMail" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetChilds">
+      <soap12:operation soapAction="http://www.gmx.com.mx/GetChilds" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="Security">
+    <wsdl:port name="SecuritySoap" binding="tns:SecuritySoap">
+      <soap:address location="http://148.243.230.134/wsUserAdmin/security.asmx" />
+    </wsdl:port>
+    <wsdl:port name="SecuritySoap12" binding="tns:SecuritySoap12">
+      <soap12:address location="http://148.243.230.134/wsUserAdmin/security.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
