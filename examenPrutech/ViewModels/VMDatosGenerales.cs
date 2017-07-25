@@ -5,7 +5,7 @@ using Xamarin.Forms.Xaml;
 using System.Runtime.CompilerServices;
 using System.Linq;
 using GMX.Views;
-
+using System.Text.RegularExpressions;
 
 namespace GMX
 {
@@ -30,10 +30,21 @@ namespace GMX
 			get { return rfc; }
 			set
 			{
+				string res;
 				if (rfc != value)
 				{
 					rfc = value;
 					NotifyPropertyChanged("RFC");
+				}
+				if (!String.IsNullOrEmpty(rfc))
+				{ 
+					string pattern = @"[A-Z,Ñ,&]{3,4}([0-9]{2})(0[1-9]|1[0-2])(0[1-9]|1[0-9]|2[0-9]|3[0-1])[A-Z|\d]{3}";
+					string input = @rfc;
+
+					Match m = Regex.Match(input, pattern);
+					bool x = m.Success;
+					if (m.Success)
+						res = "OK";
 				}
 			}
 		}
