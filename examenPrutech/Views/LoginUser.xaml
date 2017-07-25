@@ -9,25 +9,28 @@
         </ResourceDictionary>
     </ContentPage.Resources>
     <ContentPage.Content>
-        <StackLayout Padding="30" Spacing="10">
-            <!--<Grid>
-                <Grid.RowsDefinitions>
-                    <RowDefinition/>
-                </Grid.RowsDefinitions>-->
-            <Image Source="logo.png"/>
-            <Label Text="Usuario"/>
-            <Entry Text ="{Binding Usuario, Mode=TwoWay}"/>
-            <Label Text="Contraseña"/>
-            <Entry Text ="{Binding Contrasena, Mode=TwoWay}"/>
-            <Label Text="{Binding Error}" TextColor="Red" IsVisible="{Binding ErrorVisible}"/>
-            <Button Text="Iniciar sesión" Command="{Binding IniciarSesionCommand}" TextColor="White" BackgroundColor="{StaticResource bgc}" />
-            <Button Text="¿Olvidaste tu contraseña? Obtén ayuda" Command="{Binding RecoverPassCommand}" BackgroundColor="White" BorderWidth="0" BorderColor="White" />
-            <StackLayout Orientation="Horizontal">
-                <Label Text="Cerrar sesión"/>
-                <Switch x:Name="swtCerrar" IsToggled="False" BackgroundColor="{StaticResource bgc}"/>
-            </StackLayout>
-            <Button Text="Registrarme" x:Name="btnRegistrarme" TextColor="White" BackgroundColor="{StaticResource bgc}"/>
-            <!--</Grid>-->
-        </StackLayout>
+		<ScrollView>
+	        <StackLayout Padding="30" Spacing="10">
+	            <!--<Grid>
+	                <Grid.RowsDefinitions>
+	                    <RowDefinition/>
+	                </Grid.RowsDefinitions>-->
+	            <Image Source="logo.png"/>
+	            <Label Text="Usuario"/>
+	            <Entry Text ="{Binding Usuario, Mode=TwoWay}"/>
+	            <Label Text="Contraseña"/>
+	            <Entry Text ="{Binding Contrasena, Mode=TwoWay}"/>
+	            <Label Text="{Binding Error}" TextColor="Red" IsVisible="{Binding ErrorVisible}"/>
+	            <Button Text="Iniciar sesión" Command="{Binding IniciarSesionCommand}" Style="{StaticResource botonVerde}" />
+	            <Button Text="¿Olvidaste tu contraseña? Obtén ayuda" Command="{Binding RecoverPassCommand}" Style="{StaticResource botonBlanco}"/>
+				<!--BackgroundColor="White" BorderWidth="0" BorderColor="White" />-->
+	            <StackLayout Orientation="Horizontal">
+	                <Label Text="Cerrar sesión"/>
+	                <Switch x:Name="swtCerrar" IsToggled="False" BackgroundColor="{StaticResource bgc}"/>
+	            </StackLayout>
+	            <Button Text="Registrarme" x:Name="btnRegistrarme" Style="{StaticResource botonVerde}"/>
+	            <!--</Grid>-->
+	        </StackLayout>
+		</ScrollView>
     </ContentPage.Content>
 </ContentPage>

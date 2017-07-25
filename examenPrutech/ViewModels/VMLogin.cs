@@ -101,8 +101,10 @@ namespace GMX
                 GMX.wsUser.bUsers usrId = ws.GetUser(user.ExtId, 1);
                 luser = ConvertUser(user);
                 Ocupado = false;
-                var Welcome = new WelcomePage(luser);
-                Welcome.BindingContext = luser;
+                //var Welcome = new WelcomePage(luser);
+                //Welcome.BindingContext = luser;
+
+				var Welcome = new GMX.Views.DatosGenerales();
 
                 App.navigation.InsertPageBefore(Welcome, App.navigation.NavigationStack.FirstOrDefault());
                 await App.navigation.PopToRootAsync();
@@ -131,6 +133,7 @@ namespace GMX
 		void Recover()
 		{
             App.navigation.PushAsync(new RecoverPage());
+			//App.navigation.PushAsync(new Views.DatosGenerales());
 		}
         
         #endregion

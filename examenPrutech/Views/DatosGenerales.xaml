@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
+	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+	x:Class="GMX.Views.DatosGenerales">
+	<ContentPage.Resources>
+        <ResourceDictionary>
+            <Color x:Key="bgc">#04b5b5</Color>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+	<ContentPage.Content>
+		<ScrollView>
+			<StackLayout Padding="20" Spacing="10">
+				<Label Text="RFC (con homoclave)" Style="{StaticResource labels}"/>
+				<Entry Text="{Binding RFC, Mode=TwoWay}"/>
+
+				<Label Text="Nombre"  Style="{StaticResource labels}"/>
+				<Entry Text="{Binding Nombre, Mode=TwoWay}"/>
+
+				<Label Text="Apellido paterno"  Style="{StaticResource labels}"/>
+				<Entry Text="{Binding APaterno, Mode=TwoWay}"/>
+
+				<Label Text="Apellido materno"  Style="{StaticResource labels}"/>
+				<Entry Text="{Binding AMaterno, Mode=TwoWay}"/>
+
+				<Label Text="Calle, número exterior, número interior"  Style="{StaticResource labels}"/>
+				<Entry Text="{Binding Direccion, Mode=TwoWay}"/>
+
+				<Label Text="Teléfono (con lada)"  Style="{StaticResource labels}"/>
+				<Entry Text="{Binding Telefono, Mode=TwoWay}"/>
+
+				<Label Text="Código Postal"  Style="{StaticResource labels}"/>
+				<Entry Text="{Binding CP, Mode=TwoWay}"/>
+
+				<Label Text="Estado"  Style="{StaticResource labels}"/>
+				<Entry Text="{Binding Estado, Mode=TwoWay}"/>
+
+				<Label Text="Municipio"  Style="{StaticResource labels}"/>
+				<Entry Text="{Binding Municipio, Mode=TwoWay}"/>
+
+				<Label Text="Ciudad"  Style="{StaticResource labels}"/>
+				<Entry Text="{Binding Ciudad, Mode=TwoWay}"/>
+
+				<Label Text="Colonia"  Style="{StaticResource labels}"/>
+				<Entry Text="{Binding Colonia, Mode=TwoWay}"/>
+
+				<Label Text="Correo electrónico"  Style="{StaticResource labels}"/>
+				<Entry Text="{Binding Correo, Mode=TwoWay}"/>
+				
+				<BoxView HeightRequest="20" BackgroundColor="Gray"/>
+
+				
+			</StackLayout>
+		</ScrollView>
+	</ContentPage.Content>
+</ContentPage>

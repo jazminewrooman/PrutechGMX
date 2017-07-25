@@ -14,7 +14,7 @@ namespace GMX.Views
 
 			var MainP = new NavigationPage(new LoginUser())
 			{
-				BarTextColor = Color.DarkOrchid,
+				BarTextColor = Color.Black,
 				BarBackgroundColor = Color.White,
 				//Title = "Listas",
 			};
