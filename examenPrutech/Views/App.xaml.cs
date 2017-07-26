@@ -12,18 +12,13 @@ namespace GMX.Views
 		{
 			InitializeComponent();
 
-			var MainP = new NavigationPage(new LoginUser())
-			{
-				BarTextColor = Color.Black,
-				BarBackgroundColor = Color.White,
-				//Title = "Listas",
-			};
-
-			MainPage = MainP;
-
+            var mainp = new NavigationPage(new LoginUser())
+            {
+                BackgroundColor = Color.White,
+                BarTextColor = Color.Black,
+            };
+            MainPage = mainp;
 			App.navigation = MainPage.Navigation;
-
-			//MainPage = new GMXApp.LoginUser();
 		}
 
 		protected override void OnStart()

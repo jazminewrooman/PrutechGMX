@@ -18,6 +18,7 @@ namespace GMX
 
         public VMRecover(IUserDialogs diag, INavigation n) : base(diag)
         {
+            Title = "Recupera contraseña";
             RecoverPassCommand = new Command(Recover);
             nav = n;
         }

@@ -15,8 +15,16 @@ namespace GMX.Views
 		public RecoverPage()
 		{
 			InitializeComponent();
-
+            //Icon = "left.png";
 			BindingContext = new VMRecover(UserDialogs.Instance, Navigation);
 		}
+
+		/*protected override void OnAppearing()
+		{
+			(App.Current.MainPage as NavigationPage).BarBackgroundColor = Color.White;
+			(App.Current.MainPage as NavigationPage).BarTextColor = Color.Black;
+			base.OnAppearing();
+		}*/
+
 	}
 }

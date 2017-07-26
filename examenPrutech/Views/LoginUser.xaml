@@ -2,6 +2,7 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:GMXApp"
+            Title = "{Binding Title}"
              x:Class="GMX.Views.LoginUser">
     <ContentPage.Resources>
         <ResourceDictionary>
@@ -9,12 +10,13 @@
         </ResourceDictionary>
     </ContentPage.Resources>
     <ContentPage.Content>
+        <!--<StackLayout>
+        <StackLayout Padding="20">
+            <Label HorizontalTextAlignment="Center" Text="Inicio de sesión"/>
+            <BoxView BackgroundColor="#cccccc" HeightRequest="1"/>
+        </StackLayout>-->
 		<ScrollView>
 	        <StackLayout Padding="30" Spacing="10">
-	            <!--<Grid>
-	                <Grid.RowsDefinitions>
-	                    <RowDefinition/>
-	                </Grid.RowsDefinitions>-->
 	            <Image Source="logo.png"/>
 	            <Label Text="Usuario"/>
 	            <Entry Text ="{Binding Usuario, Mode=TwoWay}"/>
@@ -32,5 +34,6 @@
 	            <!--</Grid>-->
 	        </StackLayout>
 		</ScrollView>
+        <!--    </StackLayout>-->
     </ContentPage.Content>
 </ContentPage>

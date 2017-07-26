@@ -15,9 +15,14 @@ namespace GMX.Views
 		{
 			InitializeComponent();
 
-			Title = "Inicio de sesión";
-
 			this.BindingContext = vm;
 		}
+
+        protected override void OnAppearing()
+        {
+            (App.Current.MainPage as NavigationPage).BarBackgroundColor = Color.White;
+            (App.Current.MainPage as NavigationPage).BarTextColor = Color.Black;
+            base.OnAppearing();
+        }
 	}
 }

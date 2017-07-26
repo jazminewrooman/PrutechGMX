@@ -19,6 +19,7 @@ namespace GMX
     {
         public VMLogin(IUserDialogs diag) : base(diag)
         {
+            Title = "Inicio de sesión";
             IniciarSesionCommand = new Command(Boton);
             RecoverPassCommand = new Command(Recover);
         }
@@ -104,19 +105,16 @@ namespace GMX
                 //var Welcome = new WelcomePage(luser);
                 //Welcome.BindingContext = luser;
 
-				var Welcome = new GMX.Views.DatosGenerales();
-
+				var Welcome = new DatosGenerales();
                 App.navigation.InsertPageBefore(Welcome, App.navigation.NavigationStack.FirstOrDefault());
                 await App.navigation.PopToRootAsync();
-
                 var MainP = new NavigationPage(Welcome)
 				{
                     BarTextColor = Color.White,
                     BarBackgroundColor = Color.FromHex("#04b5b5"),
-					Title = "Bienvenido",
 				};
                 var md = new MasterDetailPage();
-                md.Master = new GMX.Views.menu();
+                md.Master = new menu();
                 md.Detail = MainP;
 
                 App.Current.MainPage = md;

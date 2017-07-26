@@ -14,6 +14,7 @@ namespace GMX
 	{
 		public VMDatosGenerales(IUserDialogs diag) : base(diag)
 		{
+            Title = "DATOS GENERALES";
 		}
 
 		public event PropertyChangedEventHandler PropertyChanged;

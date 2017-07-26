@@ -14,8 +14,6 @@ namespace GMX.Views
 		{
 			InitializeComponent();
 
-			Title = "COMPRA / DATOS GENERALES";
-
 			this.BindingContext = vm;
 		}
 	}
