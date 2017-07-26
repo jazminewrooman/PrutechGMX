@@ -10,35 +10,40 @@ namespace GMX.Views
     {
         public ListView Menu { get; set; }
         StackLayout layout;
+        private GMX.wsUser.bUsers muser;
 
         public void Refrescamenu()
         {
-            cargamenu();
+            cargamenu(muser);
         }
 
-        public menu()
+        public menu(GMX.wsUser.bUsers user)
         {
             Title = "Menu";
             Icon = "slideout.png";
-            cargamenu();
+            muser = user;
+            cargamenu(muser);
         }
 
-        public void cargamenu()
+        public void cargamenu(GMX.wsUser.bUsers user)
         {
             Menu = new MenuListView();
             //Menu.ItemSelected += (sender, e) => NavigateTo(e.SelectedItem as MenuItem);
 
             StackLayout menuLabel = new StackLayout
             {
-                Padding = new Thickness(10, 0, 10, 0),
+                Padding = new Thickness(0, 0, 0, 0),
                 //Spacing = 0,
                 //HeightRequest = 40,
                 HorizontalOptions = LayoutOptions.Fill,
-                Orientation = StackOrientation.Horizontal,
+                Orientation = StackOrientation.Vertical,
                 //HorizontalOptions = LayoutOptions.FillAndExpand,
                 VerticalOptions = LayoutOptions.FillAndExpand,
                 Children = {
-                    new Label{ Text = "Bienvenido"},
+                    new Image(){ Source = "dres", Aspect = Aspect.AspectFill, HeightRequest = 120 },
+                    new StackLayout(){ BackgroundColor = Color.White, Padding = 20,
+                        Children = { new Label(){ FontSize = 12, FontAttributes = FontAttributes.Bold, Text = muser.DisplayName} },
+                    }
                 }
             };
 

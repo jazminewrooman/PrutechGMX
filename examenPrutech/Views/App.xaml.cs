@@ -1,5 +1,6 @@
 ﻿using Xamarin.Forms;
 using GMX.Views;
+using GMX.Services;
 
 namespace GMX.Views
 {

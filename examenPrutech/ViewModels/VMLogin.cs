@@ -114,7 +114,7 @@ namespace GMX
                     BarBackgroundColor = Color.FromHex("#04b5b5"),
 				};
                 var md = new MasterDetailPage();
-                md.Master = new menu();
+                md.Master = new menu(user);
                 md.Detail = MainP;
 
                 App.Current.MainPage = md;

@@ -5,6 +5,7 @@ using Xamarin.Forms.Xaml;
 using System.Runtime.CompilerServices;
 using System.Linq;
 using GMX.Views;
+using GMX.Services;
 using System.Text.RegularExpressions;
 
 namespace GMX
@@ -17,14 +18,6 @@ namespace GMX
             Title = "DATOS GENERALES";
 		}
 
-		public event PropertyChangedEventHandler PropertyChanged;
-		public void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
-		{
-			if (PropertyChanged == null)
-				return;
-			PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-		}
-
 		string rfc;
 		public string RFC
 		{
@@ -35,7 +28,7 @@ namespace GMX
 				if (rfc != value)
 				{
 					rfc = value;
-					NotifyPropertyChanged("RFC");
+                    OnPropertyChanged("RFC");
 				}
 				if (!String.IsNullOrEmpty(rfc))
 				{ 
@@ -59,7 +52,7 @@ namespace GMX
 				if (nombre != value)
 				{
 					nombre = value;
-					NotifyPropertyChanged("Nombre");
+					OnPropertyChanged("Nombre");
 				}
 			}
 		}
@@ -73,7 +66,7 @@ namespace GMX
 				if (apaterno != value)
 				{
 					apaterno = value;
-					NotifyPropertyChanged("APaterno");
+					OnPropertyChanged("APaterno");
 				}
 			}
 		}
@@ -87,7 +80,7 @@ namespace GMX
 				if (amaterno != value)
 				{
 					amaterno = value;
-					NotifyPropertyChanged("AMaterno");
+					OnPropertyChanged("AMaterno");
 				}
 			}
 		}
@@ -101,7 +94,7 @@ namespace GMX
 				if (direccion != value)
 				{
 					direccion = value;
-					NotifyPropertyChanged("Direccion");
+					OnPropertyChanged("Direccion");
 				}
 			}
 		}
@@ -116,7 +109,7 @@ namespace GMX
 				if (telefono != value)
 				{
 					telefono = value;
-					NotifyPropertyChanged("Telefono");
+					OnPropertyChanged("Telefono");
 				}
 			}
 		}
@@ -130,7 +123,18 @@ namespace GMX
 				if (cp != value)
 				{
 					cp = value;
-					NotifyPropertyChanged("CP");
+					if (cp.Trim().Length == 5)
+                    {
+                        bindings b = new bindings();
+                        b.IniciaWS();
+                        b.Service.getCatalogCompleted += (sender, e) =>
+                        {
+
+                        };
+
+                        b.Service.getCatalogAsync("{ 'producto':'PVLM3D', 'clave':'AdKGEpIxQTR1XvtEpQLDYA==', 'llave':'PJUZpGkDfHaEca6I1kdw0iuSYJP8cJIw3F6L4a94uQo=', 'comando': 'GetEstadosMexByCodpost', 'parametros':'08100' }");
+                    }
+					OnPropertyChanged("CP");
 				}
 			}
 		}
@@ -144,7 +148,7 @@ namespace GMX
 				if (estado != value)
 				{
 					estado = value;
-					NotifyPropertyChanged("Estado");
+					OnPropertyChanged("Estado");
 				}
 			}
 		}
@@ -158,7 +162,7 @@ namespace GMX
 				if (municipio != value)
 				{
 					municipio = value;
-					NotifyPropertyChanged("Municipio");
+					OnPropertyChanged("Municipio");
 				}
 
 			}
@@ -173,7 +177,7 @@ namespace GMX
 				if (ciudad != value)
 				{
 					ciudad = value;
-					NotifyPropertyChanged("Ciudad");
+					OnPropertyChanged("Ciudad");
 				}
 			}
 		}
@@ -187,7 +191,7 @@ namespace GMX
 				if (colonia != value)
 				{
 					colonia = value;
-					NotifyPropertyChanged("Colonia");
+					OnPropertyChanged("Colonia");
 				}
 			}
 		}
@@ -201,7 +205,7 @@ namespace GMX
 				if (correo != value)
 				{
 					correo = value;
-					NotifyPropertyChanged("Correo");
+					OnPropertyChanged("Correo");
 				}
 			}
 		}

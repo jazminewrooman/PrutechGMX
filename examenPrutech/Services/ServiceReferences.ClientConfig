@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<configuration>
+    <system.serviceModel>
+        <bindings>
+            <basicHttpBinding>
+                <binding name="GMXbasicHttpBinding" maxBufferSize="2147483647"
+                    maxReceivedMessageSize="2147483647">
+                    <security mode="None" />
+                </binding>
+            </basicHttpBinding>
+        </bindings>
+        <client>
+            <endpoint address="http://desa.gmx.com.mx/IntegrationService/EmissionService.svc"
+                binding="basicHttpBinding" bindingConfiguration="GMXbasicHttpBinding"
+                contract="IEmissionService" name="GMXbasicHttpBinding" />
+        </client>
+        <extensions />
+    </system.serviceModel>
+</configuration>

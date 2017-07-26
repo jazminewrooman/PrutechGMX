@@ -7,7 +7,7 @@
 	<key>CFBundleName</key>
 	<string>examenPrutech</string>
 	<key>CFBundleIdentifier</key>
-	<string>javb.examenprutech</string>
+	<string>gob.mx.imss.digital</string>
 	<key>CFBundleShortVersionString</key>
 	<string>1.0</string>
 	<key>CFBundleVersion</key>
@@ -15,7 +15,7 @@
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>MinimumOSVersion</key>
-	<string>8.0</string>
+	<string>7.1</string>
 	<key>UIDeviceFamily</key>
 	<array>
 		<integer>1</integer>
@@ -44,11 +44,16 @@
 	<string>Assets.xcassets/AppIcon.appiconset</string>
 	<key>UIBackgroundModes</key>
 	<array>
-		<string>location</string>
+		<string>audio</string>
 	</array>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Se requiere permiso para usar mapas</string>
 	<key>NSLocationAlwaysUsageDescription</key>
 	<string>Se requiere permiso para usar mapas</string>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<true/>
+	</dict>
 </dict>
 </plist>
