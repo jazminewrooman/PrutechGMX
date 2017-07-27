@@ -27,7 +27,6 @@
     <DefineConstants>DEBUG;</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <AndroidLinkMode>None</AndroidLinkMode>
     <EmbedAssembliesIntoApk>true</EmbedAssembliesIntoApk>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -184,6 +183,7 @@
     </Reference>
     <Reference Include="System.Web.Services" />
     <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MainActivity.cs" />
@@ -218,6 +218,11 @@
     <AndroidResource Include="Resources\drawable\left.png" />
     <AndroidResource Include="Resources\drawable\slideout.png" />
     <AndroidResource Include="Resources\drawable\dres.png" />
+    <AndroidResource Include="Resources\drawable\document2.png" />
+    <AndroidResource Include="Resources\drawable\nocash.png" />
+    <AndroidResource Include="Resources\drawable\tick.png" />
+    <AndroidResource Include="Resources\drawable\logogmx.png" />
+    <AndroidResource Include="Resources\values\colors.xml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Dependencies\" />

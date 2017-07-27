@@ -40,10 +40,14 @@ namespace GMX.Views
                 //HorizontalOptions = LayoutOptions.FillAndExpand,
                 VerticalOptions = LayoutOptions.FillAndExpand,
                 Children = {
-                    new Image(){ Source = "dres", Aspect = Aspect.AspectFill, HeightRequest = 120 },
+                    new Image(){ Source = "dres", Aspect = Aspect.AspectFill, HeightRequest = 150 },
                     new StackLayout(){ BackgroundColor = Color.White, Padding = 20,
-                        Children = { new Label(){ FontSize = 12, FontAttributes = FontAttributes.Bold, Text = muser.DisplayName} },
-                    }
+                        Children = { 
+                            new Label(){ FontSize = 12, FontAttributes = FontAttributes.None, Text = "Bienvenido"},
+                            new Label(){ FontSize = 14, FontAttributes = FontAttributes.Bold, Text = muser.DisplayName} 
+                        },
+                    },
+                    Menu
                 }
             };
 
@@ -69,6 +73,8 @@ namespace GMX.Views
             ItemsSource = data;
             VerticalOptions = LayoutOptions.FillAndExpand;
             BackgroundColor = Color.Transparent;
+            SeparatorColor = Color.Transparent;
+            SeparatorVisibility = SeparatorVisibility.None;
             var cell = new DataTemplate(typeof(menucell));
             ItemTemplate = cell;
         }
@@ -78,15 +84,20 @@ namespace GMX.Views
     {
         public MenuListData()
         {
-            Color txt, back;
-
             this.Add(new MenuItem()
             {
-                Titulo = "Mi perfil",
-                //Icono = "profle.png",
+                Titulo = "Cotizar",
+                Icono = "nocash.png",
                 Color = Color.White,
                 TextColor = Color.Black,
             });
+			this.Add(new MenuItem()
+			{
+				Titulo = "Polizas emitidas",
+				Icono = "document2.png",
+				Color = Color.White,
+				TextColor = Color.Black,
+			});
         }
 
 

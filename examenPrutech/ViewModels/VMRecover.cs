@@ -52,6 +52,7 @@ namespace GMX
 			try
 			{
                 Ocupado = true;
+                await System.Threading.Tasks.Task.Delay(TimeSpan.FromMilliseconds(100));
 				GMX.wsUser.Security ws = new GMX.wsUser.Security();
                 exito = ws.SendPwdRecoveryMail(correo, 4);
                 Ocupado = false;

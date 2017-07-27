@@ -212,6 +212,10 @@
     <BundleResource Include="Resources\logo.png" />
     <BundleResource Include="Resources\slideout.png" />
     <BundleResource Include="Resources\dres.png" />
+    <BundleResource Include="Resources\document2.png" />
+    <BundleResource Include="Resources\nocash.png" />
+    <BundleResource Include="Resources\tick.png" />
+    <BundleResource Include="Resources\logogmx.png" />
   </ItemGroup>
   <ItemGroup>
     <WebReferences Include="Web References" />

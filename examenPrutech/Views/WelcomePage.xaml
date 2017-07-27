@@ -5,10 +5,26 @@
              x:Class="GMX.Views.WelcomePage">
     <ContentPage.Content>
         <StackLayout Padding="20, 40, 20, 0">
-            <Label Text="Solicitud de usuario y contraseña" />
-            <Label Text="Restablecimiento de contraseña" />
-            <Label Text="Permiso para un PVL" />
-            <Label Text="Problema en la emision" />
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="30"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="20"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>   
+                <Image Grid.Row="0" Grid.Column="0" Source="tick"/>
+                <Label Grid.Row="0" Grid.Column="1" VerticalTextAlignment="Center" Text="Solicitud de usuario y contraseña" />
+                <Image Grid.Row="1" Grid.Column="0" Source="tick"/>
+                <Label Grid.Row="1" Grid.Column="1" VerticalTextAlignment="Center" Text="Restablecimiento de contraseña" />
+                <Image Grid.Row="2" Grid.Column="0" Source="tick"/>
+                <Label Grid.Row="2" Grid.Column="1" VerticalTextAlignment="Center" Text="Permiso para un PVL" />
+                <Image Grid.Row="3" Grid.Column="0" Source="tick"/>
+                <Label Grid.Row="3" Grid.Column="1" VerticalTextAlignment="Center" Text="Problema en la emision" />
+            </Grid>
             <BoxView HeightRequest="20"/>
             <Label Text="Contactanos: soporte@gmx.com.mx" FontAttributes="Bold" />
             <Label Text="Telefonos: (55) 5480 4100" FontAttributes="Bold" />

@@ -22,10 +22,12 @@ namespace GMX
             Title = "Inicio de sesión";
             IniciarSesionCommand = new Command(Boton);
             RecoverPassCommand = new Command(Recover);
+            RegistrarCommand = new Command(Registrar);
         }
 
         public ICommand IniciarSesionCommand { get; private set; }
         public ICommand RecoverPassCommand { get; private set; }
+        public ICommand RegistrarCommand { get; private set; }
 
         private string usuario;
         public string Usuario
@@ -36,7 +38,7 @@ namespace GMX
                 if (usuario != value)
                 {
                     usuario = value;
-                    NotifyPropertyChanged("Usuario");
+                    OnPropertyChanged("Usuario");
                 }
             }
         }
@@ -50,7 +52,7 @@ namespace GMX
                 if (contrasena != value)
                 {
                     contrasena = value;
-                    NotifyPropertyChanged("Contrasena");
+                    OnPropertyChanged("Contrasena");
                 }
             }
         }
@@ -68,8 +70,8 @@ namespace GMX
                         ErrorVisible = false;
                     else
                         ErrorVisible = true;
-                    NotifyPropertyChanged("Error");
-                    NotifyPropertyChanged("ErrorVisible");
+                    OnPropertyChanged("Error");
+                    OnPropertyChanged("ErrorVisible");
                 }
             }
         }
@@ -81,14 +83,6 @@ namespace GMX
             set { errorvisible = value; }
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
-        public void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
-        {
-            if (PropertyChanged == null)
-                return;
-            PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-        }
-
         #region Eventos
 
         private async void Boton()
@@ -97,13 +91,12 @@ namespace GMX
             try
             {
                 Ocupado = true;
+                await System.Threading.Tasks.Task.Delay(TimeSpan.FromMilliseconds(100));
                 GMX.wsUser.Security ws = new GMX.wsUser.Security();
                 GMX.wsUser.bUsers user = ws.AuthenticateUser(Usuario, Contrasena, 1);
                 GMX.wsUser.bUsers usrId = ws.GetUser(user.ExtId, 1);
                 luser = ConvertUser(user);
                 Ocupado = false;
-                //var Welcome = new WelcomePage(luser);
-                //Welcome.BindingContext = luser;
 
 				var Welcome = new DatosGenerales();
                 App.navigation.InsertPageBefore(Welcome, App.navigation.NavigationStack.FirstOrDefault());
@@ -131,9 +124,12 @@ namespace GMX
 		void Recover()
 		{
             App.navigation.PushAsync(new RecoverPage());
-			//App.navigation.PushAsync(new Views.DatosGenerales());
 		}
-        
+
+        private void Registrar(){
+            App.navigation.PushAsync(new WelcomePage());
+        }
+
         #endregion
 
         #region Metodos

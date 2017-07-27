@@ -4,36 +4,23 @@
              xmlns:local="clr-namespace:GMXApp"
             Title = "{Binding Title}"
              x:Class="GMX.Views.LoginUser">
-    <ContentPage.Resources>
-        <ResourceDictionary>
-            <Color x:Key="bgc">#04b5b5</Color>
-        </ResourceDictionary>
-    </ContentPage.Resources>
     <ContentPage.Content>
-        <!--<StackLayout>
-        <StackLayout Padding="20">
-            <Label HorizontalTextAlignment="Center" Text="Inicio de sesión"/>
-            <BoxView BackgroundColor="#cccccc" HeightRequest="1"/>
-        </StackLayout>-->
 		<ScrollView>
 	        <StackLayout Padding="30" Spacing="10">
 	            <Image Source="logo.png"/>
 	            <Label Text="Usuario"/>
 	            <Entry Text ="{Binding Usuario, Mode=TwoWay}"/>
 	            <Label Text="Contraseña"/>
-	            <Entry Text ="{Binding Contrasena, Mode=TwoWay}"/>
+	            <Entry Text ="{Binding Contrasena, Mode=TwoWay}" IsPassword="true"/>
 	            <Label Text="{Binding Error}" TextColor="Red" IsVisible="{Binding ErrorVisible}"/>
 	            <Button Text="Iniciar sesión" Command="{Binding IniciarSesionCommand}" Style="{StaticResource botonVerde}" />
 	            <Button Text="¿Olvidaste tu contraseña? Obtén ayuda" Command="{Binding RecoverPassCommand}" Style="{StaticResource botonBlanco}"/>
-				<!--BackgroundColor="White" BorderWidth="0" BorderColor="White" />-->
 	            <StackLayout Orientation="Horizontal">
 	                <Label Text="Cerrar sesión"/>
-	                <Switch x:Name="swtCerrar" IsToggled="False" BackgroundColor="{StaticResource bgc}"/>
+	                <Switch x:Name="swtCerrar" IsToggled="False" Style="{StaticResource switchVerde}"/>
 	            </StackLayout>
-	            <Button Text="Registrarme" x:Name="btnRegistrarme" Style="{StaticResource botonVerde}"/>
-	            <!--</Grid>-->
+	            <Button Text="Registrarme" Command="{Binding RegistrarCommand}" Style="{StaticResource botonVerde}"/>
 	        </StackLayout>
 		</ScrollView>
-        <!--    </StackLayout>-->
     </ContentPage.Content>
 </ContentPage>

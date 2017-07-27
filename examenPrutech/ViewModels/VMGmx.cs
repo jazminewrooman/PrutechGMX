@@ -1,7 +1,9 @@
 ﻿using System;
 using MvvmHelpers;
 using Acr.UserDialogs;
-         
+using Xamarin.Forms;
+using System.Threading.Tasks;
+
 namespace GMX
 {
     public class VMGmx : BaseViewModel
@@ -18,10 +20,21 @@ namespace GMX
                 if (mocupado != value)
                 {
                     if (value)
-                        Diag.ShowLoading("Cargando...");
+                    {
+                        //Device.BeginInvokeOnMainThread(async () =>
+                        //{
+                            Diag.ShowLoading("Cargando...");
+                            //Task.Delay(TimeSpan.FromMilliseconds(10000));
+                        //});
+                    }
                     else
-                        Diag.HideLoading();
-                    mocupado = value;
+                    {
+                        //Device.BeginInvokeOnMainThread(() =>
+                        //{
+                            Diag.HideLoading();
+                        //});
+                    }
+					mocupado = value;
                     OnPropertyChanged("Ocupado");
                 }
             }

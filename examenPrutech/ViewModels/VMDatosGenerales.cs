@@ -24,22 +24,22 @@ namespace GMX
 			get { return rfc; }
 			set
 			{
-				string res;
+				//string res;
 				if (rfc != value)
 				{
-					rfc = value;
-                    OnPropertyChanged("RFC");
+                    rfc = (value.Length > 13 ? value.Substring(0, 13) : value);
+                    //OnPropertyChanged("RFC");
 				}
-				if (!String.IsNullOrEmpty(rfc))
-				{ 
-					string pattern = @"[A-Z,Ñ,&]{3,4}([0-9]{2})(0[1-9]|1[0-2])(0[1-9]|1[0-9]|2[0-9]|3[0-1])[A-Z|\d]{3}";
-					string input = @rfc;
+				//if (!String.IsNullOrEmpty(rfc))
+				//{ 
+				//	string pattern = @"[A-Z,Ñ,&]{3,4}([0-9]{2})(0[1-9]|1[0-2])(0[1-9]|1[0-9]|2[0-9]|3[0-1])[A-Z|\d]{3}";
+				//	string input = @rfc;
 
-					Match m = Regex.Match(input, pattern);
-					bool x = m.Success;
-					if (m.Success)
-						res = "OK";
-				}
+				//	Match m = Regex.Match(input, pattern);
+				//	bool x = m.Success;
+				//	if (m.Success)
+				//		res = "OK";
+				//}
 			}
 		}
 

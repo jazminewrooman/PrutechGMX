@@ -12,7 +12,7 @@ namespace GMX.Views
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class WelcomePage : ContentPage
 	{
-		public WelcomePage(LoginUsers user)
+		public WelcomePage()
 		{
 			InitializeComponent();
 		}

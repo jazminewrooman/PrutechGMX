@@ -14,6 +14,7 @@
     <Folder Include="$(MSBuildThisFileDirectory)ViewModels\" />
     <Folder Include="$(MSBuildThisFileDirectory)Models\" />
     <Folder Include="$(MSBuildThisFileDirectory)Services\" />
+    <Folder Include="$(MSBuildThisFileDirectory)Helpers\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)Models\LoginModel.cs" />
@@ -40,6 +41,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\VMDatosGenerales.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\reference.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\bindings.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\behaviors.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\WelcomePage.xaml">

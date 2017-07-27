@@ -2,7 +2,8 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
 	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
 	x:Class="GMX.Views.DatosGenerales"
-    Title = "{Binding Title}">
+    Title = "{Binding Title}"
+    xmlns:local="clr-namespace:GMX.Helpers;">
 	<ContentPage.Resources>
         <ResourceDictionary>
             <Color x:Key="bgc">#04b5b5</Color>
@@ -12,7 +13,12 @@
 		<ScrollView>
 			<StackLayout Padding="20" Spacing="10">
 				<Label Text="RFC (con homoclave)" Style="{StaticResource labels}"/>
-				<Entry Text="{Binding RFC, Mode=TwoWay}"/>
+				<Entry Text="{Binding RFC}">
+                    <Entry.Behaviors>
+                        <local:UpperValidator />
+                        <!--<local:MaxLengthValidator MaxLength="13" />-->
+                    </Entry.Behaviors>
+                </Entry>
 
 				<Label Text="Nombre"  Style="{StaticResource labels}"/>
 				<Entry Text="{Binding Nombre, Mode=TwoWay}"/>
