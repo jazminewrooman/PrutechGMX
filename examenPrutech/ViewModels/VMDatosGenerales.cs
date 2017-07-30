@@ -7,6 +7,10 @@ using System.Linq;
 using GMX.Views;
 using GMX.Services;
 using System.Text.RegularExpressions;
+using System.Collections.Generic;
+using Newtonsoft.Json;
+using System.Threading.Tasks;
+using GMX.Services.DTOs;
 
 namespace GMX
 {
@@ -116,31 +120,54 @@ namespace GMX
 
 		string cp;
 		public string CP
-		{
-			get { return cp; }
-			set
-			{
-				if (cp != value)
-				{
-					cp = value;
-					if (cp.Trim().Length == 5)
+        {
+            get { return cp; }
+            set
+            {
+                if (cp != value)
+                {
+                    cp = value;
+                    if (cp.Trim().Length == 5)
                     {
-                        bindings b = new bindings();
-                        b.IniciaWS();
-                        b.Service.getCatalogCompleted += (sender, e) =>
-                        {
-
-                        };
-
-                        b.Service.getCatalogAsync("{ 'producto':'PVLM3D', 'clave':'AdKGEpIxQTR1XvtEpQLDYA==', 'llave':'PJUZpGkDfHaEca6I1kdw0iuSYJP8cJIw3F6L4a94uQo=', 'comando': 'GetEstadosMexByCodpost', 'parametros':'08100' }");
+                        CargaCatalogos(value);
                     }
-					OnPropertyChanged("CP");
-				}
-			}
-		}
+                    OnPropertyChanged("CP");
+                }
+            }
+        }
 
-		string estado;
-		public string Estado
+        private async Task CargaCatalogos(string cp)
+        {
+            bindings b = new bindings();
+            b.IniciaWS();
+
+            var cod = new Dictionary<string, string>();
+            cod.Add("codpost", cp);
+            Ocupado = true;
+
+            var crypdata = await b.getCatalog("GetEstadosMexByCodpost", cod);
+            var strdata = await b.decrypt(crypdata.Result);
+            Dictionary<string, estado> lstedos = JsonConvert.DeserializeObject<Dictionary<string,estado>>(strdata.Result);
+            Estados = lstedos.Select(x => x.Value.txt_desc).ToList();
+            if (Estados.Count > 0)
+                Estado = 0;
+
+            cod.Add("estadoId", lstedos["1"].cod_dpto);
+			crypdata = await b.getCatalog("GetMuncpsMexByEstadoAndCodpost", cod);
+            strdata = await b.decrypt(crypdata.Result);
+            Dictionary<string, municipio> lstmun = JsonConvert.DeserializeObject<Dictionary<string, municipio>>(strdata.Result);
+            Municipios = lstmun.Select(x => x.Value.txt_desc).ToList();
+
+			crypdata = await b.getCatalog("GetCiudadesMexByEstadoAndCodpost", cod);
+            strdata = await b.decrypt(crypdata.Result);
+            Dictionary<string, ciudad> lstciud = JsonConvert.DeserializeObject<Dictionary<string, ciudad>>(strdata.Result);
+            Ciudades = lstciud.Select(x => x.Value.txt_desc).ToList();
+
+			Ocupado = false;
+        }
+
+		int estado;
+		public int Estado
 		{
 			get { return estado; }
 			set
@@ -149,6 +176,20 @@ namespace GMX
 				{
 					estado = value;
 					OnPropertyChanged("Estado");
+				}
+			}
+		}
+
+		List<string> estados;
+		public List<string> Estados
+		{
+			get { return estados; }
+			set
+			{
+				if (estados != value)
+				{
+					estados = value;
+					OnPropertyChanged("Estados");
 				}
 			}
 		}
@@ -168,6 +209,21 @@ namespace GMX
 			}
 		}
 
+		List<string> municipios;
+		public List<string> Municipios
+		{
+			get { return municipios; }
+			set
+			{
+				if (municipios != value)
+				{
+					municipios = value;
+					OnPropertyChanged("Municipios");
+				}
+
+			}
+		}
+
 		string ciudad;
 		public string Ciudad
 		{
@@ -178,6 +234,20 @@ namespace GMX
 				{
 					ciudad = value;
 					OnPropertyChanged("Ciudad");
+				}
+			}
+		}
+
+		List<string> ciudades;
+		public List<string> Ciudades
+		{
+			get { return ciudades; }
+			set
+			{
+				if (ciudades != value)
+				{
+					ciudades = value;
+					OnPropertyChanged("Ciudades");
 				}
 			}
 		}

@@ -39,7 +39,7 @@
 				<Entry Text="{Binding CP, Mode=TwoWay}"/>
 
 				<Label Text="Estado"  Style="{StaticResource labels}"/>
-				<Entry Text="{Binding Estado, Mode=TwoWay}"/>
+				<Picker SelectedIndex="{Binding Estado, Mode=TwoWay}" ItemsSource="{Binding Estados}"/>
 
 				<Label Text="Municipio"  Style="{StaticResource labels}"/>
 				<Entry Text="{Binding Municipio, Mode=TwoWay}"/>

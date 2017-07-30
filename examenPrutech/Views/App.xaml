@@ -14,7 +14,7 @@
 			<Style x:Key="botonVerde" TargetType="Button">
 				<Setter Property="TextColor" 		Value="White"/>
 				<Setter Property="BackgroundColor"	Value="#04b5b5"/>
-			</Style>
+            </Style>
             <Style x:Key="switchVerde" TargetType="Switch">
                 <Setter Property="BackgroundColor"  Value="#04b5b5"/>
             </Style>

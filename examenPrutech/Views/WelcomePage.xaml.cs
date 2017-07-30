@@ -15,6 +15,11 @@ namespace GMX.Views
 		public WelcomePage()
 		{
 			InitializeComponent();
+
+            btnCall.Clicked += (s, e) =>
+            {
+                MessagingCenter.Send<Page, string>(this, "Call", "5554804100");
+            };
 		}
 	}
 }

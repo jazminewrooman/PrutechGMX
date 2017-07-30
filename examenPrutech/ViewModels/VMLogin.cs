@@ -92,7 +92,7 @@ namespace GMX
             {
                 Ocupado = true;
                 await System.Threading.Tasks.Task.Delay(TimeSpan.FromMilliseconds(100));
-                GMX.wsUser.Security ws = new GMX.wsUser.Security();
+                GMX.wsUser.Security ws = new GMX.wsUser.Security(config.Config["APIUsuarios"]);
                 GMX.wsUser.bUsers user = ws.AuthenticateUser(Usuario, Contrasena, 1);
                 GMX.wsUser.bUsers usrId = ws.GetUser(user.ExtId, 1);
                 luser = ConvertUser(user);

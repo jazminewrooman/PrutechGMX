@@ -26,9 +26,20 @@
                 <Label Grid.Row="3" Grid.Column="1" VerticalTextAlignment="Center" Text="Problema en la emision" />
             </Grid>
             <BoxView HeightRequest="20"/>
-            <Label Text="Contactanos: soporte@gmx.com.mx" FontAttributes="Bold" />
-            <Label Text="Telefonos: (55) 5480 4100" FontAttributes="Bold" />
-            <!--<Label Text="{Binding DisplayName}"/>-->
+            <Grid VerticalOptions="Center">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="30*"/>
+                    <ColumnDefinition Width="70*"/>
+                </Grid.ColumnDefinitions>   
+                <Label Grid.Row="0" Grid.Column="0" Text="Contactanos: " FontAttributes="Bold" />
+                <Button Grid.Row="0" Grid.Column="1" Style="{DynamicResource botonVerde}" x:Name="btnEmail" Text="soporte@gmx.com.mx"/>
+                <Label Grid.Row="1" Grid.Column="0" Text="Telefonos: " FontAttributes="Bold" />
+                <Button Grid.Row="1" Grid.Column="1" Style="{DynamicResource botonVerde}" x:Name="btnCall" Text="(55) 5480 4100"/>
+            </Grid>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

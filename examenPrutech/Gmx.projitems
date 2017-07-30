@@ -15,6 +15,7 @@
     <Folder Include="$(MSBuildThisFileDirectory)Models\" />
     <Folder Include="$(MSBuildThisFileDirectory)Services\" />
     <Folder Include="$(MSBuildThisFileDirectory)Helpers\" />
+    <Folder Include="$(MSBuildThisFileDirectory)Services\DTOs\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)Models\LoginModel.cs" />
@@ -39,9 +40,11 @@
       <DependentUpon>DatosGenerales.xaml</DependentUpon>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\VMDatosGenerales.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Services\reference.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\bindings.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\behaviors.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)config.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\reference.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\DTOs\estados.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\WelcomePage.xaml">
@@ -59,8 +62,5 @@
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\DatosGenerales.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="$(MSBuildThisFileDirectory)Services\ServiceReferences.ClientConfig" />
   </ItemGroup>
 </Project>

@@ -1,0 +1,7 @@
+﻿{
+    "producto" : "PVLM3D",
+    "clave" : "AdKGEpIxQTR1XvtEpQLDYA==",
+    "llave" : "PJUZpGkDfHaEca6I1kdw0iuSYJP8cJIw3F6L4a94uQo=",
+    "APIUsuarios" : "http://148.243.230.134/wsUserAdmin/security.asmx",
+    "APIIntegracion": "http://desa.gmx.com.mx/IntegrationService/EmissionService.svc"
+}
