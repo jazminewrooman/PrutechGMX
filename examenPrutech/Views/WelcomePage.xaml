@@ -32,8 +32,8 @@
                     <RowDefinition/>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="30*"/>
-                    <ColumnDefinition Width="70*"/>
+                    <ColumnDefinition Width="35*"/>
+                    <ColumnDefinition Width="65*"/>
                 </Grid.ColumnDefinitions>   
                 <Label Grid.Row="0" Grid.Column="0" Text="Contactanos: " FontAttributes="Bold" />
                 <Button Grid.Row="0" Grid.Column="1" Style="{DynamicResource botonVerde}" x:Name="btnEmail" Text="soporte@gmx.com.mx"/>

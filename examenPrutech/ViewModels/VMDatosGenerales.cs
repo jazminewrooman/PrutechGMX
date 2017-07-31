@@ -17,9 +17,15 @@ namespace GMX
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public class VMDatosGenerales : VMGmx
 	{
+        private Dictionary<string, estado> lstedos;
+        private Dictionary<string, municipio> lstmun;
+        private Dictionary<string, ciudad> lstciud;
+        private Dictionary<string, colonia> lstcols;
+
 		public VMDatosGenerales(IUserDialogs diag) : base(diag)
 		{
             Title = "DATOS GENERALES";
+
 		}
 
 		string rfc;
@@ -28,22 +34,27 @@ namespace GMX
 			get { return rfc; }
 			set
 			{
-				//string res;
 				if (rfc != value)
 				{
-                    rfc = (value.Length > 13 ? value.Substring(0, 13) : value);
+                    rfc = value;
                     //OnPropertyChanged("RFC");
 				}
-				//if (!String.IsNullOrEmpty(rfc))
-				//{ 
-				//	string pattern = @"[A-Z,Ñ,&]{3,4}([0-9]{2})(0[1-9]|1[0-2])(0[1-9]|1[0-9]|2[0-9]|3[0-1])[A-Z|\d]{3}";
-				//	string input = @rfc;
+			}
+		}
 
-				//	Match m = Regex.Match(input, pattern);
-				//	bool x = m.Success;
-				//	if (m.Success)
-				//		res = "OK";
-				//}
+		bool rfcvalido;
+        public bool RFCValido
+		{
+			get { return rfcvalido; }
+			set
+			{
+				if (rfcvalido != value)
+				{
+					rfcvalido = value;
+                    //if (!value)
+                    //    Diag.AlertAsync("El RFC es incorrecto, verifique por favor", "Error", "OK");
+					//OnPropertyChanged("RFCValido");
+				}
 			}
 		}
 
@@ -136,37 +147,88 @@ namespace GMX
             }
         }
 
+        private async Task CargaColonias(string cp, string idedo, string idmuncp, string idciudad)
+        {
+            bindings b = new bindings();
+            b.IniciaWS();
+            var cod = new Dictionary<string, string>();
+            cod.Add("codpost", cp);
+            cod.Add("estadoId", idedo);
+            cod.Add("muncpId", idmuncp);
+            cod.Add("ciudadId", idciudad);
+            Ocupado = true;
+            try
+            {
+                var crypdata = await b.getCatalog("GetColoniasMexByDetailedInfo", cod);
+                var strdata = await b.decrypt(crypdata.Result);
+                lstcols = JsonConvert.DeserializeObject<Dictionary<string, colonia>>(strdata.Result);
+                if (lstcols != null && lstcols.Count > 0)
+                    Colonias = lstcols.Select(x => x.Value.txt_desc).ToList();
+                else
+                    Colonias = null;
+            }
+            finally
+            {
+                Ocupado = false;
+                await Task.Delay(TimeSpan.FromMilliseconds(100));
+                if (lstcols != null && lstcols.Count > 0)
+                    Colonia = 0;
+                else
+                    Colonia = -1;
+            }
+        }
+
         private async Task CargaCatalogos(string cp)
         {
             bindings b = new bindings();
             b.IniciaWS();
-
             var cod = new Dictionary<string, string>();
             cod.Add("codpost", cp);
             Ocupado = true;
-
-            var crypdata = await b.getCatalog("GetEstadosMexByCodpost", cod);
-            var strdata = await b.decrypt(crypdata.Result);
-            Dictionary<string, estado> lstedos = JsonConvert.DeserializeObject<Dictionary<string,estado>>(strdata.Result);
-            Estados = lstedos.Select(x => x.Value.txt_desc).ToList();
-            if (Estados.Count > 0)
-                Estado = 0;
-
-            cod.Add("estadoId", lstedos["1"].cod_dpto);
-			crypdata = await b.getCatalog("GetMuncpsMexByEstadoAndCodpost", cod);
-            strdata = await b.decrypt(crypdata.Result);
-            Dictionary<string, municipio> lstmun = JsonConvert.DeserializeObject<Dictionary<string, municipio>>(strdata.Result);
-            Municipios = lstmun.Select(x => x.Value.txt_desc).ToList();
-
-			crypdata = await b.getCatalog("GetCiudadesMexByEstadoAndCodpost", cod);
-            strdata = await b.decrypt(crypdata.Result);
-            Dictionary<string, ciudad> lstciud = JsonConvert.DeserializeObject<Dictionary<string, ciudad>>(strdata.Result);
-            Ciudades = lstciud.Select(x => x.Value.txt_desc).ToList();
-
-			Ocupado = false;
+            try
+            {
+                var crypdata = await b.getCatalog("GetEstadosMexByCodpost", cod);
+                var strdata = await b.decrypt(crypdata.Result);
+                lstedos = JsonConvert.DeserializeObject<Dictionary<string, estado>>(strdata.Result);
+                if (lstedos != null && lstedos.Count > 0)
+                {
+                    Estados = lstedos.Select(x => x.Value.txt_desc).ToList();
+                    cod.Add("estadoId", lstedos["1"].cod_dpto);
+                    crypdata = await b.getCatalog("GetMuncpsMexByEstadoAndCodpost", cod);
+                    strdata = await b.decrypt(crypdata.Result);
+                    lstmun = JsonConvert.DeserializeObject<Dictionary<string, municipio>>(strdata.Result);
+                    Municipios = lstmun.Select(x => x.Value.txt_desc).ToList();
+                    crypdata = await b.getCatalog("GetCiudadesMexByEstadoAndCodpost", cod);
+                    strdata = await b.decrypt(crypdata.Result);
+                    lstciud = JsonConvert.DeserializeObject<Dictionary<string, ciudad>>(strdata.Result);
+                    Ciudades = lstciud.Select(x => x.Value.txt_desc).ToList();
+                }
+                else
+                    Estados = null;
+            }
+            finally
+            {
+                Ocupado = false;
+                if (Estados == null || Estados.Count == 0)
+                {
+					Municipios = null;
+					Ciudades = null;
+					Estado = -1;
+                    Municipio = -1;
+                    Ciudad = -1;
+                    await Diag.AlertAsync("No existe el Codigo Postal, favor de verificar", "Error", "OK");
+                }
+                else
+                {
+                    await Task.Delay(TimeSpan.FromMilliseconds(100));
+                    Estado = 0;
+                    Municipio = 0;
+                    Ciudad = 0;
+                }
+            }
         }
 
-		int estado;
+		int estado = -1;
 		public int Estado
 		{
 			get { return estado; }
@@ -194,8 +256,8 @@ namespace GMX
 			}
 		}
 
-		string municipio;
-		public string Municipio
+		int municipio = -1;
+		public int Municipio
 		{
 			get { return municipio; }
 			set
@@ -224,8 +286,8 @@ namespace GMX
 			}
 		}
 
-		string ciudad;
-		public string Ciudad
+		int ciudad = -1;
+		public int Ciudad
 		{
 			get { return ciudad; }
 			set
@@ -233,6 +295,8 @@ namespace GMX
 				if (ciudad != value)
 				{
 					ciudad = value;
+                    if (estado > -1 && municipio > -1 && ciudad > -1)
+                        CargaColonias(cp, lstedos.ElementAt(estado).Value.cod_dpto, lstmun.ElementAt(municipio).Value.cod_municipio, lstciud.ElementAt(ciudad).Value.cod_ciudad);
 					OnPropertyChanged("Ciudad");
 				}
 			}
@@ -252,8 +316,8 @@ namespace GMX
 			}
 		}
 
-		string colonia;
-		public string Colonia
+		int colonia = -1;
+		public int Colonia
 		{
 			get { return colonia; }
 			set
@@ -262,6 +326,20 @@ namespace GMX
 				{
 					colonia = value;
 					OnPropertyChanged("Colonia");
+				}
+			}
+		}
+
+		List<string> colonias;
+		public List<string> Colonias
+		{
+			get { return colonias; }
+			set
+			{
+				if (colonias != value)
+				{
+					colonias = value;
+					OnPropertyChanged("Colonias");
 				}
 			}
 		}

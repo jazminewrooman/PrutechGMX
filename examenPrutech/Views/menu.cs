@@ -40,7 +40,7 @@ namespace GMX.Views
                 //HorizontalOptions = LayoutOptions.FillAndExpand,
                 VerticalOptions = LayoutOptions.FillAndExpand,
                 Children = {
-                    new Image(){ Source = "dres", Aspect = Aspect.AspectFill, HeightRequest = 150 },
+                    new Image(){ Source = "dres", Aspect = Aspect.AspectFill, HeightRequest = 200 },
                     new StackLayout(){ BackgroundColor = Color.White, Padding = 20,
                         Children = { 
                             new Label(){ FontSize = 12, FontAttributes = FontAttributes.None, Text = "Bienvenido"},

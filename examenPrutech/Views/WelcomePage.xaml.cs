@@ -20,6 +20,10 @@ namespace GMX.Views
             {
                 MessagingCenter.Send<Page, string>(this, "Call", "5554804100");
             };
+
+            btnEmail.Clicked += (sender, e) => {
+                Device.OpenUri(new Uri("mailto:soporte@gmx.com.mx"));
+            };
 		}
 	}
 }

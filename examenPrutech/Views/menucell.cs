@@ -10,7 +10,7 @@ namespace GMX.Views
         {
             var icono = new Image
             {
-                HeightRequest = 28,
+                HeightRequest = 32,
                 //WidthRequest = 30,
                 Aspect = Aspect.AspectFill,
                 HorizontalOptions = LayoutOptions.Center,
@@ -21,15 +21,16 @@ namespace GMX.Views
             var titulo = new Label()
             {
                 VerticalOptions = LayoutOptions.Center,
-                FontFamily = "HelveticaNeue-Medium",
-                FontSize = 12,
+                //FontFamily = "HelveticaNeue-Medium",
+                FontSize = 14,
                 //TextColor = Color.FromHex(App.PrimaryColor)
             };
             titulo.SetBinding(Label.TextProperty, "Titulo");
 
             var statusLayout = new StackLayout
             {
-				Padding = new Thickness(10, 0, 10, 0),
+                Spacing = 10,
+				Padding = new Thickness(10, 5, 10, 5),
                 Orientation = StackOrientation.Horizontal,
                 Children = { icono, titulo }
             };

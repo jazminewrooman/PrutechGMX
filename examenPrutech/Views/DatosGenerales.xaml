@@ -4,11 +4,6 @@
 	x:Class="GMX.Views.DatosGenerales"
     Title = "{Binding Title}"
     xmlns:local="clr-namespace:GMX.Helpers;">
-	<ContentPage.Resources>
-        <ResourceDictionary>
-            <Color x:Key="bgc">#04b5b5</Color>
-        </ResourceDictionary>
-    </ContentPage.Resources>
 	<ContentPage.Content>
 		<ScrollView>
 			<StackLayout Padding="20" Spacing="10">
@@ -16,7 +11,8 @@
 				<Entry Text="{Binding RFC}">
                     <Entry.Behaviors>
                         <local:UpperValidator />
-                        <!--<local:MaxLengthValidator MaxLength="13" />-->
+                        <local:MaxLengthValidator MaxLength="13" />
+                        <local:RFCValidationBehavior/>
                     </Entry.Behaviors>
                 </Entry>
 
@@ -36,19 +32,23 @@
 				<Entry Text="{Binding Telefono, Mode=TwoWay}"/>
 
 				<Label Text="Código Postal"  Style="{StaticResource labels}"/>
-				<Entry Text="{Binding CP, Mode=TwoWay}"/>
+				<Entry Text="{Binding CP, Mode=TwoWay}">
+                    <Entry.Behaviors>
+                        <local:MaxLengthValidator MaxLength="5" />
+                    </Entry.Behaviors>
+                </Entry>
 
 				<Label Text="Estado"  Style="{StaticResource labels}"/>
 				<Picker SelectedIndex="{Binding Estado, Mode=TwoWay}" ItemsSource="{Binding Estados}"/>
 
 				<Label Text="Municipio"  Style="{StaticResource labels}"/>
-				<Entry Text="{Binding Municipio, Mode=TwoWay}"/>
+				<Picker SelectedIndex="{Binding Municipio, Mode=TwoWay}" ItemsSource="{Binding Municipios}"/>
 
 				<Label Text="Ciudad"  Style="{StaticResource labels}"/>
-				<Entry Text="{Binding Ciudad, Mode=TwoWay}"/>
+				<Picker SelectedIndex="{Binding Ciudad, Mode=TwoWay}" ItemsSource="{Binding Ciudades}"/>
 
 				<Label Text="Colonia"  Style="{StaticResource labels}"/>
-				<Entry Text="{Binding Colonia, Mode=TwoWay}"/>
+				<Picker SelectedIndex="{Binding Colonia, Mode=TwoWay}" ItemsSource="{Binding Colonias}"/>
 
 				<Label Text="Correo electrónico"  Style="{StaticResource labels}"/>
 				<Entry Text="{Binding Correo, Mode=TwoWay}"/>

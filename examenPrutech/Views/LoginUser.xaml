@@ -7,18 +7,18 @@
     <ContentPage.Content>
 		<ScrollView>
 	        <StackLayout Padding="30" Spacing="10">
-	            <Image Source="logo.png" HeightRequest="150"/>
+	            <Image Source="logo.png" HeightRequest="200"/>
 	            <Label Text="Usuario"/>
 	            <Entry Text ="{Binding Usuario, Mode=TwoWay}"/>
 	            <Label Text="Contraseña"/>
 	            <Entry Text ="{Binding Contrasena, Mode=TwoWay}" IsPassword="true"/>
 	            <Label Text="{Binding Error}" TextColor="Red" IsVisible="{Binding ErrorVisible}"/>
 	            <Button Text="Iniciar sesión" Command="{Binding IniciarSesionCommand}" Style="{StaticResource botonVerde}" />
-	            <Button Text="¿Olvidaste tu contraseña? Obtén ayuda" Command="{Binding RecoverPassCommand}" Style="{StaticResource botonBlanco}"/>
-	            <StackLayout Orientation="Horizontal">
+	            <!--<Button Text="¿Olvidaste tu contraseña? Obtén ayuda" Command="{Binding RecoverPassCommand}" Style="{StaticResource botonBlanco}"/>-->
+	            <!--<StackLayout Orientation="Horizontal">
 	                <Label Text="Cerrar sesión"/>
 	                <Switch x:Name="swtCerrar" IsToggled="False" Style="{StaticResource switchVerde}"/>
-	            </StackLayout>
+	            </StackLayout>-->
 	            <Button Text="Registrarme" Command="{Binding RegistrarCommand}" Style="{StaticResource botonVerde}"/>
 	        </StackLayout>
 		</ScrollView>

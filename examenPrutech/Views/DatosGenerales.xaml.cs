@@ -15,6 +15,8 @@ namespace GMX.Views
 			InitializeComponent();
 
 			this.BindingContext = vm;
+
 		}
+
 	}
 }

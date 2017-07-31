@@ -23,7 +23,7 @@ namespace GMX
                     {
                         //Device.BeginInvokeOnMainThread(async () =>
                         //{
-                            Diag.ShowLoading("Cargando...");
+                        Diag.ShowLoading("Cargando...", MaskType.Black);
                             //Task.Delay(TimeSpan.FromMilliseconds(10000));
                         //});
                     }
