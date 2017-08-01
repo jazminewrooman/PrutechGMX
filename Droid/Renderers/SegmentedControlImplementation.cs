@@ -14,7 +14,7 @@ namespace GMX.SegmentedControl.Android
 	/// </summary>
 	public class SegmentedControlRenderer : ViewRenderer<SegmentedControl, RadioGroup>
 	{
-		RadioGroup nativeControl;
+		static RadioGroup nativeControl;
 		RadioButton _v;
 
 		protected override void OnElementChanged(ElementChangedEventArgs<SegmentedControl> e)
@@ -72,6 +72,7 @@ namespace GMX.SegmentedControl.Android
 			}
 
 			var option = (RadioButton)nativeControl.GetChildAt(Element.SelectedSegment);
+            
 			option.Checked = true;
 
 			nativeControl.CheckedChange += NativeControl_ValueChanged;
@@ -82,8 +83,10 @@ namespace GMX.SegmentedControl.Android
 		protected override void OnElementPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
 		{
 			base.OnElementPropertyChanged(sender, e);
+            //var layoutInflater = LayoutInflater.From(Forms.Context);
 
-			switch (e.PropertyName)
+            //nativeControl = (RadioGroup)layoutInflater.Inflate(Resource.Layout.RadioGroup, null);
+            switch (e.PropertyName)
 			{
 				//case "Renderer":
 				//	Element.ValueChanged?.Invoke(Element, null);
