@@ -152,12 +152,6 @@
     <Reference Include="System.Web.Services" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel" />
-    <Reference Include="SegmentedControl.FormsPlugin.Abstractions">
-      <HintPath>..\packages\SegmentedControl.FormsPlugin.1.3.0\lib\MonoAndroid\SegmentedControl.FormsPlugin.Abstractions.dll</HintPath>
-    </Reference>
-    <Reference Include="SegmentedControl.FormsPlugin.Android">
-      <HintPath>..\packages\SegmentedControl.FormsPlugin.1.3.0\lib\MonoAndroid\SegmentedControl.FormsPlugin.Android.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MainActivity.cs" />
@@ -166,6 +160,7 @@
     <Compile Include="Web References\wsUser\Reference.cs">
       <DependentUpon>Reference.map</DependentUpon>
     </Compile>
+    <Compile Include="Renderers\SegmentedControlImplementation.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />

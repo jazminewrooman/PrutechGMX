@@ -8,8 +8,8 @@ using Android.Views;
 using Android.Widget;
 using Android.OS;
 using Acr.UserDialogs;
-//using GMX.SegmentedControl.Android;
-using SegmentedControl.FormsPlugin.Android;
+using GMX.SegmentedControl.Android;
+//using SegmentedControl.FormsPlugin.Android;
 
 namespace GMX.Droid
 {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Acr.UserDialogs;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
-using SegmentedControl.FormsPlugin.Abstractions;
+using GMX.SegmentedControl;
 
 namespace GMX.Views
 {

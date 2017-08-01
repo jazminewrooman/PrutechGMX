@@ -48,6 +48,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Services\DTOs\estados.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\DatosGralesModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Enums.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\SegmentedControl.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\WelcomePage.xaml">

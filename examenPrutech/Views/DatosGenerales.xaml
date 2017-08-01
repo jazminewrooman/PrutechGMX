@@ -3,7 +3,7 @@
 	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
 	x:Class="GMX.Views.DatosGenerales"
     Title = "{Binding Title}"
-    xmlns:controls="clr-namespace:SegmentedControl.FormsPlugin.Abstractions;assembly=SegmentedControl.FormsPlugin.Abstractions"
+    xmlns:controls="clr-namespace:GMX.SegmentedControl;"
     xmlns:local="clr-namespace:GMX.Helpers;">
 	<ContentPage.Content>
 		<ScrollView>
