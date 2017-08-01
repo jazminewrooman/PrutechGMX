@@ -3,4 +3,7 @@
   <color name="primary">#2B84D3</color>
   <color name="primary_dark">#2C3E50</color>
   <color name="accent">#04b5b5</color>
+<!--    segmented   -->	
+	<color name="normal">@android:color/transparent</color>
+    <color name="selected">#007AFF</color>
 </resources>

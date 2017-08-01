@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Acr.UserDialogs;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using SegmentedControl.FormsPlugin.Abstractions;
 
 namespace GMX.Views
 {
@@ -16,6 +17,10 @@ namespace GMX.Views
 			InitializeComponent();
 
 			this.BindingContext = vm;
+
+            seg.ValueChanged += (sender, e) => {
+                
+            };
 
 			if (dgmodel != null)
 			{

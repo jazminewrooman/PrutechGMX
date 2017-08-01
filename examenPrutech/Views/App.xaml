@@ -1,11 +1,16 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Application xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                    xmlns:controls="clr-namespace:SegmentedControl.FormsPlugin.Abstractions;assembly=SegmentedControl.FormsPlugin.Abstractions"
              x:Class="GMX.Views.App">
     <Application.Resources>
 
         <!-- Application resource dictionary -->
 		<ResourceDictionary>
+            <Style x:Key="segmented" TargetType="controls:SegmentedControl">
+                <Setter Property="TintColor" Value="#04b5b5"/>
+                <Setter Property="SelectedTextColor" Value="White"/>
+            </Style>
 			<Style x:Key="labels" TargetType="Label">
 				<Setter Property="TextColor" 		Value="Black" />
 				<Setter Property="FontAttributes" 	Value="Bold" />

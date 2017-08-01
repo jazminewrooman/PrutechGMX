@@ -1,20 +1,11 @@
 ﻿<Properties StartupConfiguration="{BA6AB127-05DF-447D-AE76-1287DE2FB771}|Default">
-  <MonoDevelop.Ide.ItemProperties.Gmx.Droid PreferredExecutionTarget="Android.810EBMK4UZZN" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="PrutechGMX Status">
-    <Files>
-      <File FileName="../../../../../Library/Frameworks/Xamarin.Android.framework/Versions/7.3.1-2/lib/xbuild/Xamarin/Android/Xamarin.Android.Common.targets" Line="1780" Column="26" />
-      <File FileName="Droid/MainActivity.cs" Line="14" Column="24" />
-      <File FileName="examenPrutech/Views/App.xaml.cs" Line="20" Column="12" />
-      <File FileName="examenPrutech/ViewModels/VMLogin.cs" Line="1" Column="1" />
-      <File FileName="examenPrutech/Views/DatosGenerales.xaml" Line="19" Column="75" />
-      <File FileName="PrutechGMX Status" />
-    </Files>
-  </MonoDevelop.Ide.Workbench>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Release" />
+  <MonoDevelop.Ide.ItemProperties.Gmx.Droid AndroidDesignerPreferredDevice="Nexus 4" PreferredExecutionTarget="Android.27d9f243" />
+  <MonoDevelop.Ide.Workbench />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
-  <MonoDevelop.Ide.ItemProperties.Gmx.iOS PreferredExecutionTarget="MonoDevelop.IPhone.IPhoneSimulatorTarget.230C6031-C44A-4B41-9618-657E9B85CFDD" />
+  <MonoDevelop.Ide.ItemProperties.Gmx.iOS PreferredExecutionTarget="MonoDevelop.IPhone.IPhoneSimulatorTarget.FC6EBC55-4EBF-471C-A3DF-128A6F97D265" />
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MultiItemStartupConfigurations />
 </Properties>

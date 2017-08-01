@@ -3,12 +3,21 @@
 	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
 	x:Class="GMX.Views.DatosGenerales"
     Title = "{Binding Title}"
+    xmlns:controls="clr-namespace:SegmentedControl.FormsPlugin.Abstractions;assembly=SegmentedControl.FormsPlugin.Abstractions"
     xmlns:local="clr-namespace:GMX.Helpers;">
 	<ContentPage.Content>
 		<ScrollView>
 			<StackLayout Padding="20" Spacing="10">
-				<Label Text="RFC (con homoclave)" Style="{StaticResource labels}"/>
-				<Entry Text="{Binding RFC}">
+
+                <controls:SegmentedControl x:Name="seg" Style="{StaticResource segmented}">
+                    <controls:SegmentedControl.Children>
+                        <controls:SegmentedControlOption Text="uno"/>
+                        <controls:SegmentedControlOption Text="dos"/>
+                    </controls:SegmentedControl.Children>
+                </controls:SegmentedControl>
+
+                <Label Text="RFC (con homoclave)" Style="{StaticResource labels}"/>
+				<Entry Text="{Binding RFC, Mode=OneWayToSource}">
                     <Entry.Behaviors>
                         <local:UpperValidator />
                         <local:MaxLengthValidator MaxLength="13" />

@@ -8,6 +8,8 @@ using Android.Views;
 using Android.Widget;
 using Android.OS;
 using Acr.UserDialogs;
+//using GMX.SegmentedControl.Android;
+using SegmentedControl.FormsPlugin.Android;
 
 namespace GMX.Droid
 {
@@ -23,7 +25,7 @@ namespace GMX.Droid
 
             global::Xamarin.Forms.Forms.Init(this, bundle);
 
-            Xamarin.FormsMaps.Init(this, bundle);
+            SegmentedControlRenderer.Init(); 
             UserDialogs.Init(this);
 
             LoadApplication(new GMX.Views.App());

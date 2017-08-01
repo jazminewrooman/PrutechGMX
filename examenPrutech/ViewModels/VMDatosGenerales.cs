@@ -42,22 +42,6 @@ namespace GMX
 			}
 		}
 
-		bool rfcvalido;
-        public bool RFCValido
-		{
-			get { return rfcvalido; }
-			set
-			{
-				if (rfcvalido != value)
-				{
-					rfcvalido = value;
-                    //if (!value)
-                    //    Diag.AlertAsync("El RFC es incorrecto, verifique por favor", "Error", "OK");
-					//OnPropertyChanged("RFCValido");
-				}
-			}
-		}
-
 		string nombre;
 		public string Nombre
 		{

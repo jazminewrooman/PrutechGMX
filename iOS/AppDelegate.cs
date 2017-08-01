@@ -4,6 +4,7 @@ using System.Linq;
 using Xamarin.Forms;
 using Foundation;
 using UIKit;
+using GMX.SegmentedControl.iOS;
 
 namespace GMX.iOS
 {
@@ -13,7 +14,7 @@ namespace GMX.iOS
 		public override bool FinishedLaunching(UIApplication app, NSDictionary options)
 		{
 			global::Xamarin.Forms.Forms.Init();
-			Xamarin.FormsMaps.Init();
+			SegmentedControlRenderer.Init();
 
             LoadApplication(new GMX.Views.App());
 
