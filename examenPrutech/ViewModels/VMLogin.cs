@@ -97,8 +97,9 @@ namespace GMX
                 GMX.wsUser.bUsers usrId = ws.GetUser(user.ExtId, 1);
                 luser = ConvertUser(user);
                 Ocupado = false;
-
-				var Welcome = new DatosGenerales();
+				DatosGralesModel dgmodel;
+				dgmodel = null;
+				var Welcome = new DatosGenerales(dgmodel, TipoDatos.Fiscales);
                 App.navigation.InsertPageBefore(Welcome, App.navigation.NavigationStack.FirstOrDefault());
                 await App.navigation.PopToRootAsync();
                 var MainP = new NavigationPage(Welcome)

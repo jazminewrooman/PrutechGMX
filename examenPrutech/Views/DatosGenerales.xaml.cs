@@ -10,11 +10,28 @@ namespace GMX.Views
 	public partial class DatosGenerales : ContentPage
 	{
 		public VMDatosGenerales vm = new VMDatosGenerales(UserDialogs.Instance);
-		public DatosGenerales()
+
+		public DatosGenerales(DatosGralesModel dgmodel, TipoDatos td)
 		{
 			InitializeComponent();
 
 			this.BindingContext = vm;
+
+			if (dgmodel != null)
+			{
+				//Si el modelo trae datos, la vista servirá para editar datos existentes
+				vm.CargaDatosGenerales(dgmodel, td);
+			}
+			else 
+			{
+				//Si el modelo se encuentra vacio quiere decir que la vista servirá para captura de datos
+				if (td.Equals(TipoDatos.Fiscales))
+					Title = "DATOS FISCALES";
+				else
+					Title = "DATOS GENERALES";
+
+			}
+
 
 		}
 

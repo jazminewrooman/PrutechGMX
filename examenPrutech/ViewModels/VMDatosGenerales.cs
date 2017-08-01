@@ -357,5 +357,26 @@ namespace GMX
 				}
 			}
 		}
+
+		public void CargaDatosGenerales(DatosGralesModel dgmodel, TipoDatos td)
+		{
+			RFC = dgmodel.RFC;
+			Nombre = dgmodel.Nombre;
+			APaterno = dgmodel.APaterno;
+			AMaterno = dgmodel.AMaterno;
+			Direccion = dgmodel.Direccion;
+			Telefono = dgmodel.Telefono;
+			CP = dgmodel.CP;
+			Estado = dgmodel.Estado;
+			Municipio = dgmodel.Municipio;
+			Ciudad = dgmodel.Ciudad;
+			Colonia = dgmodel.Colonia;
+			Correo = dgmodel.Correo;
+
+			if (td.Equals(TipoDatos.Fiscales))
+				Title = "DATOS FISCALES";
+			else
+				Title = "DATOS GENERALES";
+		}
 	}
 }

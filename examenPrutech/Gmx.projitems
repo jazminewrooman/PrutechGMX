@@ -45,6 +45,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)config.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\reference.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\DTOs\estados.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\DatosGralesModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Enums.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\WelcomePage.xaml">
