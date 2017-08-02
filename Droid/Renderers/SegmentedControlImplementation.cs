@@ -50,73 +50,90 @@ namespace GMX.SegmentedControl.Android
 
         void Element_SizeChanged ()
 		{
-	        var layoutInflater = LayoutInflater.From(Forms.Context);
-
-			nativeControl = (RadioGroup)layoutInflater.Inflate(Resource.Layout.RadioGroup, null);
-
-			for (var i = 0; i < Element.Children.Count; i++)
+			try
 			{
-				var o = Element.Children[i];
-				var v = (RadioButton)layoutInflater.Inflate(Resource.Layout.RadioButton, null);
+				var layoutInflater = LayoutInflater.From(Forms.Context);
 
-				v.LayoutParameters = new RadioGroup.LayoutParams(0, LayoutParams.WrapContent, 1f);
-				v.Text = o.Text;
+				nativeControl = (RadioGroup)layoutInflater.Inflate(Resource.Layout.RadioGroup, null);
 
-				if (i == 0)
-					v.SetBackgroundResource(Resource.Drawable.segmented_control_first_background);
-				else if (i == Element.Children.Count - 1)
-					v.SetBackgroundResource(Resource.Drawable.segmented_control_last_background);
+				for (var i = 0; i < Element.Children.Count; i++)
+				{
+					var o = Element.Children[i];
+					var v = (RadioButton)layoutInflater.Inflate(Resource.Layout.RadioButton, null);
 
-				ConfigureRadioButton(i, v);
+					v.LayoutParameters = new RadioGroup.LayoutParams(0, LayoutParams.WrapContent, 1f);
+					v.Text = o.Text;
 
-				nativeControl.AddView(v);
+					if (i == 0)
+						v.SetBackgroundResource(Resource.Drawable.segmented_control_first_background);
+					else if (i == Element.Children.Count - 1)
+						v.SetBackgroundResource(Resource.Drawable.segmented_control_last_background);
+
+					ConfigureRadioButton(i, v);
+
+					nativeControl.AddView(v);
+				}
+
+				var option = (RadioButton)nativeControl.GetChildAt(Element.SelectedSegment);
+
+				option.Checked = true;
+
+				nativeControl.CheckedChange += NativeControl_ValueChanged;
+
+				SetNativeControl(nativeControl);
 			}
-
-			var option = (RadioButton)nativeControl.GetChildAt(Element.SelectedSegment);
-            
-			option.Checked = true;
-
-			nativeControl.CheckedChange += NativeControl_ValueChanged;
-
-			SetNativeControl(nativeControl);
+			catch (ObjectDisposedException oex)
+			{
+			}
 		}
 
 		protected override void OnElementPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
 		{
 			base.OnElementPropertyChanged(sender, e);
-            //var layoutInflater = LayoutInflater.From(Forms.Context);
-
-            //nativeControl = (RadioGroup)layoutInflater.Inflate(Resource.Layout.RadioGroup, null);
-            switch (e.PropertyName)
+			//var layoutInflater = LayoutInflater.From(Forms.Context);
+			try
 			{
-				case "Renderer":
-					Element.ValueChanged?.Invoke(Element, null);
-					break;
-				case "SelectedSegment":
-					var option = (RadioButton)nativeControl.GetChildAt(Element.SelectedSegment);
-                    option.Checked = true;
-					Element.ValueChanged?.Invoke(Element, null);
-					break;
-				case "TintColor":
-                    OnPropertyChanged();
-					break;
-				case "IsEnabled":
-					OnPropertyChanged();
-					break;
-				case "SelectedTextColor":
-                    var v = (RadioButton)nativeControl.GetChildAt(Element.SelectedSegment);
-					v.SetTextColor(Element.SelectedTextColor.ToAndroid());
-					break;
+				//nativeControl = (RadioGroup)layoutInflater.Inflate(Resource.Layout.RadioGroup, null);
+				switch (e.PropertyName)
+				{
+					case "Renderer":
+						Element.ValueChanged?.Invoke(Element, null);
+						break;
+					case "SelectedSegment":
+						var option = (RadioButton)nativeControl.GetChildAt(Element.SelectedSegment);
+						option.Checked = true;
+						Element.ValueChanged?.Invoke(Element, null);
+						break;
+					case "TintColor":
+						OnPropertyChanged();
+						break;
+					case "IsEnabled":
+						OnPropertyChanged();
+						break;
+					case "SelectedTextColor":
+						var v = (RadioButton)nativeControl.GetChildAt(Element.SelectedSegment);
+						v.SetTextColor(Element.SelectedTextColor.ToAndroid());
+						break;
+				}
+			}
+			catch (Exception ex)
+			{
 			}
 		}
 
 		void OnPropertyChanged()
 		{
-			for (var i = 0; i < Element.Children.Count; i++)
+			try
 			{
-				var v = (RadioButton)nativeControl.GetChildAt(i);
+				for (var i = 0; i < Element.Children.Count; i++)
+				{
+					var v = (RadioButton)nativeControl.GetChildAt(i);
 
-				ConfigureRadioButton(i, v);
+					ConfigureRadioButton(i, v);
+				}
+			}
+			catch (Exception ex)
+			{
 			}
 		}
 
@@ -177,6 +194,22 @@ namespace GMX.SegmentedControl.Android
             Element_SizeChanged();   
         }
 
+		protected override void OnAttachedToWindow()
+		{
+			// I gave up and added this ugly catch
+			// because:
+			// - the Element is not null, 
+			// - the native Handle is not null,
+			// - Dispose() has not been called yet,
+			// but still the base crashed with ObjectDisposedException
+			// when it tried to read Context of Android View
+			try
+			{
+				base.OnAttachedToWindow();
+			}
+			catch (ObjectDisposedException) { }
+		}
+
 		protected override void Dispose(bool disposing)
 		{
 			if (nativeControl != null)
@@ -184,7 +217,7 @@ namespace GMX.SegmentedControl.Android
 				nativeControl.CheckedChange -= NativeControl_ValueChanged;
 				nativeControl.Dispose();
 				nativeControl = null;
-				_v = null;
+				_v = null;	
 			}
 
 			if (Element != null)
@@ -193,6 +226,7 @@ namespace GMX.SegmentedControl.Android
 			try
 			{
 				base.Dispose(disposing);
+				GC.Collect();
 			}
 			catch (Exception ex)
 			{
