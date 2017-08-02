@@ -25,6 +25,7 @@ namespace GMX.SegmentedControl.Android
 			{
 				// Instantiate the native control and assign it to the Control property with
 				// the SetNativeControl method
+                Element_SizeChanged();
 			}
 
 			if (e.OldElement != null)
@@ -34,15 +35,15 @@ namespace GMX.SegmentedControl.Android
 				if (nativeControl != null)
 					nativeControl.CheckedChange -= NativeControl_ValueChanged;
 
-				//if (Element != null)
-				//	Element.SizeChanged -= Element_SizeChanged;
+				if (Element != null)
+					Element.SizeChanged -= Element_SizeChanged;
 			}
 
 			if (e.NewElement != null)
 			{
                 // Configure the control and subscribe to event handlers
 
-                //Element.SizeChanged += Element_SizeChanged;
+                Element.SizeChanged += Element_SizeChanged;
                 Element_SizeChanged();
 			}
 		}
@@ -88,9 +89,9 @@ namespace GMX.SegmentedControl.Android
             //nativeControl = (RadioGroup)layoutInflater.Inflate(Resource.Layout.RadioGroup, null);
             switch (e.PropertyName)
 			{
-				//case "Renderer":
-				//	Element.ValueChanged?.Invoke(Element, null);
-				//	break;
+				case "Renderer":
+					Element.ValueChanged?.Invoke(Element, null);
+					break;
 				case "SelectedSegment":
 					var option = (RadioButton)nativeControl.GetChildAt(Element.SelectedSegment);
                     option.Checked = true;
@@ -172,6 +173,10 @@ namespace GMX.SegmentedControl.Android
 			}
 		}
 
+        private void Element_SizeChanged(object sender, EventArgs ea){
+            Element_SizeChanged();   
+        }
+
 		protected override void Dispose(bool disposing)
 		{
 			if (nativeControl != null)
@@ -182,8 +187,8 @@ namespace GMX.SegmentedControl.Android
 				_v = null;
 			}
 
-			//if (Element != null)
-			//	Element.SizeChanged -= Element_SizeChanged;
+			if (Element != null)
+				Element.SizeChanged -= Element_SizeChanged;
 
 			try
 			{

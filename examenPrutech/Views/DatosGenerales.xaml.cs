@@ -18,8 +18,8 @@ namespace GMX.Views
 
 			this.BindingContext = vm;
 
-            seg.ValueChanged += (sender, e) => {
-                
+            seg.ValueChanged += async (sender, e) => {
+                await DisplayAlert("a", seg.SelectedSegment.ToString(), "ok");
             };
 
 			if (dgmodel != null)
