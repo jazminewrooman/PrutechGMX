@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+    x:Class="GMX.Views.VwOpcion"
+    x:Name="x_this">
+	<ContentView.Content>
+        <StackLayout x:Name="stack">
+            <Label Text="{Binding Title, Source={Reference x_this}}"/>
+            <Label Text="{Binding Detail, Source={Reference x_this}}"/>
+        </StackLayout>
+	</ContentView.Content>
+</ContentView>

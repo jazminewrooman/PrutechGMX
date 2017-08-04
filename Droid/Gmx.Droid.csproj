@@ -197,6 +197,7 @@
     <AndroidResource Include="Resources\drawable\segmented_control_last_background.xml" />
     <AndroidResource Include="Resources\layout\RadioButton.axml" />
     <AndroidResource Include="Resources\layout\RadioGroup.axml" />
+    <AndroidResource Include="Resources\drawable\ticksel.png" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Dependencies\" />

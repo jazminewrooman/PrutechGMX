@@ -186,6 +186,7 @@
     <BundleResource Include="Resources\nocash.png" />
     <BundleResource Include="Resources\tick.png" />
     <BundleResource Include="Resources\logogmx.png" />
+    <BundleResource Include="Resources\ticksel.png" />
   </ItemGroup>
   <ItemGroup>
     <WebReferences Include="Web References" />

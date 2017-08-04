@@ -99,7 +99,8 @@ namespace GMX
                 Ocupado = false;
 				DatosGralesModel dgmodel;
 				dgmodel = null;
-				var Welcome = new DatosGenerales(dgmodel, TipoDatos.Fiscales);
+                //var Welcome = new DatosGenerales(dgmodel, TipoDatos.Fiscales);
+                var Welcome = new Cotizar();
                 App.navigation.InsertPageBefore(Welcome, App.navigation.NavigationStack.FirstOrDefault());
                 await App.navigation.PopToRootAsync();
                 var MainP = new NavigationPage(Welcome)
