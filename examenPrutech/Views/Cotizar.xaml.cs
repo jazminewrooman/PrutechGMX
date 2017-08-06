@@ -15,5 +15,5 @@ namespace GMX.Views
             BindingContext = new VMCotizar(UserDialogs.Instance, Navigation);
         }
 
-    }
+	}
 }

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ContentView xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
-    x:Class="GMX.Views.VwOpcion"
+    x:Class="GMX.Views.VwCal"
     x:Name="x_this" BackgroundColor="White">
-	<ContentView.Content>
+    <ContentView.Content>
         <Grid x:Name="stack" Padding="10,15,10,15">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
@@ -16,5 +16,5 @@
             <Label Grid.Row="1" Grid.Column="0" FontSize="16" FontAttributes="Bold" Text="{Binding Detail, Source={Reference x_this}}"/>
             <Image Aspect="AspectFit" VerticalOptions="Center" Grid.Row="0" Grid.Column="1" Grid.RowSpan="2" Source="next.png" HeightRequest="16"/>
         </Grid>
-	</ContentView.Content>
+    </ContentView.Content>
 </ContentView>

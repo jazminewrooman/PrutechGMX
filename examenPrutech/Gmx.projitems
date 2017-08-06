@@ -44,7 +44,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Services\bindings.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\behaviors.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)config.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Services\reference.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\wsintegracion.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\DTOs\estados.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\DatosGralesModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Enums.cs" />
@@ -59,6 +59,15 @@
       <DependentUpon>VwOpcion.xaml</DependentUpon>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\VMCotizar.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\VwSwitch.xaml.cs">
+      <DependentUpon>VwSwitch.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Services\wsuser.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\wsbd.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\DTOs\SumaAsegurada.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\VwCal.xaml.cs">
+      <DependentUpon>VwCal.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\WelcomePage.xaml">
@@ -83,6 +92,12 @@
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\VwOpcion.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\VwSwitch.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\VwCal.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
   </ItemGroup>

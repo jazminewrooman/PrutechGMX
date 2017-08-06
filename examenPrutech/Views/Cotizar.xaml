@@ -2,11 +2,24 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
     xmlns:local="clr-namespace:GMX.Views;"
     Title = "{Binding Title}"
-    x:Class="GMX.Views.Cotizar">
+    x:Class="GMX.Views.Cotizar" BackgroundColor="{StaticResource ligthgray}">
+    <ContentPage.ToolbarItems> 
+        <ToolbarItem Name="Menu1" Icon="flecha.png" Order="Primary" Priority="0"/> 
+    </ContentPage.ToolbarItems>
 	<ContentPage.Content>
-        <StackLayout>
-            <local:VwOpcion Title="{Binding TxtPlan}" Lst="{Binding LstPlan}" />
-            <local:VwOpcion Title="{Binding TxtTipo}" Lst="{Binding LstTipo}" />
+        <StackLayout Spacing="1">
+            <BoxView HeightRequest="10"/>
+            <local:VwOpcion IdDetail="{Binding IdPlan, Mode=TwoWay}" Title="{Binding TxtPlan}" Lst="{Binding LstPlan}" />
+            <local:VwOpcion IdDetail="{Binding IdTipo, Mode=TwoWay}" Title="{Binding TxtTipo}" Lst="{Binding LstTipo}" />
+            <BoxView HeightRequest="10"/>
+            <StackLayout Spacing="1" IsVisible="{Binding VerCuestionario}">
+                <local:VwSwitch Title="{Binding TxtCirugias}"/>
+                <local:VwSwitch Title="{Binding TxtEjerce}"/>
+                <local:VwOpcion SubTxt="{Binding LySumaAseg}" IdDetail="{Binding IdSuma, Mode=TwoWay}" Title="{Binding TxtSuma}" Lst="{Binding LstSuma}" />
+                <local:VwSwitch Title="{Binding TxtContratar}"/>
+                <local:VwCal Title="{Binding TxtContratar}"/>
+            </StackLayout>
         </StackLayout>
 	</ContentPage.Content>
 </ContentPage>
+ 

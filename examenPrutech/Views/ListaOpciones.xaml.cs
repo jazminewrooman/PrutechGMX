@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 using Xamarin.Forms;
 
@@ -22,7 +23,11 @@ namespace GMX.Views
             public opciones sel { get; set; }
 		}
 
-        public ListaOpciones(IEnumerable<opciones> ls, string title)
+        public ListaOpciones()
+        {
+        }
+
+        public ListaOpciones(ObservableCollection<opciones> ls, string title, string leyenda = "")
         {
             try
             {
@@ -38,8 +43,13 @@ namespace GMX.Views
                     await Navigation.PopAsync();
                     ((ListView)sender).SelectedItem = null;
                 };
-            }catch(Exception ex){
-                
+                lblLeyenda.Text = leyenda;
+				var adjust = Device.OS != TargetPlatform.Android ? 1 : -ls.Count + 1;
+				lvOpciones.HeightRequest = (ls.Count * lvOpciones.RowHeight) - adjust;
+			}
+            catch (Exception ex)
+            {
+
             }
         }
     }

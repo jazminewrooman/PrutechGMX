@@ -32,6 +32,7 @@ namespace GMX.Views
 
             StackLayout menuLabel = new StackLayout
             {
+                BackgroundColor = Color.FromHex(App.Current.Resources["ligthgray"].ToString()),
                 Padding = new Thickness(0, 0, 0, 0),
                 //Spacing = 0,
                 //HeightRequest = 40,
@@ -43,8 +44,8 @@ namespace GMX.Views
                     new Image(){ Source = "dres", Aspect = Aspect.AspectFill, HeightRequest = 200 },
                     new StackLayout(){ BackgroundColor = Color.White, Padding = 20,
                         Children = { 
-                            new Label(){ FontSize = 12, FontAttributes = FontAttributes.None, Text = "Bienvenido"},
-                            new Label(){ FontSize = 14, FontAttributes = FontAttributes.Bold, Text = muser.DisplayName} 
+                            new Label(){ FontSize = 14, FontAttributes = FontAttributes.None, Text = "Bienvenido"},
+                            new Label(){ FontSize = 16, FontAttributes = FontAttributes.Bold, Text = muser.DisplayName} 
                         },
                     },
                     Menu
@@ -69,12 +70,14 @@ namespace GMX.Views
     {
         public MenuListView()
         {
+            
             List<MenuItem> data = new MenuListData();
             ItemsSource = data;
             VerticalOptions = LayoutOptions.FillAndExpand;
             BackgroundColor = Color.Transparent;
             SeparatorColor = Color.Transparent;
-            SeparatorVisibility = SeparatorVisibility.None;
+            HasUnevenRows = true;
+            //SeparatorVisibility = SeparatorVisibility.None;
             var cell = new DataTemplate(typeof(menucell));
             ItemTemplate = cell;
         }
@@ -95,6 +98,13 @@ namespace GMX.Views
 			{
 				Titulo = "Polizas emitidas",
 				Icono = "document2.png",
+				Color = Color.White,
+				TextColor = Color.Black,
+			});
+			this.Add(new MenuItem()
+			{
+				Titulo = "Cerrar sesion",
+				Icono = "cross.png",
 				Color = Color.White,
 				TextColor = Color.Black,
 			});

@@ -20,9 +20,11 @@ namespace GMX.Views
 
         protected override void OnAppearing()
         {
-            (App.Current.MainPage as NavigationPage).BarBackgroundColor = Color.White;
-            (App.Current.MainPage as NavigationPage).BarTextColor = Color.Black;
-            base.OnAppearing();
+			//(App.Current.MainPage as NavigationPage).BarBackgroundColor = Color.White;
+			//(App.Current.MainPage as NavigationPage).BarTextColor = Color.Black;
+			(App.Current.MainPage as NavigationPage).BarBackgroundColor = Color.FromHex("#04b5b5");
+			(App.Current.MainPage as NavigationPage).BarTextColor = Color.White;
+			base.OnAppearing();
         }
 	}
 }

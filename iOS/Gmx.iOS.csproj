@@ -18,7 +18,7 @@
     <DefineConstants>DEBUG;ENABLE_TEST_CLOUD;</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <CodesignKey>iPhone Developer</CodesignKey>
+    <CodesignKey>iPhone Developer: Jazmine VB (VR56VD63J6)</CodesignKey>
     <DeviceSpecificBuild>true</DeviceSpecificBuild>
     <MtouchDebug>true</MtouchDebug>
     <MtouchNoSymbolStrip>true</MtouchNoSymbolStrip>
@@ -28,6 +28,7 @@
     <MtouchArch>i386, x86_64</MtouchArch>
     <MtouchHttpClientHandler>HttpClientHandler</MtouchHttpClientHandler>
     <PlatformTarget>x86</PlatformTarget>
+    <CodesignProvision>iOS Team Provisioning Profile: *</CodesignProvision>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhone' ">
     <DebugType>pdbonly</DebugType>
@@ -65,18 +66,18 @@
     <DefineConstants>DEBUG;ENABLE_TEST_CLOUD;</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <CodesignKey>iPhone Developer: Jazmine VB (VR56VD63J6)</CodesignKey>
+    <CodesignKey>iPhone Developer: Jacobo Becerra Schulz (2VRU6G7ND2)</CodesignKey>
     <DeviceSpecificBuild>true</DeviceSpecificBuild>
     <MtouchDebug>true</MtouchDebug>
     <MtouchNoSymbolStrip>true</MtouchNoSymbolStrip>
-    <MtouchFastDev>true</MtouchFastDev>
+    <MtouchFastDev>false</MtouchFastDev>
     <MtouchFloat32>true</MtouchFloat32>
     <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
     <MtouchLink>SdkOnly</MtouchLink>
     <MtouchArch>ARMv7, ARM64</MtouchArch>
     <MtouchHttpClientHandler>HttpClientHandler</MtouchHttpClientHandler>
     <PlatformTarget>x86</PlatformTarget>
-    <CodesignProvision>iOS Team Provisioning Profile: gob.mx.imss.digital</CodesignProvision>
+    <CodesignProvision>DevAsiCompras</CodesignProvision>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -163,20 +164,14 @@
     <None Include="Info.plist" />
     <None Include="Entitlements.plist" />
     <None Include="packages.config" />
-    <None Include="Web References\wsUser\security.disco" />
-    <None Include="Web References\wsUser\security.wsdl" />
-    <None Include="Web References\wsUser\Reference.map">
-      <Generator>MSDiscoCodeGenerator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />
-    <Compile Include="Web References\wsUser\Reference.cs">
-      <DependentUpon>Reference.map</DependentUpon>
-    </Compile>
     <Compile Include="Renderers\SegmentedControlImplementation.cs" />
+    <Compile Include="Resources.Designer.cs">
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\logo.png" />
@@ -187,19 +182,17 @@
     <BundleResource Include="Resources\tick.png" />
     <BundleResource Include="Resources\logogmx.png" />
     <BundleResource Include="Resources\ticksel.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <WebReferences Include="Web References" />
-  </ItemGroup>
-  <ItemGroup>
-    <WebReferenceUrl Include="http://148.243.230.134/wsUserAdmin/security.asmx">
-      <UrlBehavior>Dynamic</UrlBehavior>
-      <RelPath>Web References\wsUser</RelPath>
-      <UpdateFromURL>http://148.243.230.134/wsUserAdmin/security.asmx</UpdateFromURL>
-    </WebReferenceUrl>
+    <BundleResource Include="Resources\cross.png" />
+    <BundleResource Include="Resources\next.png" />
+    <BundleResource Include="Resources\right.png" />
+    <BundleResource Include="Resources\flecha.png" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="settings.json" />
+    <EmbeddedResource Include="Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="..\examenPrutech\Gmx.projitems" Label="Shared" Condition="Exists('..\examenPrutech\Gmx.projitems')" />
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />

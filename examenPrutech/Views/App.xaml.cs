@@ -16,8 +16,10 @@ namespace GMX.Views
             //var mainp = new NavigationPage(new LoginUser())
             var mainp = new NavigationPage(new Cotizar())
             {
-				BackgroundColor = Color.White,
-				BarTextColor = Color.Black,
+				//BackgroundColor = Color.White,
+				//BarTextColor = Color.Black,
+				BarTextColor = Color.White,
+				BarBackgroundColor = Color.FromHex("#04b5b5"),
 			};
             MainPage = mainp;
 			App.navigation = mainp.Navigation;

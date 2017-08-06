@@ -13,7 +13,7 @@ using GMX.SegmentedControl.Android;
 
 namespace GMX.Droid
 {
-[Activity(Label = "GMX", Icon = "@drawable/logogmx", Theme = "@style/MyTheme", MainLauncher = true,  ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation, ScreenOrientation = ScreenOrientation.Portrait)]
+[Activity(Theme = "@style/MyTheme", MainLauncher = true,  ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation, ScreenOrientation = ScreenOrientation.Portrait)]
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
     {
         protected override void OnCreate(Bundle bundle)

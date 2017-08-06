@@ -22,7 +22,7 @@ namespace GMX.Views
             {
                 VerticalOptions = LayoutOptions.Center,
                 //FontFamily = "HelveticaNeue-Medium",
-                FontSize = 14,
+                FontSize = 16,
                 //TextColor = Color.FromHex(App.PrimaryColor)
             };
             titulo.SetBinding(Label.TextProperty, "Titulo");
@@ -30,7 +30,7 @@ namespace GMX.Views
             var statusLayout = new StackLayout
             {
                 Spacing = 10,
-				Padding = new Thickness(10, 5, 10, 5),
+				Padding = new Thickness(10, 15, 10, 15),
                 Orientation = StackOrientation.Horizontal,
                 Children = { icono, titulo }
             };

@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+	<resheader name="resmimetype">
+		<value>text/microsoft-resx</value>
+	</resheader>
+	<resheader name="version">
+		<value>2.0</value>
+	</resheader>
+	<resheader name="reader">
+		<value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+	</resheader>
+	<resheader name="writer">
+		<value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+	</resheader>
+
+    <data name="RealizaCirugias" xml:space="preserve">
+       <value>¿Realiza cirugías y/o métodos invasivos?</value>
+    </data>
+    <data name="Sumaasegurada" xml:space="preserve">
+       <value>Suma asegurada en moneda nacional</value>
+    </data>
+    <data name="Ejerce" xml:space="preserve">
+       <value>¿Ejerce en más de 1 lugar?</value>
+    </data>
+    <data name="Montosexpresados" xml:space="preserve">
+       <value>Montos expresados en moneda nacional (M.N.)</value>
+    </data>
+    <data name="Contratarcobertura" xml:space="preserve">
+       <value>¿Contratar la cobertura adicional RC arrendatario?</value>
+    </data>
+    	
+</root>
