@@ -161,6 +161,7 @@
     <Compile Include="Resources.Designer.cs">
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="loadingAct.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />
@@ -196,6 +197,12 @@
     <AndroidResource Include="Resources\drawable\next.png" />
     <AndroidResource Include="Resources\drawable\right.png" />
     <AndroidResource Include="Resources\drawable\flecha.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\flecha.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\flecha.png" />
+    <AndroidResource Include="Resources\drawable\shopping.png" />
+    <AndroidResource Include="Resources\drawable\mail.png" />
+    <AndroidResource Include="Resources\drawable\loading.xml" />
+    <AndroidResource Include="Resources\drawable\logogmxblanco.png" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Dependencies\" />

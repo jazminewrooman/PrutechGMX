@@ -13,8 +13,8 @@ namespace GMX.Views
 		{
 			InitializeComponent();
 
-            //var mainp = new NavigationPage(new LoginUser())
-            var mainp = new NavigationPage(new Cotizar())
+            var mainp = new NavigationPage(new LoginUser())
+            //var mainp = new NavigationPage(new Cotizar())
             {
 				//BackgroundColor = Color.White,
 				//BarTextColor = Color.Black,

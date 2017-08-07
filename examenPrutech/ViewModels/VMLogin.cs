@@ -97,9 +97,6 @@ namespace GMX
                 GMX.wsUser.bUsers usrId = ws.GetUser(user.ExtId, 1);
                 luser = ConvertUser(user);
                 Ocupado = false;
-				DatosGralesModel dgmodel;
-				dgmodel = null;
-                //var Welcome = new DatosGenerales(dgmodel, TipoDatos.Fiscales);
                 var Welcome = new Cotizar();
                 App.navigation.InsertPageBefore(Welcome, App.navigation.NavigationStack.FirstOrDefault());
                 await App.navigation.PopToRootAsync();
@@ -116,7 +113,7 @@ namespace GMX
 
 				
             }
-            catch
+            catch(Exception ex)
             {
                 Ocupado = false;
                 await Diag.AlertAsync("Usuario y/o contraseña no valido, favor de verificar", "Error", "OK");

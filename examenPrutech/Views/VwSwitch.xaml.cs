@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Xamarin.Forms;
+using System.Threading.Tasks;
 
 namespace GMX.Views
 {
@@ -13,41 +14,17 @@ namespace GMX.Views
 		}
 		public static readonly BindableProperty TitleProperty = BindableProperty.Create(propertyName: "Title", returnType: typeof(string), declaringType: typeof(VwOpcion), defaultValue: "", defaultBindingMode: BindingMode.TwoWay);
 
-		public string Detail
+		public bool On
 		{
-			get { return GetValue(DetailProperty).ToString(); }
-			set { base.SetValue(DetailProperty, value); }
+			get { return (bool)GetValue(OnProperty); }
+			set { base.SetValue(OnProperty, value); }
 		}
-		public static readonly BindableProperty DetailProperty = BindableProperty.Create(propertyName: "Detail", returnType: typeof(string), declaringType: typeof(VwOpcion), defaultValue: "", defaultBindingMode: BindingMode.TwoWay);
-
-
-		public string IdDetail
-		{
-			get { return GetValue(IdDetailProperty).ToString(); }
-			set { base.SetValue(IdDetailProperty, value); }
-		}
-		public static readonly BindableProperty IdDetailProperty = BindableProperty.Create(propertyName: "IdDetail", returnType: typeof(string), declaringType: typeof(VwOpcion), defaultValue: "", defaultBindingMode: BindingMode.TwoWay);
+        public static readonly BindableProperty OnProperty = BindableProperty.Create(propertyName: "On", returnType: typeof(bool), declaringType: typeof(VwOpcion), defaultValue: false, defaultBindingMode: BindingMode.TwoWay);
 
         public VwSwitch()
-		{
-			InitializeComponent();
-			/*Detail = " ";
-			TapGestureRecognizer tap = new TapGestureRecognizer();
-			tap.Tapped += async (s, e) =>
-			{
-				lo = new ListaOpciones(Lst, Title);
-				stack.BackgroundColor = Color.FromHex("#e5e5e5");
-				await Task.Delay(100);
-				stack.BackgroundColor = Color.Transparent;
-				lo.OpcionSeleccionada += (sender, ea) =>
-				{
-					Detail = ea.sel.opc;
-					IdDetail = ea.sel.idopc;
-				};
-				await Navigation.PushAsync(lo, true);
-			};
-			stack.GestureRecognizers.Add(tap);
-*/
-		}
+        {
+            InitializeComponent();
+            swOn.Toggled += (sender, ea) => On = ea.Value;
+        }
     }
 }

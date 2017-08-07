@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Xamarin.Forms.Xaml;
 using Xamarin.Forms;
+using System.Linq;
 
 namespace GMX.Views
 {
@@ -28,11 +29,22 @@ namespace GMX.Views
         public void cargamenu(GMX.wsUser.bUsers user)
         {
             Menu = new MenuListView();
-            //Menu.ItemSelected += (sender, e) => NavigateTo(e.SelectedItem as MenuItem);
+            Menu.ItemSelected += (sender, e) =>
+            {
+                if ((e.SelectedItem as MenuItem).TargetType == null)
+                {
+                    //Navigation.InsertPageBefore(new LoginUser(), Navigation.NavigationStack.FirstOrDefault());
+                    //await Navigation.PopToRootAsync();
+                    var det = new NavigationPage(new LoginUser());
+                    App.navigation = det.Navigation;
+                    App.Current.MainPage = det;
+                }
+				//NavigateTo(e.SelectedItem as MenuItem);
+			};
 
             StackLayout menuLabel = new StackLayout
             {
-                BackgroundColor = Color.FromHex(App.Current.Resources["ligthgray"].ToString()),
+                BackgroundColor = (Color)App.Current.Resources["ligthgray"],
                 Padding = new Thickness(0, 0, 0, 0),
                 //Spacing = 0,
                 //HeightRequest = 40,
@@ -107,6 +119,7 @@ namespace GMX.Views
 				Icono = "cross.png",
 				Color = Color.White,
 				TextColor = Color.Black,
+                TargetType = null
 			});
         }
 

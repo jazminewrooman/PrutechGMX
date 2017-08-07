@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+    BackgroundColor="{StaticResource ligthgray}"
+    xmlns:local="clr-namespace:GMX.Views;"
+    x:Class="GMX.Views.Cotizacion">
+    <ContentPage.ToolbarItems> 
+        <ToolbarItem Name="Menu1" Command="{Binding ShopCommand}" Icon="shopping.png" Order="Primary" Priority="0"/> 
+        <ToolbarItem Name="Menu1" Command="{Binding EmailCommand}" Icon="mail.png" Order="Primary" Priority="1"/> 
+    </ContentPage.ToolbarItems>
+	<ContentPage.Content>
+        <ScrollView VerticalOptions="FillAndExpand">
+            <StackLayout Spacing="1">
+                <BoxView HeightRequest="15"/>
+                <local:VwText Title="Inicia" Detail="{Binding Inicia}"/>
+                <local:VwText Title="Vence" Detail="{Binding Vence}"/>
+                <local:VwText Title="Suma asegurada" Detail="{Binding SumaAseg}"/>
+                <BoxView HeightRequest="15"/>
+                <StackLayout Spacing="1">
+                    <local:VwText Title="Prima neta" Detail="{Binding PrimaNeta, StringFormat='{}{0:c}'}"/>
+                    <local:VwText Title="Recargos" Detail="$0.00"/>
+                    <local:VwText Title="Derechos" Detail="{Binding Derechos, StringFormat='{}{0:c}'}"/>
+                    <local:VwText Title="Subtotal" Detail="{Binding SubTotal, StringFormat='{}{0:c}'}"/>
+                    <local:VwText Title="IVA" Detail="{Binding Iva, StringFormat='{}{0:c}'}"/>
+                    <local:VwText Title="Prima total" Detail="{Binding PrimaTotal, StringFormat='{}{0:c}'}"/>
+                </StackLayout>
+                <StackLayout Padding="10">
+                    <Label FontSize="12" x:Name="lblLeyenda" Text=""/>
+                </StackLayout>
+            </StackLayout>
+        </ScrollView>
+	</ContentPage.Content>
+</ContentPage>

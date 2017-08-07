@@ -29,28 +29,21 @@ namespace GMX.Views
 
         public ListaOpciones(ObservableCollection<opciones> ls, string title, string leyenda = "")
         {
-            try
+            InitializeComponent();
+            Title = title;
+            lvOpciones.IsGroupingEnabled = false;
+            lvOpciones.ItemsSource = ls;
+            lvOpciones.ItemSelected += async (sender, e) =>
             {
-                InitializeComponent();
-                Title = title;
-                lvOpciones.IsGroupingEnabled = false;
-                lvOpciones.ItemsSource = ls;
-                lvOpciones.ItemSelected += async (sender, e) =>
-                {
-                    if (e.SelectedItem == null)
-                        return;
-                    OnOpcionSeleccionada(new OpcionSeleccionadaEventArgs() { sel = (e.SelectedItem as opciones) });
-                    await Navigation.PopAsync();
-                    ((ListView)sender).SelectedItem = null;
-                };
-                lblLeyenda.Text = leyenda;
-				var adjust = Device.OS != TargetPlatform.Android ? 1 : -ls.Count + 1;
-				lvOpciones.HeightRequest = (ls.Count * lvOpciones.RowHeight) - adjust;
-			}
-            catch (Exception ex)
-            {
-
-            }
+                if (e.SelectedItem == null)
+                    return;
+                OnOpcionSeleccionada(new OpcionSeleccionadaEventArgs() { sel = (e.SelectedItem as opciones) });
+                await Navigation.PopAsync();
+                ((ListView)sender).SelectedItem = null;
+            };
+            lblLeyenda.Text = leyenda;
+            var adjust = Device.OS != TargetPlatform.Android ? 1 : -ls.Count + 1;
+            lvOpciones.HeightRequest = (ls.Count * lvOpciones.RowHeight) - adjust;
         }
     }
 

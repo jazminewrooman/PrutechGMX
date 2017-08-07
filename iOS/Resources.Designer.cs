@@ -76,5 +76,17 @@ namespace GMX {
                 return ResourceManager.GetString("Contratarcobertura", resourceCulture);
             }
         }
+        
+        internal static string IniVig {
+            get {
+                return ResourceManager.GetString("IniVig", resourceCulture);
+            }
+        }
+        
+        internal static string FaltanOb {
+            get {
+                return ResourceManager.GetString("FaltanOb", resourceCulture);
+            }
+        }
     }
 }

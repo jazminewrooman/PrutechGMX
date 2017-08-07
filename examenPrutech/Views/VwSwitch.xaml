@@ -11,7 +11,7 @@
             <Label Grid.Column="0" FontSize="16" Text="{Binding Title, Source={Reference x_this}}"/>
             <StackLayout Grid.Column="1" Orientation="Horizontal" VerticalOptions="Center">
                 <Label Text="No" VerticalTextAlignment="Center" FontSize="12"/>
-                <Switch HorizontalOptions="Center" />
+                <Switch x:Name="swOn" HorizontalOptions="Center" IsToggled="{Binding On}" />
                 <Label Text="Si" VerticalTextAlignment="Center" FontSize="12"/>
             </StackLayout>
         </Grid>

@@ -12,8 +12,11 @@ namespace GMX.Views
         {
             InitializeComponent();
 
-            BindingContext = new VMCotizar(UserDialogs.Instance, Navigation);
-        }
+            var vm = new VMCotizar(UserDialogs.Instance, Navigation);
+            BindingContext = vm;
+			Title = "Cotizar";
+
+		}
 
 	}
 }

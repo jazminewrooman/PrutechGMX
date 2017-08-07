@@ -28,5 +28,11 @@
     <data name="Contratarcobertura" xml:space="preserve">
        <value>¿Contratar la cobertura adicional RC arrendatario?</value>
     </data>
+    <data name="IniVig" xml:space="preserve">
+       <value>Inicio de vigencia</value>
+    </data>
+    <data name="FaltanOb" xml:space="preserve">
+       <value>Faltan algunos campos obligatorios, revise por favor</value>
+    </data>
 	
 </root>
