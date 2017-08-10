@@ -26,6 +26,14 @@ namespace GMX.Views
             cargamenu(muser);
         }
 
+		void NavigateTo(MenuItem menu)
+		{
+			Page displayPage = (Page)Activator.CreateInstance(menu.TargetType);
+            var det = new NavigationPage(displayPage);
+            App.navigation = det.Navigation;
+            (App.Current.MainPage as MasterDetailPage).Detail = det;
+		}
+
         public void cargamenu(GMX.wsUser.bUsers user)
         {
             Menu = new MenuListView();
@@ -39,8 +47,9 @@ namespace GMX.Views
                     App.navigation = det.Navigation;
                     App.Current.MainPage = det;
                 }
-				//NavigateTo(e.SelectedItem as MenuItem);
-			};
+                else
+                    NavigateTo(e.SelectedItem as MenuItem);
+            };
 
             StackLayout menuLabel = new StackLayout
             {
@@ -112,6 +121,7 @@ namespace GMX.Views
 				Icono = "document2.png",
 				Color = Color.White,
 				TextColor = Color.Black,
+                TargetType = typeof(Resumen)
 			});
 			this.Add(new MenuItem()
 			{

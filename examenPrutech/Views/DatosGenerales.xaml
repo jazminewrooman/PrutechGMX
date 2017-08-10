@@ -9,19 +9,18 @@
 		<ScrollView>
 			<StackLayout Padding="20" Spacing="10">
 
-                <controls:SegmentedControl x:Name="seg" Style="{StaticResource segmented}">
+                <!--<controls:SegmentedControl x:Name="seg" Style="{StaticResource segmented}">
                     <controls:SegmentedControl.Children>
                         <controls:SegmentedControlOption Text="uno"/>
                         <controls:SegmentedControlOption Text="dos"/>
                     </controls:SegmentedControl.Children>
-                </controls:SegmentedControl>
+                </controls:SegmentedControl>-->
 
                 <Label Text="RFC (con homoclave)" Style="{StaticResource labels}"/>
-				<Entry Text="{Binding RFC, Mode=OneWayToSource}">
+				<Entry Text="{Binding RFC}">
                     <Entry.Behaviors>
-                        <local:UpperValidator />
-                        <local:MaxLengthValidator MaxLength="13" />
-                        <local:RFCValidationBehavior/>
+                        <local:MaxLengthValidator MaxLength="13" Upper="true" />
+                        <!--<local:RFCValidationBehavior/>-->
                     </Entry.Behaviors>
                 </Entry>
 

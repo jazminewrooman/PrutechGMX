@@ -25,7 +25,9 @@ namespace GMX.Helpers
 
 		private void bindable_TextChanged(object sender, TextChangedEventArgs e)
 		{
+            ((Entry)sender).TextChanged -= bindable_TextChanged;
             ((Entry)sender).Text = e.NewTextValue.ToUpper();
+            ((Entry)sender).TextChanged += bindable_TextChanged;
 		}
 
 		protected override void OnDetachingFrom(Entry bindable)
@@ -35,19 +37,29 @@ namespace GMX.Helpers
 		}
 	}
 
-    public class MaxLengthValidator : Behavior<Entry>     {         static readonly BindablePropertyKey IsValidPropertyKey = BindableProperty.CreateReadOnly("IsValid", typeof(bool), typeof(MaxLengthValidator), false);          public static readonly BindableProperty IsValidProperty = IsValidPropertyKey.BindableProperty;          public bool IsValid         {             get { return (bool)base.GetValue(IsValidProperty); }             private set { base.SetValue(IsValidPropertyKey, value); }         }          public static readonly BindableProperty MaxLengthProperty = BindableProperty.Create("MaxLength", typeof(int), typeof(MaxLengthValidator), 0);         public int MaxLength         {             get { return (int)GetValue(MaxLengthProperty); }             set { SetValue(MaxLengthProperty, value); }         }          protected override void OnAttachedTo(Entry bindable)         {             bindable.TextChanged += bindable_TextChanged;             base.OnAttachedTo(bindable);         }
+    public class MaxLengthValidator : Behavior<Entry>     {         public int MaxLength { get; set; }
+        public bool Upper { get; set; }          protected override void OnAttachedTo(Entry bindable)         {
+			base.OnAttachedTo(bindable);
+			bindable.TextChanged += OnEntryTextChanged;         }
 
-		private void bindable_TextChanged(object sender, TextChangedEventArgs e)
-		{
+        void OnEntryTextChanged(object sender, TextChangedEventArgs e)
+        {
+            var entry = (Entry)sender;
 
-			if (((Entry)sender).Text != null)
-			{
-				if (e.NewTextValue.Length > 0 && e.NewTextValue.Length > MaxLength)
-					((Entry)sender).Text = e.NewTextValue.Substring(0, MaxLength);
-				//else
-				//	((Entry)sender).Text = e.NewTextValue.ToUpper();
-			}
-		}          protected override void OnDetachingFrom(Entry bindable)         {             bindable.TextChanged -= bindable_TextChanged;             base.OnDetachingFrom(bindable);         }     } 
+            if (entry.Text.Length > this.MaxLength)
+            {
+                string entryText = entry.Text;
+                entry.TextChanged -= OnEntryTextChanged;
+                if (Upper)
+                    entry.Text = e.OldTextValue.ToUpper();
+                else
+                    entry.Text = e.OldTextValue;
+                entry.TextChanged += OnEntryTextChanged;
+            }
+        }
+         protected override void OnDetachingFrom(Entry bindable)         {
+			base.OnDetachingFrom(bindable);
+			bindable.TextChanged -= OnEntryTextChanged;         }     } 
     public class EmailValidationBehavior : Behavior<Entry>     {         static readonly BindablePropertyKey IsValidPropertyKey = BindableProperty.CreateReadOnly("IsValid", typeof(bool), typeof(EmailValidationBehavior), false);          public static readonly BindableProperty IsValidProperty = IsValidPropertyKey.BindableProperty;          public bool IsValid         {             get { return (bool)base.GetValue(IsValidProperty); }             private set { base.SetValue(IsValidPropertyKey, value); }         }         protected override void OnAttachedTo(Entry entry)         {             entry.TextChanged += OnEntryTextChanged;             base.OnAttachedTo(entry);         }         protected override void OnDetachingFrom(Entry entry)         {             entry.TextChanged -= OnEntryTextChanged;             base.OnDetachingFrom(entry);         }         void OnEntryTextChanged(object sender, TextChangedEventArgs args)         {             const string emailRegex = @"^(?("")("".+?(?<!\\)""@)|(([0-9a-z]((\.(?!\.))|[-!#\$%&'\*\+/=\?\^`\{\}\|~\w])*)(?<=[0-9a-z])@))" +                 @"(?(\[)(\[(\d{1,3}\.){3}\d{1,3}\])|(([0-9a-z][-\w]*[0-9a-z]*\.)+[a-z0-9][\-a-z0-9]{0,22}[a-z0-9]))$";             IsValid = (Regex.IsMatch(args.NewTextValue, emailRegex, RegexOptions.IgnoreCase, TimeSpan.FromMilliseconds(250)));             //((Entry)sender).BackgroundColor = isValid ? Color.Default : Color.Red;         }     }
 
 	public class RFCValidationBehavior : Behavior<Entry>
