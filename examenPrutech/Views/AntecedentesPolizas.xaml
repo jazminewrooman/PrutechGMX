@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
+	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+	x:Class="GMX.Views.AntecedentesPolizas">
+	<ContentPage.Content>
+		<ScrollView>
+			<StackLayout>
+				
+				<Label Text="Número de pólizas"  Style="{StaticResource labels}"/>
+				<Entry Text="{Binding NumPolizas, Mode=TwoWay}"/>
+
+				<Label Text="Oficina"  Style="{StaticResource labels}"/>
+				<Entry Text="{Binding Oficina, Mode=TwoWay}"/>
+
+				<Label Text="Producto"  Style="{StaticResource labels}"/>
+				<Entry Text="{Binding Producto, Mode=TwoWay}"/>
+
+				<Label Text="Póliza"  Style="{StaticResource labels}"/>
+				<Entry Text="{Binding Poliza, Mode=TwoWay}" Keyboard="Numeric"/>
+
+				<Label Text="Endoso"  Style="{StaticResource labels}"/>
+				<Entry Text="{Binding Endoso, Mode=TwoWay}"/>
+
+				<Label Text="Renovación"  Style="{StaticResource labels}"/>
+				<Entry Text="{Binding Renovacion, Mode=TwoWay}"/>
+
+				<Label Text="Fecha de inicio de vigencia de la primera póliza contratada con GMX"  Style="{StaticResource labels}"/>
+				<Entry Text="{Binding FechaInicio, Mode=TwoWay}"/>
+				
+			</StackLayout>
+		</ScrollView>
+	</ContentPage.Content>
+</ContentPage>

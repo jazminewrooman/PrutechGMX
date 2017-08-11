@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
+	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+	x:Class="GMX.Views.DatosProfesionales">
+	<ContentPage.Content>
+		<ScrollView>
+			<StackLayout>
+				
+				<Label Text="Descripción"  Style="{StaticResource labels}"/>
+				<Entry Text="{Binding Descripcion, Mode=TwoWay}"/>
+
+				<Label Text="Especialidad"  Style="{StaticResource labels}"/>
+				<Entry Text="{Binding Especialidad, Mode=TwoWay}"/>
+
+				<Label Text="Número de cédula profesional"  Style="{StaticResource labels}"/>
+				<Entry Text="{Binding CedulaProf, Mode=TwoWay}" Keyboard="Numeric"/>
+
+				<Label Text="Número dé cédula especialidad"  Style="{StaticResource labels}"/>
+				<Entry Text="{Binding CedulaEsp, Mode=TwoWay}" Keyboard="Numeric"/>
+
+				<Label Text="Diplomados u otros estudios"  Style="{StaticResource labels}"/>
+				<Entry Text="{Binding Diplomados, Mode=TwoWay}"/>
+				
+			</StackLayout>
+		</ScrollView>
+	</ContentPage.Content>
+</ContentPage>

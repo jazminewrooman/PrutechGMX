@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
+	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+	x:Class="GMX.Views.DatosBancarios">
+	<ContentPage.Content>
+		<ScrollView>
+			<StackLayout>
+				
+				<Label Text="Nombre del tarjetahabiente"  Style="{StaticResource labels}"/>
+				<Entry Text="{Binding NombreTB, Mode=TwoWay}"/>
+
+				<Label Text="Tipo de Tarjeta"  Style="{StaticResource labels}"/>
+				<Entry Text="{Binding TipoTar, Mode=TwoWay}"/>
+
+				<Label Text="Forma de Pago"  Style="{StaticResource labels}"/>
+				<Entry Text="{Binding FormaPago, Mode=TwoWay}"/>
+
+				<Label Text="Número de Tarjeta"  Style="{StaticResource labels}"/>
+				<Entry Text="{Binding NumTarjeta, Mode=TwoWay}" Keyboard="Numeric"/>
+
+				<Label Text="Fecha de Vencimiento"  Style="{StaticResource labels}"/>
+				<Entry Text="{Binding FechaVenc, Mode=TwoWay}"/>
+
+				<Label Text="Código de Seguridad"  Style="{StaticResource labels}"/>
+				<Entry Text="{Binding CodigoSeg, Mode=TwoWay}"/>
+				
+			</StackLayout>
+		</ScrollView>
+	</ContentPage.Content>
+</ContentPage>

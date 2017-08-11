@@ -77,6 +77,26 @@
     <Compile Include="$(MSBuildThisFileDirectory)Views\Resumen.xaml.cs">
       <DependentUpon>Resumen.xaml</DependentUpon>
     </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Views\ResumenDatos.xaml.cs">
+      <DependentUpon>ResumenDatos.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\VMResumenDatos.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\DatosProfesionales.xaml.cs">
+      <DependentUpon>DatosProfesionales.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Views\DatosBancarios.xaml.cs">
+      <DependentUpon>DatosBancarios.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\VMDatosProfesionales.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\VMDatosBancarios.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\MetodoPago.xaml.cs">
+      <DependentUpon>MetodoPago.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\VMMetodoPago.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\AntecedentesPolizas.xaml.cs">
+      <DependentUpon>AntecedentesPolizas.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\VMAntecedentesPolizas.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\WelcomePage.xaml">
@@ -116,6 +136,21 @@
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\Resumen.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\ResumenDatos.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\DatosProfesionales.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\DatosBancarios.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\MetodoPago.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\AntecedentesPolizas.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
   </ItemGroup>

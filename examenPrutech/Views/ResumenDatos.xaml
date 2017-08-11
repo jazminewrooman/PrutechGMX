@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
+	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+	x:Class="GMX.Views.ResumenDatos">
+	<ContentPage.ToolbarItems> 
+        <ToolbarItem Name="Menu1" Command="{Binding ShopCommand}" Icon="shopping.png" Order="Primary" Priority="0"/> 
+    </ContentPage.ToolbarItems>
+	<ContentPage.Content>
+		<ListView ItemsSource="{Binding LstResumenDatos}" x:Name="lstResumen">
+			<ListView.ItemTemplate>
+				<DataTemplate>
+					<ViewCell>
+						<Grid>
+							<Grid.ColumDefinitions>
+								<ColumnDefinition/>
+								<ColumnDefinition Width="20"/>
+							</Grid.ColumDefinitions>
+							<Label Grid.Column="0" Text="{Binding opc}" Style="{StaticResource labels}"/>
+							<Image Grid.Column="1" Source="next.png"/>
+						</Grid>
+					</ViewCell>
+				</DataTemplate>
+			</ListView.ItemTemplate>
+		</ListView>
+	</ContentPage.Content>
+</ContentPage>

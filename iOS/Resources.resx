@@ -34,5 +34,11 @@
     <data name="FaltanOb" xml:space="preserve">
        <value>Faltan algunos campos obligatorios, revise por favor</value>
     </data>
+	<data name="Terminos" xml:space="preserve">
+       <value>Acepto términos y condiciones</value>
+    </data>
+	<data name="Manifiesto" xml:space="preserve">
+       <value>Manifiesto  que los datos personales y profesionales son correctos y fueron verificados con el Asegurado</value>
+    </data>
 	
 </root>

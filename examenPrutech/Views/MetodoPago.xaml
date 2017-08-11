@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
+	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+	xmlns:controls="clr-namespace:GMX.SegmentedControl;"
+	xmlns:local="clr-namespace:GMX.Views;"
+	x:Class="GMX.Views.MetodoPago">
+	<ContentPage.ToolbarItems> 
+        <ToolbarItem Name="Menu1" Command="{Binding NextCommand}" Icon="flecha.png" Order="Primary" Priority="0"/> 
+    </ContentPage.ToolbarItems>
+	<ContentPage.Content>
+		<ScrollView>
+			<StackLayout Spacing="20">
+
+				<controls:SegmentedControl x:Name="seg" Style="{StaticResource segmented}">
+                    <controls:SegmentedControl.Children>
+                        <controls:SegmentedControlOption Text="Tarjeta bancaria"/>
+                        <controls:SegmentedControlOption Text="Pago directo en banco"/>
+                    </controls:SegmentedControl.Children>
+                </controls:SegmentedControl>
+
+				<local:VwSwitch Title="{Binding TxtTerminos}" On="{Binding Terminos, Mode=TwoWay}"/>
+
+				<local:VwSwitch Title="{Binding TxtManifiesto}" On="{Binding Manifiesto, Mode=TwoWay}"/>
+				
+			</StackLayout>
+		</ScrollView>
+	</ContentPage.Content>
+</ContentPage>
