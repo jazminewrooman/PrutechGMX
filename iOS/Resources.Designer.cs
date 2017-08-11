@@ -88,5 +88,17 @@ namespace GMX {
                 return ResourceManager.GetString("FaltanOb", resourceCulture);
             }
         }
+        
+        internal static string Terminos {
+            get {
+                return ResourceManager.GetString("Terminos", resourceCulture);
+            }
+        }
+        
+        internal static string Manifiesto {
+            get {
+                return ResourceManager.GetString("Manifiesto", resourceCulture);
+            }
+        }
     }
 }
