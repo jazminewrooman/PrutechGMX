@@ -9,7 +9,12 @@ namespace GMX.Views
 {
 	public partial class VwCal : ContentView
 	{
-		private ListaOpciones lo;
+		public Color TitleColor
+		{
+			get { return (Color)GetValue(TitleColorProperty); }
+			set { base.SetValue(TitleColorProperty, value); }
+		}
+		public static readonly BindableProperty TitleColorProperty = BindableProperty.Create(propertyName: "TitleColor", returnType: typeof(Color), declaringType: typeof(VwOpcion), defaultValue: Color.Black, defaultBindingMode: BindingMode.TwoWay);
 
 		public string Title
 		{
@@ -30,9 +35,26 @@ namespace GMX.Views
             get { return (DateTime)GetValue(DateSelProperty); }
 			set { base.SetValue(DateSelProperty, value); }
 		}
-        public static readonly BindableProperty DateSelProperty = BindableProperty.Create(propertyName: "DateSel", returnType: typeof(DateTime), declaringType: typeof(VwOpcion), defaultValue: DateTime.MinValue, defaultBindingMode: BindingMode.TwoWay);
+        public static readonly BindableProperty DateSelProperty = BindableProperty.Create(propertyName: "DateSel", returnType: typeof(DateTime), declaringType: typeof(VwOpcion), defaultValue: DateTime.MinValue, defaultBindingMode: BindingMode.TwoWay, propertyChanged:Seleccion);
 
-        public VwCal()
+		private static void Seleccion(BindableObject bindable, object oldValue, object newValue)
+		{
+            var obj = bindable as VwCal;
+			try
+			{
+                if (obj.DateSel != DateTime.MinValue)
+                {
+                    obj.Detail = obj.DateSel.ToString("dd/MM/yyyy");
+                    obj.TitleColor = Color.Black;
+                }
+			}
+			catch
+			{
+
+			}
+		}
+
+		public VwCal()
         {
             InitializeComponent();
             Detail = " ";
@@ -46,12 +68,20 @@ namespace GMX.Views
                 {
                     IsCancellable = true,
                     MinimumDate = DateTime.Now,
-                    MaximumDate = DateTime.Now.AddYears(1)
+                    MaximumDate = DateTime.Now.AddYears(1),
                 });
                 Detail = result.SelectedDate.ToString("dd/MM/yyyy");
                 DateSel = result.SelectedDate;
+                TitleColor = Color.Black;
             };
             stack.GestureRecognizers.Add(tap);
-        }
+			if (String.IsNullOrEmpty(Detail.Trim()))
+			{
+				TitleColor = Color.Red;
+				Title = "*" + Title;
+			}
+			else
+				TitleColor = Color.Black;
+		}
 	}
 }

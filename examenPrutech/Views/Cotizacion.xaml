@@ -10,7 +10,9 @@
 	<ContentPage.Content>
         <ScrollView VerticalOptions="FillAndExpand">
             <StackLayout Spacing="1">
+
                 <BoxView HeightRequest="15"/>
+                <local:VwText Title="Cobertura(s)" Detail="{Binding Cobertura}"/>
                 <local:VwText Title="Inicia" Detail="{Binding Inicia}"/>
                 <local:VwText Title="Vence" Detail="{Binding Vence}"/>
                 <local:VwText Title="Suma asegurada" Detail="{Binding SumaAseg}"/>
@@ -24,7 +26,7 @@
                     <local:VwText Title="Prima total" Detail="{Binding PrimaTotal, StringFormat='{}{0:c}'}"/>
                 </StackLayout>
                 <StackLayout Padding="10">
-                    <Label FontSize="12" x:Name="lblLeyenda" Text=""/>
+                    <Label FontSize="Small" x:Name="lblLeyenda" Text=""/>
                 </StackLayout>
             </StackLayout>
         </ScrollView>

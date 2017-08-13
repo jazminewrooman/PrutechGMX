@@ -9,16 +9,17 @@
         <ScrollView VerticalOptions="FillAndExpand">
             <StackLayout Spacing="1">
                 <BoxView HeightRequest="15"/>
-                <local:VwOpcion IdDetail="{Binding IdPlan, Mode=TwoWay}" Title="{Binding TxtPlan}" Lst="{Binding LstPlan}" />
-                <local:VwOpcion IdDetail="{Binding IdTipo, Mode=TwoWay}" Title="{Binding TxtTipo}" Lst="{Binding LstTipo}" />
+                <local:VwOpcion Lst="{Binding LstPlan}" IdDetail="{Binding IdPlan, Mode=TwoWay}" Title="{Binding TxtPlan}" />
+                <local:VwOpcion Lst="{Binding LstTipo}" IdDetail="{Binding IdTipo, Mode=TwoWay}" Title="{Binding TxtTipo}" ClickAuto="{Binding ClickAuto}" />
                 <BoxView HeightRequest="15"/>
                 <StackLayout Spacing="1" IsVisible="{Binding VerCuestionario}">
                     <local:VwSwitch Title="{Binding TxtCirugias}" On="{Binding Cirugias, Mode=TwoWay}"/>
                     <local:VwSwitch Title="{Binding TxtEjerce}" On="{Binding Ejerce, Mode=TwoWay}"/>
-                    <local:VwOpcion SubTxt="{Binding LySumaAseg}" Detail="{Binding SumaAseg, Mode=TwoWay}" IdDetail="{Binding IdSuma, Mode=TwoWay}" Title="{Binding TxtSuma}" Lst="{Binding LstSuma}" />
+                    <local:VwOpcion Lst="{Binding LstSuma}" IdDetail="{Binding IdSuma, Mode=TwoWay}" SubTxt="{Binding LySumaAseg}" Detail="{Binding SumaAseg, Mode=TwoWay}" Title="{Binding TxtSuma}" />
                     <local:VwSwitch Title="{Binding TxtContratar}" On="{Binding Adicional, Mode=TwoWay}"/>
                     <local:VwCal Title="{Binding TxtVig}" DateSel="{Binding IniVig}"/>
                 </StackLayout>
+                <Image Source="medicosneg" Opacity="0.3" Aspect="AspectFit"/>
             </StackLayout>
         </ScrollView>
 	</ContentPage.Content>

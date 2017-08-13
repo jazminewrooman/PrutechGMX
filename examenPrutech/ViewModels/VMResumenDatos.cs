@@ -29,8 +29,8 @@ namespace GMX
 			ShopCommand = new Command(async () =>
 			{
 				DatosGralesModel dgmodel = null;
-				var Welcome = new DatosGenerales(dgmodel, TipoDatos.Generales);
-				await nav.PushAsync(new DatosGenerales(dgmodel, TipoDatos.Generales));
+				//var Welcome = new DatosGenerales(dgmodel, TipoDatos.Generales);
+				//await nav.PushAsync(new DatosGenerales(dgmodel, TipoDatos.Generales));
 			});
 		}
 
@@ -63,34 +63,33 @@ namespace GMX
 				case 1:
 					//Para Datos Generales
 					dgmodel = null;
-					var Welcome1 = new DatosGenerales(dgmodel, TipoDatos.Generales);
-					App.navigation.InsertPageBefore(Welcome1, App.navigation.NavigationStack.FirstOrDefault());
-					await App.navigation.PopToRootAsync();
-					var MainP1 = new NavigationPage(Welcome1)
-					{
-						BarTextColor = Color.White,
-						BarBackgroundColor = Color.FromHex("#04b5b5"),
-					};
-					var md1 = new MasterDetailPage();
-					//md.Master = new menu(user);
-					md1.Detail = MainP1;
-					App.Current.MainPage = md1;
+					//var Welcome1 = new DatosGenerales(dgmodel, TipoDatos.Generales);
+					//App.navigation.InsertPageBefore(Welcome1, App.navigation.NavigationStack.FirstOrDefault());
+					//await App.navigation.PopToRootAsync();
+					//var MainP1 = new NavigationPage(Welcome1)
+					//{
+					//	BarTextColor = Color.White,
+					//	BarBackgroundColor = Color.FromHex("#04b5b5"),
+					//};
+					//var md1 = new MasterDetailPage();
+					//md1.Detail = MainP1;
+					//App.Current.MainPage = md1;
 					break;
 				case 2:
 					//Para Datos Fiscales
 					dgmodel = null;
-					var Welcome2 = new DatosGenerales(dgmodel, TipoDatos.Fiscales);
-					App.navigation.InsertPageBefore(Welcome2, App.navigation.NavigationStack.FirstOrDefault());
-					await App.navigation.PopToRootAsync();
-					var MainP2 = new NavigationPage(Welcome2)
-					{
-						BarTextColor = Color.White,
-						BarBackgroundColor = Color.FromHex("#04b5b5"),
-					};
-					var md2 = new MasterDetailPage();
-					//md.Master = new menu(user);
-					md2.Detail = MainP2;
-					App.Current.MainPage = md2;
+					//var Welcome2 = new DatosGenerales(dgmodel, TipoDatos.Fiscales);
+					//App.navigation.InsertPageBefore(Welcome2, App.navigation.NavigationStack.FirstOrDefault());
+					//await App.navigation.PopToRootAsync();
+					//var MainP2 = new NavigationPage(Welcome2)
+					//{
+					//	BarTextColor = Color.White,
+					//	BarBackgroundColor = Color.FromHex("#04b5b5"),
+					//};
+					//var md2 = new MasterDetailPage();
+					////md.Master = new menu(user);
+					//md2.Detail = MainP2;
+					//App.Current.MainPage = md2;
 					break;
 				case 3:
 					//Para Datos Profesionales

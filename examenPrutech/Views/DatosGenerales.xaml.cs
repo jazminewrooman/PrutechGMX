@@ -10,12 +10,14 @@ namespace GMX.Views
 [XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class DatosGenerales : ContentPage
 	{
-		public VMDatosGenerales vm = new VMDatosGenerales(UserDialogs.Instance);
+        public VMCotizar vmcot;
+        public VMDatosGenerales vm;
 
-		public DatosGenerales(DatosGralesModel dgmodel, TipoDatos td)
+        public DatosGenerales(DatosGralesModel dgmodel, TipoDatos td, VMCotizar v)
 		{
 			InitializeComponent();
-
+			vmcot = v;
+            vm = new VMDatosGenerales(UserDialogs.Instance, Navigation, vmcot);
 			this.BindingContext = vm;
 
             //seg.ValueChanged += async (sender, e) => {

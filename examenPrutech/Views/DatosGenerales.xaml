@@ -6,65 +6,67 @@
     xmlns:controls="clr-namespace:GMX.SegmentedControl;"
     xmlns:local="clr-namespace:GMX.Helpers;">
 	<ContentPage.Content>
-		<ScrollView>
-			<StackLayout Padding="20" Spacing="10">
+        <StackLayout>
+            <StackLayout>
+                <Button Text="Ver Cotización" Command="{Binding VerCotizaCommand}" Style="{StaticResource botonVerde}"/>
+            </StackLayout>
+    		<ScrollView>
+    			<StackLayout Padding="20" Spacing="10">
 
-                <!--<controls:SegmentedControl x:Name="seg" Style="{StaticResource segmented}">
-                    <controls:SegmentedControl.Children>
-                        <controls:SegmentedControlOption Text="uno"/>
-                        <controls:SegmentedControlOption Text="dos"/>
-                    </controls:SegmentedControl.Children>
-                </controls:SegmentedControl>-->
+                    <!--<controls:SegmentedControl x:Name="seg" Style="{StaticResource segmented}">
+                        <controls:SegmentedControl.Children>
+                            <controls:SegmentedControlOption Text="uno"/>
+                            <controls:SegmentedControlOption Text="dos"/>
+                        </controls:SegmentedControl.Children>
+                    </controls:SegmentedControl>-->
 
-                <Label Text="RFC (con homoclave)" Style="{StaticResource labels}"/>
-				<Entry Text="{Binding RFC}">
-                    <Entry.Behaviors>
-                        <local:MaxLengthValidator MaxLength="13" Upper="true" />
-                        <!--<local:RFCValidationBehavior/>-->
-                    </Entry.Behaviors>
-                </Entry>
+                    <Label Text="RFC (con homoclave)" Style="{StaticResource labels}"/>
+    				<Entry Text="{Binding RFC}">
+                        <Entry.Behaviors>
+                            <local:MaxLengthValidator MaxLength="13" Upper="true" />
+                            <local:RFCValidationBehavior IsValid="{Binding RFCValido, Mode=TwoWay}"/>
+                        </Entry.Behaviors>
+                    </Entry>
 
-				<Label Text="Nombre"  Style="{StaticResource labels}"/>
-				<Entry Text="{Binding Nombre, Mode=TwoWay}"/>
+    				<Label Text="Nombre"  Style="{StaticResource labels}"/>
+    				<Entry Text="{Binding Nombre, Mode=TwoWay}"/>
 
-				<Label Text="Apellido paterno"  Style="{StaticResource labels}"/>
-				<Entry Text="{Binding APaterno, Mode=TwoWay}"/>
+    				<Label Text="Apellido paterno"  Style="{StaticResource labels}"/>
+    				<Entry Text="{Binding APaterno, Mode=TwoWay}"/>
 
-				<Label Text="Apellido materno"  Style="{StaticResource labels}"/>
-				<Entry Text="{Binding AMaterno, Mode=TwoWay}"/>
+    				<Label Text="Apellido materno"  Style="{StaticResource labels}"/>
+    				<Entry Text="{Binding AMaterno, Mode=TwoWay}"/>
 
-				<Label Text="Calle, número exterior, número interior"  Style="{StaticResource labels}"/>
-				<Entry Text="{Binding Direccion, Mode=TwoWay}"/>
+    				<Label Text="Calle, número exterior, número interior"  Style="{StaticResource labels}"/>
+    				<Editor HeightRequest="50" Text="{Binding Direccion, Mode=TwoWay}"/>
 
-				<Label Text="Teléfono (con lada)"  Style="{StaticResource labels}"/>
-				<Entry Text="{Binding Telefono, Mode=TwoWay}"/>
+    				<Label Text="Teléfono (con lada)"  Style="{StaticResource labels}"/>
+    				<Entry Text="{Binding Telefono, Mode=TwoWay}"/>
 
-				<Label Text="Código Postal"  Style="{StaticResource labels}"/>
-				<Entry Text="{Binding CP, Mode=TwoWay}">
-                    <Entry.Behaviors>
-                        <local:MaxLengthValidator MaxLength="5" />
-                    </Entry.Behaviors>
-                </Entry>
+    				<Label Text="Código Postal"  Style="{StaticResource labels}"/>
+    				<Entry Text="{Binding CP, Mode=TwoWay}">
+                        <Entry.Behaviors>
+                            <local:MaxLengthValidator MaxLength="5" />
+                        </Entry.Behaviors>
+                    </Entry>
 
-				<Label Text="Estado"  Style="{StaticResource labels}"/>
-				<Picker SelectedIndex="{Binding Estado, Mode=TwoWay}" ItemsSource="{Binding Estados}"/>
+    				<Label Text="Estado"  Style="{StaticResource labels}"/>
+    				<Picker SelectedIndex="{Binding Estado, Mode=TwoWay}" ItemsSource="{Binding Estados}"/>
 
-				<Label Text="Municipio"  Style="{StaticResource labels}"/>
-				<Picker SelectedIndex="{Binding Municipio, Mode=TwoWay}" ItemsSource="{Binding Municipios}"/>
+    				<Label Text="Municipio"  Style="{StaticResource labels}"/>
+    				<Picker SelectedIndex="{Binding Municipio, Mode=TwoWay}" ItemsSource="{Binding Municipios}"/>
 
-				<Label Text="Ciudad"  Style="{StaticResource labels}"/>
-				<Picker SelectedIndex="{Binding Ciudad, Mode=TwoWay}" ItemsSource="{Binding Ciudades}"/>
+    				<Label Text="Ciudad"  Style="{StaticResource labels}"/>
+    				<Picker SelectedIndex="{Binding Ciudad, Mode=TwoWay}" ItemsSource="{Binding Ciudades}"/>
 
-				<Label Text="Colonia"  Style="{StaticResource labels}"/>
-				<Picker SelectedIndex="{Binding Colonia, Mode=TwoWay}" ItemsSource="{Binding Colonias}"/>
+    				<Label Text="Colonia"  Style="{StaticResource labels}"/>
+    				<Picker SelectedIndex="{Binding Colonia, Mode=TwoWay}" ItemsSource="{Binding Colonias}"/>
 
-				<Label Text="Correo electrónico"  Style="{StaticResource labels}"/>
-				<Entry Text="{Binding Correo, Mode=TwoWay}"/>
-				
-				<BoxView HeightRequest="20" BackgroundColor="Gray"/>
-
-				
-			</StackLayout>
-		</ScrollView>
+    				<Label Text="Correo electrónico"  Style="{StaticResource labels}"/>
+    				<Entry Text="{Binding Correo, Mode=TwoWay}"/>
+    				
+    			</StackLayout>
+    		</ScrollView>
+        </StackLayout>
 	</ContentPage.Content>
 </ContentPage>

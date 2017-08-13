@@ -8,11 +8,11 @@
                 <ColumnDefinition Width="70*"/>
                 <ColumnDefinition Width="30*"/>
             </Grid.ColumnDefinitions>
-            <Label Grid.Column="0" FontSize="16" Text="{Binding Title, Source={Reference x_this}}"/>
+            <Label Grid.Column="0" Text="{Binding Title, Source={Reference x_this}}"/>
             <StackLayout Grid.Column="1" Orientation="Horizontal" VerticalOptions="Center">
-                <Label Text="No" VerticalTextAlignment="Center" FontSize="12"/>
+                <Label Text="No" VerticalTextAlignment="Center" FontSize="Small"/>
                 <Switch x:Name="swOn" HorizontalOptions="Center" IsToggled="{Binding On}" />
-                <Label Text="Si" VerticalTextAlignment="Center" FontSize="12"/>
+                <Label Text="Si" VerticalTextAlignment="Center" FontSize="Small"/>
             </StackLayout>
         </Grid>
     </ContentView.Content>

@@ -8,8 +8,8 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
-            <Label Grid.Row="0" Grid.Column="0" FontSize="12" Text="{Binding Title, Source={Reference x_this}}"/>
-            <Label Grid.Row="1" Grid.Column="0" FontSize="16" FontAttributes="Bold" Text="{Binding Detail, Source={Reference x_this}}"/>
+            <Label Grid.Row="0" Grid.Column="0" Text="{Binding Title, Source={Reference x_this}}"/>
+            <Label Grid.Row="1" Grid.Column="0" FontAttributes="Bold" Text="{Binding Detail, Source={Reference x_this}}"/>
         </Grid>
     </ContentView.Content>
 </ContentView>

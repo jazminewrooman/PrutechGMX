@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:local="clr-namespace:GMXApp"
+             xmlns:local="clr-namespace:GMX.Views;"
             Title = "{Binding Title}"
              x:Class="GMX.Views.LoginUser">
     <ContentPage.Content>
@@ -19,7 +19,7 @@
 	                <Label Text="Cerrar sesión"/>
 	                <Switch x:Name="swtCerrar" IsToggled="False" Style="{StaticResource switchVerde}"/>
 	            </StackLayout>-->
-	            <Button Text="Registrarme" Command="{Binding RegistrarCommand}" Style="{StaticResource botonVerde}"/>
+	            <Button Text="Soporte PVL" Command="{Binding RegistrarCommand}" Style="{StaticResource botonVerde}"/>
 	        </StackLayout>
 		</ScrollView>
     </ContentPage.Content>

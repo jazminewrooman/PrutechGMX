@@ -12,8 +12,8 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="32"/>
             </Grid.ColumnDefinitions>
-            <Label Grid.Row="0" Grid.Column="0" FontSize="12" Text="{Binding Title, Source={Reference x_this}}"/>
-            <Label Grid.Row="1" Grid.Column="0" FontSize="16" FontAttributes="Bold" Text="{Binding Detail, Source={Reference x_this}}"/>
+            <Label Grid.Row="0" Grid.Column="0" Text="{Binding Title, Source={Reference x_this}}" TextColor="{Binding TitleColor, Source={Reference x_this}}"/>
+            <Label Grid.Row="1" Grid.Column="0" FontAttributes="Bold" Text="{Binding Detail, Source={Reference x_this}}"/>
             <Image Aspect="AspectFit" VerticalOptions="Center" Grid.Row="0" Grid.Column="1" Grid.RowSpan="2" Source="next.png" HeightRequest="16"/>
         </Grid>
     </ContentView.Content>

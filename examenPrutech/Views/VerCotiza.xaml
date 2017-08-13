@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pages:PopupPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
+    x:Class="GMX.Views.VerCotiza">
+	<Frame Margin="30,100,30,150" Padding="10">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="40*"/>
+                <ColumnDefinition Width="60*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Label BackgroundColor="#c8dade" Grid.Column="0" Grid.Row="0" FontSize="Small" Text="Cobertura(s):"/>
+            <Label BackgroundColor="#c8dade" Grid.Column="1" Grid.Row="0" FontSize="Small" Text="{Binding Cobertura}"/>
+            <Label Grid.Column="0" Grid.Row="1" FontSize="Small" Text="Inicia:"/>
+            <Label Grid.Column="1" Grid.Row="1" FontSize="Small" Text="{Binding Inicia}"/>
+            <Label BackgroundColor="#c8dade" Grid.Column="0" Grid.Row="2" FontSize="Small" Text="Vence:"/>
+            <Label BackgroundColor="#c8dade" Grid.Column="1" Grid.Row="2" FontSize="Small" Text="{Binding Vence}"/>
+            <Label Grid.Column="0" Grid.Row="3" FontSize="Small" Text="Suma asegurada:"/>
+            <Label Grid.Column="1" Grid.Row="3" FontSize="Small" Text="{Binding SumaAseg}"/>
+            <Label BackgroundColor="#c8dade" Grid.Column="0" Grid.Row="4" FontSize="Small" Text="Prima neta:"/>
+            <Label BackgroundColor="#c8dade" Grid.Column="1" Grid.Row="4" FontSize="Small" Text="{Binding PrimaNeta, StringFormat='{}{0:c}'}"/>
+            <Label Grid.Column="0" Grid.Row="5" FontSize="Small" Text="Recargos:"/>
+            <Label Grid.Column="1" Grid.Row="5" FontSize="Small" Text="$0.00"/>
+            <Label BackgroundColor="#c8dade" Grid.Column="0" Grid.Row="6" FontSize="Small" Text="Derechos:"/>
+            <Label BackgroundColor="#c8dade" Grid.Column="1" Grid.Row="6" FontSize="Small" Text="{Binding Derechos, StringFormat='{}{0:c}'}"/>
+            <Label Grid.Column="0" Grid.Row="7" FontSize="Small" Text="Subtotal:"/>
+            <Label Grid.Column="1" Grid.Row="7" FontSize="Small" Text="{Binding SubTotal, StringFormat='{}{0:c}'}"/>
+            <Label BackgroundColor="#c8dade" Grid.Column="0" Grid.Row="8" FontSize="Small" Text="I.V.A:"/>
+            <Label BackgroundColor="#c8dade" Grid.Column="1" Grid.Row="8" FontSize="Small" Text="{Binding Iva, StringFormat='{}{0:c}'}"/>
+            <Label Grid.Column="0" Grid.Row="9" FontSize="Small" Text="Prima Total:"/>
+            <Label Grid.Column="1" Grid.Row="9" FontSize="Small" Text="{Binding PrimaTotal, StringFormat='{}{0:c}'}"/>
+        </Grid>
+	</Frame>
+</pages:PopupPage>

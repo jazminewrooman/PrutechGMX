@@ -102,8 +102,8 @@ namespace GMX
                 await App.navigation.PopToRootAsync();
                 var MainP = new NavigationPage(Welcome)
 				{
-                    BarTextColor = Color.White,
-                    BarBackgroundColor = Color.FromHex("#04b5b5"),
+					BarTextColor = Color.FromHex("#04b5b5"),
+					BarBackgroundColor = Color.White,
 				};
                 var md = new MasterDetailPage();
                 md.Master = new menu(user);

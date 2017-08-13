@@ -6,4 +6,7 @@
 <!--    segmented   -->	
 	<color name="normal">@android:color/transparent</color>
     <color name="selected">#007AFF</color>
+<!--    listview    -->
+	<color name="ListViewSelected">#04b5b5</color>
+    <color name="ListViewHighlighted">#04b5b5</color>	
 </resources>

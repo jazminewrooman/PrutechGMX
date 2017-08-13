@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using Acr.UserDialogs;
 using Xamarin.Forms.Xaml;
+using Xamarin.Forms;
 using System.Runtime.CompilerServices;
 using System.Linq;
 using GMX.Views;
@@ -11,21 +12,30 @@ using System.Collections.Generic;
 using Newtonsoft.Json;
 using System.Threading.Tasks;
 using GMX.Services.DTOs;
+using System.Windows.Input;
+using Rg.Plugins.Popup.Extensions;
 
 namespace GMX
 {
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public class VMDatosGenerales : VMGmx
 	{
+		INavigation nav;
+		private bool datosdeservicio = false;
         private Dictionary<string, estado> lstedos;
         private Dictionary<string, municipio> lstmun;
         private Dictionary<string, ciudad> lstciud;
         private Dictionary<string, colonia> lstcols;
+        public ICommand VerCotizaCommand { get; private set; }
 
-		public VMDatosGenerales(IUserDialogs diag) : base(diag)
+        public VMDatosGenerales(IUserDialogs diag, INavigation n, VMCotizar vmcot) : base(diag)
 		{
-            Title = "DATOS GENERALES";
-
+            nav = n;
+            Title = "Datos Generales";
+			VerCotizaCommand = new Command(async () =>
+			{
+                await n.PushPopupAsync(new VerCotiza(vmcot), true);
+			});
 		}
 
 		string rfc;
@@ -37,7 +47,23 @@ namespace GMX
 				if (rfc != value)
 				{
                     rfc = value;
-                    //OnPropertyChanged("RFC");
+                    OnPropertyChanged("RFC");
+				}
+			}
+		}
+
+		bool rfcvalido;
+		public bool RFCValido
+		{
+			get { return rfcvalido; }
+			set
+			{
+				if (rfcvalido != value)
+				{
+					rfcvalido = value;
+                    if (value)
+					    CargaRFC();
+					OnPropertyChanged("RFCValido");
 				}
 			}
 		}
@@ -124,11 +150,50 @@ namespace GMX
                     cp = value;
                     if (cp.Trim().Length == 5)
                     {
-                        CargaCatalogos(value);
+                        if (!datosdeservicio)
+                            CargaCatalogos(value);
                     }
                     OnPropertyChanged("CP");
                 }
             }
+        }
+
+        private async Task CargaRFC(){
+			bindings b = new bindings();
+			b.IniciaWS();
+			var cod = new Dictionary<string, string>();
+            cod.Add("clientRFC", RFC);
+			Ocupado = true;
+			try
+			{
+				var crypdata = await b.getCatalog("GetClientByRFC", cod);
+				var strdata = await b.decrypt(crypdata.Result);
+                KeyValuePair<string, cliente> cli = JsonConvert.DeserializeObject<Dictionary<string, cliente>>(strdata.Result).FirstOrDefault();
+                if (cli.Value != null)
+                {
+                    datosdeservicio = true;
+                    cliente c = cli.Value;
+                    Nombre = c.txt_nombre;
+                    APaterno = c.txt_apellido1;
+                    AMaterno = c.txt_apellido2;
+                    Direccion = $"{c.calle} {c.num_ext} {c.num_int}";
+                    Telefono = c.txt_telefono;
+                    CP = c.nro_cod_postal;
+                    await CargaCatalogos(c.nro_cod_postal);
+                    Estado = Estados.IndexOf(lstedos.Where(x => x.Value.cod_dpto == c.cod_estado).FirstOrDefault().Value.txt_desc);
+                    Municipio = Municipios.IndexOf(lstmun.Where(x => x.Value.cod_municipio == c.cod_municipio).FirstOrDefault().Value.txt_desc);
+                    await CargaColonias(CP, c.cod_estado, c.cod_municipio, c.cod_ciudad);
+                    Ciudad = Ciudades.IndexOf(lstciud.Where(x => x.Value.cod_ciudad == c.cod_ciudad).FirstOrDefault().Value.txt_desc);
+                    Colonia = Colonias.IndexOf(lstcols.Where(x => x.Value.cod_colonia == c.cod_colonia).FirstOrDefault().Value.txt_desc);
+                }
+                else
+                    datosdeservicio = false;
+			}
+			finally
+			{
+				Ocupado = false;
+				await Task.Delay(TimeSpan.FromMilliseconds(100));
+			}
         }
 
         private async Task CargaColonias(string cp, string idedo, string idmuncp, string idciudad)
@@ -156,7 +221,10 @@ namespace GMX
                 Ocupado = false;
                 await Task.Delay(TimeSpan.FromMilliseconds(100));
                 if (lstcols != null && lstcols.Count > 0)
-                    Colonia = 0;
+                {
+                    if (!datosdeservicio)
+                        Colonia = 0;
+                }
                 else
                     Colonia = -1;
             }
@@ -205,9 +273,12 @@ namespace GMX
                 else
                 {
                     await Task.Delay(TimeSpan.FromMilliseconds(100));
-                    Estado = 0;
-                    Municipio = 0;
-                    Ciudad = 0;
+                    if (!datosdeservicio)
+                    {
+                        Estado = 0;
+                        Municipio = 0;
+                        Ciudad = 0;
+                    }
                 }
             }
         }
@@ -280,7 +351,10 @@ namespace GMX
 				{
 					ciudad = value;
                     if (estado > -1 && municipio > -1 && ciudad > -1)
-                        CargaColonias(cp, lstedos.ElementAt(estado).Value.cod_dpto, lstmun.ElementAt(municipio).Value.cod_municipio, lstciud.ElementAt(ciudad).Value.cod_ciudad);
+                    {
+                        if (!datosdeservicio)
+                            CargaColonias(cp, lstedos.ElementAt(estado).Value.cod_dpto, lstmun.ElementAt(municipio).Value.cod_municipio, lstciud.ElementAt(ciudad).Value.cod_ciudad);
+                    }
 					OnPropertyChanged("Ciudad");
 				}
 			}

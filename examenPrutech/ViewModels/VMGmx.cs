@@ -21,18 +21,18 @@ namespace GMX
                 {
                     if (value)
                     {
-                        //Device.BeginInvokeOnMainThread(async () =>
-                        //{
-                        Diag.ShowLoading("Cargando...", MaskType.Black);
+                        Device.BeginInvokeOnMainThread( () =>
+                        {
+                            Diag.ShowLoading("Estamos trabajando.\nPermítenos procesar tu información.", MaskType.Black);
                             //Task.Delay(TimeSpan.FromMilliseconds(10000));
-                        //});
+                        });
                     }
                     else
                     {
-                        //Device.BeginInvokeOnMainThread(() =>
-                        //{
+                        Device.BeginInvokeOnMainThread(() =>
+                        {
                             Diag.HideLoading();
-                        //});
+                        });
                     }
 					mocupado = value;
                     OnPropertyChanged("Ocupado");

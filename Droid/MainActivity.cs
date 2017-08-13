@@ -9,13 +9,32 @@ using Android.Widget;
 using Android.OS;
 using Acr.UserDialogs;
 using GMX.SegmentedControl.Android;
-//using SegmentedControl.FormsPlugin.Android;
+using GMX.Views;
 
 namespace GMX.Droid
 {
     [Activity(Theme = "@style/MyTheme", ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation, ScreenOrientation = ScreenOrientation.Portrait)]
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
     {
+        public override void OnBackPressed()
+        {
+            if (App.DoBack)
+                base.OnBackPressed();
+            else
+            {
+                var builder = new AlertDialog.Builder(this);
+                builder.SetMessage("¿Desea salir de la aplicación?");
+                builder.SetPositiveButton("SI", (s, e) =>
+                { /* do something on OK click */
+                    base.OnBackPressed();
+                });
+                builder.SetNegativeButton("NO", (s, e) =>
+                { /* do something on Cancel click */
+                });
+                builder.Create().Show();
+            }
+        }
+
         protected override void OnCreate(Bundle bundle)
         {
             TabLayoutResource = Resource.Layout.Tabbar;

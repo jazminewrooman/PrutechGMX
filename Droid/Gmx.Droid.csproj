@@ -152,6 +152,15 @@
     <Reference Include="System.Web.Services" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel" />
+    <Reference Include="Rg.Plugins.Popup">
+      <HintPath>..\packages\Rg.Plugins.Popup.1.0.4\lib\MonoAndroid\Rg.Plugins.Popup.dll</HintPath>
+    </Reference>
+    <Reference Include="Rg.Plugins.Popup.Droid">
+      <HintPath>..\packages\Rg.Plugins.Popup.1.0.4\lib\MonoAndroid\Rg.Plugins.Popup.Droid.dll</HintPath>
+    </Reference>
+    <Reference Include="Rg.Plugins.Popup.Platform">
+      <HintPath>..\packages\Rg.Plugins.Popup.1.0.4\lib\MonoAndroid\Rg.Plugins.Popup.Platform.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MainActivity.cs" />
@@ -184,7 +193,6 @@
     <AndroidResource Include="Resources\drawable\document2.png" />
     <AndroidResource Include="Resources\drawable\nocash.png" />
     <AndroidResource Include="Resources\drawable\tick.png" />
-    <AndroidResource Include="Resources\drawable\logogmx.png" />
     <AndroidResource Include="Resources\values\colors.xml" />
     <AndroidResource Include="Resources\color\segmented_control_text.xml" />
     <AndroidResource Include="Resources\drawable\segmented_control_background.xml" />
@@ -197,12 +205,15 @@
     <AndroidResource Include="Resources\drawable\next.png" />
     <AndroidResource Include="Resources\drawable\right.png" />
     <AndroidResource Include="Resources\drawable\flecha.png" />
-    <AndroidResource Include="Resources\drawable-hdpi\flecha.png" />
-    <AndroidResource Include="Resources\drawable-xhdpi\flecha.png" />
     <AndroidResource Include="Resources\drawable\shopping.png" />
     <AndroidResource Include="Resources\drawable\mail.png" />
     <AndroidResource Include="Resources\drawable\loading.xml" />
     <AndroidResource Include="Resources\drawable\logogmxblanco.png" />
+    <AndroidResource Include="Resources\drawable\medicosneg.png" />
+    <AndroidResource Include="Resources\drawable\splash.jpg" />
+    <AndroidResource Include="Resources\drawable-hdpi\splash.jpg" />
+    <AndroidResource Include="Resources\drawable\icon152.png" />
+    <AndroidResource Include="Resources\drawable\check.png" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Dependencies\" />

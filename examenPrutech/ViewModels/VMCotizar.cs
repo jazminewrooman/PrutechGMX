@@ -16,6 +16,7 @@ namespace GMX
     {
         INavigation nav;
         ListaSumasAseg lstsumas;
+        ListaSumaAngeles lstangeles;
 		public ICommand NextCommand { get; private set; }
         public ICommand EmailCommand { get; private set; }
         public ICommand ShopCommand { get; private set; }
@@ -50,13 +51,20 @@ namespace GMX
 			ShopCommand = new Command(async () =>
 			{
                 DatosGralesModel dgmodel = null;
-                var Welcome = new DatosGenerales(dgmodel, TipoDatos.Generales);
-                await nav.PushAsync(new DatosGenerales(dgmodel, TipoDatos.Generales));
+                //var Welcome = new DatosGenerales(dgmodel, TipoDatos.Generales);
+                await nav.PushAsync(new DatosGenerales(dgmodel, TipoDatos.Generales, this));
 			});
             /*EmailCommand = new Command(() => 
 			{
                 ;
 			});*/
+		}
+
+        public void IniciaCarga(){
+            Ocupado = true;
+			IdPlan = "1";
+			IniVig = DateTime.Now;
+            Ocupado = false;
 		}
 
         private bool Validar(){
@@ -148,52 +156,87 @@ namespace GMX
 				if (idplan != value)
 				{
                     idplan = value;
-                    CargaSumas(value);
+                    CargaSumas();
 					OnPropertyChanged("IdPlan");
 				}
 			}
 		}
-        private async Task CargaSumas(string idpl){
+        private async Task CargaSumas(){
+            ObservableCollection<opciones> lst = null;
 			Ocupado = true;
 			await System.Threading.Tasks.Task.Delay(TimeSpan.FromMilliseconds(100));
 			ValidarMuestroCuestionario();
 			wsbd.Service ws = new wsbd.Service(config.Config["APIBD"]);
 			string json = "";
-			if (idpl == "1") //tradicional
-				json = ws.get_catalogos("GetAllSumaAseg_Categoria", "");
-			if (idpl == "2") //angeles
-				json = ws.get_catalogos("GetAllSumaAseg_Angeles", "");
-			lstsumas = JsonConvert.DeserializeObject<ListaSumasAseg>(json);
-			ObservableCollection<opciones> lst = new ObservableCollection<opciones>();
-			foreach (SumaAsegXPlan s in lstsumas.Table)
-				lst.Add(new opciones() { idopc = s.idSumAse_Categoria.ToString(), opc = s.SumaAsegurada.ToString("c") });
+            if (idplan == "1") //tradicional
+			{
+                json = ws.get_catalogos("GetAllSumaAseg_Categoria", "");
+				lstsumas = JsonConvert.DeserializeObject<ListaSumasAseg>(json);
+				lst = new ObservableCollection<opciones>();
+				foreach (SumaAsegXPlan s in lstsumas.Table)
+					lst.Add(new opciones() { idopc = s.idSumAse_Categoria.ToString(), opc = s.SumaAsegurada.ToString("c") });
+			}
+            if (idplan == "2") //angeles
+            {
+                json = ws.get_catalogos("GetAllSumaAseg_Angeles", "");
+                lstangeles = JsonConvert.DeserializeObject<ListaSumaAngeles>(json);
+				lst = new ObservableCollection<opciones>();
+                foreach (SumaAsegAngeles s in lstangeles.Table)
+                    lst.Add(new opciones() { idopc = s.idSumAseg_Angeles.ToString(), opc = s.SumaAsegurada.ToString("c") });
+			}
 			LstSuma = lst;
 			Ocupado = false;
 			IdSuma = String.Empty;
+            SumaAseg = " ";
 		}
         private void EvaluaPrimaNeta(){
             string categoria = "";
             if (!String.IsNullOrEmpty(IdSuma))
             {
-                if (Cirugias)
+                if (idplan == "1") //tradicional
                 {
-                    categoria = "D";
-                    PrimaNeta = (decimal)lstsumas.Table.Where(x => x.idSumAse_Categoria == int.Parse(idsuma)).FirstOrDefault().D;
-                }
-                else
-                {
-                    categoria = "A";
-                    PrimaNeta = (decimal)lstsumas.Table.Where(x => x.idSumAse_Categoria == int.Parse(idsuma)).FirstOrDefault().A;
-                }
+                    if (Cirugias)
+                    {
+                        categoria = "D";
+                        PrimaNeta = (decimal)lstsumas.Table.Where(x => x.idSumAse_Categoria == int.Parse(idsuma)).FirstOrDefault().D;
+                    }
+                    else
+                    {
+                        categoria = "A";
+                        PrimaNeta = (decimal)lstsumas.Table.Where(x => x.idSumAse_Categoria == int.Parse(idsuma)).FirstOrDefault().A;
+                    }
+					Derechos = (decimal)lstsumas.Table.Where(x => x.idSumAse_Categoria == int.Parse(idsuma)).FirstOrDefault().derechos;
+				}
+                if (idplan == "2") //angeles
+                {   // ??? PrimaTotal o PrimaUnica ???
+                    PrimaNeta = (decimal)lstangeles.Table.Where(x => x.idSumAseg_Angeles == int.Parse(idsuma)).FirstOrDefault().PrimaUnica;
+					Derechos = (decimal)lstangeles.Table.Where(x => x.idSumAseg_Angeles == int.Parse(idsuma)).FirstOrDefault().derechos;
+				}
+                Cobertura = "RC Profesional\nRC Actividades e Inmuebles";
                 if (Adicional)
-					PrimaNeta = PrimaNeta + (0.10M * PrimaNeta);
-				Derechos = decimal.Parse(config.Config["DerechosPoliza"]);
+                {
+                    PrimaNeta = PrimaNeta + (0.10M * PrimaNeta);
+                    Cobertura += "\nRC Arrendatario";
+                }
                 SubTotal = PrimaNeta + Derechos;
                 Iva = SubTotal * 0.16M;
                 PrimaTotal = SubTotal + Iva;
             }
 		}
 
+		string cobertura;
+		public string Cobertura
+		{
+			get { return cobertura; }
+			set
+			{
+				if (cobertura != value)
+				{
+					cobertura = value;
+					OnPropertyChanged("Cobertura");
+				}
+			}
+		}
 		string idtipo;
 		public string IdTipo
 		{
@@ -381,6 +424,19 @@ namespace GMX
 					adicional = value;
 					EvaluaPrimaNeta();
 					OnPropertyChanged("Adicional");
+				}
+			}
+		}
+		bool clickauto;
+		public bool ClickAuto
+		{
+			get { return clickauto; }
+			set
+			{
+				if (clickauto != value)
+				{
+					clickauto = value;
+					OnPropertyChanged("ClickAuto");
 				}
 			}
 		}
