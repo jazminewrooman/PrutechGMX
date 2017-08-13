@@ -15,6 +15,7 @@ namespace GMX.Droid
 {
     [Activity(Theme = "@style/MyTheme", ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation, ScreenOrientation = ScreenOrientation.Portrait)]
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
+    //public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsApplicationActivity
     {
         public override void OnBackPressed()
         {

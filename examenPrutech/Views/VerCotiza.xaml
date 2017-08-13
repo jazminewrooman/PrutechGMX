@@ -3,13 +3,15 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
     x:Class="GMX.Views.VerCotiza">
-	<Frame Margin="30,100,30,150" Padding="10">
+    <ScrollView HorizontalOptions="Center" VerticalOptions="Center">
+	<Frame Margin="30" Padding="10">
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="40*"/>
                 <ColumnDefinition Width="60*"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
@@ -41,6 +43,8 @@
             <Label BackgroundColor="#c8dade" Grid.Column="1" Grid.Row="8" FontSize="Small" Text="{Binding Iva, StringFormat='{}{0:c}'}"/>
             <Label Grid.Column="0" Grid.Row="9" FontSize="Small" Text="Prima Total:"/>
             <Label Grid.Column="1" Grid.Row="9" FontSize="Small" Text="{Binding PrimaTotal, StringFormat='{}{0:c}'}"/>
+            <Button x:Name="btnCerrar" Grid.Column="0" Grid.Row="10" Grid.ColumnSpan="2" Text="Cerrar" Style="{StaticResource botonVerde}"/>
         </Grid>
 	</Frame>
+    </ScrollView>
 </pages:PopupPage>

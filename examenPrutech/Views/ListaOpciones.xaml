@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
     x:Class="GMX.Views.ListaOpciones">
+    <ScrollView HorizontalOptions="Center" VerticalOptions="Center">
         <Frame Margin="30,100,30,100" Padding="10">
         <StackLayout BackgroundColor="{StaticResource ligthgray}" Padding="0" HorizontalOptions="Fill" Orientation="Vertical" VerticalOptions="Fill">
             <StackLayout HeightRequest="20"/>
@@ -28,4 +29,5 @@
             <!--<Image Source="medicosneg" Opacity="0.3" Aspect="AspectFit"/>-->
         </StackLayout>
         </Frame>
+    </ScrollView>        
 </pages:PopupPage>

@@ -107,6 +107,7 @@
       <DependentUpon>VerCotiza.xaml</DependentUpon>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\converters.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\MyMasterDetail.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\WelcomePage.xaml">

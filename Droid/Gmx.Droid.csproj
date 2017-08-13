@@ -171,6 +171,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="loadingAct.cs" />
+    <Compile Include="Renderers\MyMasterDetailRenderer.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />

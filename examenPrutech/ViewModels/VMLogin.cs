@@ -102,9 +102,11 @@ namespace GMX
                 await App.navigation.PopToRootAsync();
                 var MainP = new NavigationPage(Welcome)
 				{
+                    //Icon = "slideout.png",
 					BarTextColor = Color.FromHex("#04b5b5"),
 					BarBackgroundColor = Color.White,
 				};
+                //var md = new GMX.Controls.MyMasterDetail();
                 var md = new MasterDetailPage();
                 md.Master = new menu(user);
                 md.Detail = MainP;

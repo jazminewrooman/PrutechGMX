@@ -13,6 +13,11 @@ namespace GMX.Views
             InitializeComponent();
 
             BindingContext = vm;
+
+            btnCerrar.Clicked += (s, e) =>
+            {
+                Navigation.PopPopupAsync(true);
+            };
         }
     }
 }

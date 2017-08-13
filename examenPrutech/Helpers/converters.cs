@@ -1,5 +1,5 @@
 ﻿using System;
-namespace Gmx.Helpers
+namespace GMX.Helpers
 {
     public class converters
     {
