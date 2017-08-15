@@ -108,6 +108,7 @@
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\converters.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\MyMasterDetail.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\Extensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\WelcomePage.xaml">

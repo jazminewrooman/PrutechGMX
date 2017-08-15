@@ -40,5 +40,12 @@
     <data name="Manifiesto" xml:space="preserve">
        <value>Manifiesto  que los datos personales y profesionales son correctos y fueron verificados con el Asegurado</value>
     </data>
+	<data name="NoCP" xml:space="preserve">
+       <value>No existe el Codigo Postal, favor de verificar</value>
+    </data>
+	<data name="UserNoExist" xml:space="preserve">
+       <value>Usuario y/o contraseña no valido, favor de verificar</value>
+    </data>
+
 	
 </root>

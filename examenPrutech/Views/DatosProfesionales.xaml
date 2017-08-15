@@ -1,9 +1,15 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
 	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
 	x:Class="GMX.Views.DatosProfesionales">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Name="Menu1" Command="{Binding NextCommand}" Icon="flecha.png" Order="Primary" Priority="0"/>     </ContentPage.ToolbarItems>
 	<ContentPage.Content>
-		<ScrollView>
+        <StackLayout>
+            <StackLayout>
+                <Button Text="Ver Cotización" Command="{Binding VerCotizaCommand}" Style="{StaticResource botonVerde}"/>
+            </StackLayout>
+		    <ScrollView>
 			<StackLayout>
 				
 				<Label Text="Descripción"  Style="{StaticResource labels}"/>
@@ -22,6 +28,7 @@
 				<Entry Text="{Binding Diplomados, Mode=TwoWay}"/>
 				
 			</StackLayout>
-		</ScrollView>
+		    </ScrollView>
+        </StackLayout>
 	</ContentPage.Content>
 </ContentPage>

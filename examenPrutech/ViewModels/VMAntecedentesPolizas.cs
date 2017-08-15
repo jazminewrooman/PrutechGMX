@@ -12,14 +12,19 @@ using System.Threading.Tasks;
 
 namespace GMX
 {
-	public class VMAntecedentesPolizas : VMGmx
-	{
-		INavigation nav;
+    public class VMAntecedentesPolizas : VMGmx
+    {
+        INavigation nav;
 
-		public ICommand NextCommand { get; private set; }
+        public ICommand NextCommand { get; private set; }
 
-		public VMAntecedentesPolizas(IUserDialogs diag, INavigation n) : base(diag)
-		{
-		}
-	}
+        public VMAntecedentesPolizas(IUserDialogs diag, INavigation n) : base(diag)
+        {
+            nav = n;
+            NextCommand = new Command(async () =>
+            {
+                await nav.PushAsync(new MetodoPago());
+		    });
+        }
+    }
 }

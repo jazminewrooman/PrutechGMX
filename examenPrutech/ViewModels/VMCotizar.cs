@@ -50,9 +50,7 @@ namespace GMX
             });
 			ShopCommand = new Command(async () =>
 			{
-                DatosGralesModel dgmodel = null;
-                //var Welcome = new DatosGenerales(dgmodel, TipoDatos.Generales);
-                await nav.PushAsync(new DatosGenerales(dgmodel, TipoDatos.Generales, this));
+                await nav.PushAsync(new DatosGenerales(datosgrales, TipoDatos.Generales, this));
 			});
             /*EmailCommand = new Command(() => 
 			{
@@ -74,6 +72,45 @@ namespace GMX
                 return true;
         }
 
+        DatosGralesModel datosfiscales;
+		public DatosGralesModel DatosFiscales
+		{
+			get { return datosfiscales; }
+			set
+			{
+				if (datosfiscales != value)
+				{
+					datosfiscales = value;
+					OnPropertyChanged("DatosFiscales");
+				}
+			}
+		}
+		DatosGralesModel datosgrales;
+		public DatosGralesModel DatosGrales
+		{
+			get { return datosgrales; }
+			set
+			{
+				if (datosgrales != value)
+				{
+					datosgrales = value;
+					OnPropertyChanged("DatosGrales");
+				}
+			}
+		}
+        /*bool fiscales = false;
+		public bool Fiscales
+		{
+			get { return fiscales; }
+			set
+			{
+				if (fiscales != value)
+				{
+					fiscales = value;
+					OnPropertyChanged("Fiscales");
+				}
+			}
+		}*/
 		string txtcontratar;
 		public string TxtContratar
 		{

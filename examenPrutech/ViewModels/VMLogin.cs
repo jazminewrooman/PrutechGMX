@@ -118,7 +118,7 @@ namespace GMX
             catch(Exception ex)
             {
                 Ocupado = false;
-                await Diag.AlertAsync("Usuario y/o contraseña no valido, favor de verificar", "Error", "OK");
+                await Diag.AlertAsync(Resources.UserNoExist, "Error", "OK");
             }
         }
 

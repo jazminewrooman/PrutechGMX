@@ -7,40 +7,53 @@ using GMX.SegmentedControl;
 
 namespace GMX.Views
 {
-[XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class DatosGenerales : ContentPage
-	{
+    [XamlCompilation(XamlCompilationOptions.Compile)]
+    public partial class DatosGenerales : ContentPage
+    {
         public VMCotizar vmcot;
         public VMDatosGenerales vm;
 
-        public DatosGenerales(DatosGralesModel dgmodel, TipoDatos td, VMCotizar v)
-		{
-			InitializeComponent();
-			vmcot = v;
-            vm = new VMDatosGenerales(UserDialogs.Instance, Navigation, vmcot);
-			this.BindingContext = vm;
+        public DatosGenerales()
+        {
+            InitializeComponent();
+        }
 
-            //seg.ValueChanged += async (sender, e) => {
-            //    await DisplayAlert("a", seg.SelectedSegment.ToString(), "ok");
-            //};
+        public DatosGenerales(DatosGralesModel dg, TipoDatos td, VMCotizar v)
+        {
+            InitializeComponent();
+            vmcot = v;
+            vm = new VMDatosGenerales(UserDialogs.Instance, Navigation, vmcot, td);
+            this.BindingContext = vm;
 
-			if (dgmodel != null)
-			{
-				//Si el modelo trae datos, la vista servirá para editar datos existentes
-				vm.CargaDatosGenerales(dgmodel, td);
-			}
-			else 
-			{
-				//Si el modelo se encuentra vacio quiere decir que la vista servirá para captura de datos
-				if (td.Equals(TipoDatos.Fiscales))
-					Title = "DATOS FISCALES";
-				else
-					Title = "DATOS GENERALES";
+            edtDirecc.TextChanged += (sender, e) => edtDirecc.UpdateLayout();
 
-			}
+            seg.ValueChanged += (sender, e) => {
+                if (seg.SelectedSegment == 0)
+                    vm.Persona = TipoPersona.Fisica;
+				if (seg.SelectedSegment == 1)
+                    vm.Persona = TipoPersona.Moral;
+			};
 
+            if (dg != null)
+            {
+                //Si el modelo trae datos, la vista servirá para editar datos existentes
+                vm.CargaDatosGenerales(dg, td);
+                seg.SelectedSegment = (int)dg.Persona;
+            }
 
-		}
-
-	}
+            //Si el modelo se encuentra vacio quiere decir que la vista servirá para captura de datos
+            if (td == TipoDatos.Fiscales)
+            {
+                Title = "Datos Fiscales";
+                seg.IsVisible = true;
+                btnFiscales.IsVisible = false;
+            }
+            else
+            {
+                Title = "Datos Generales";
+                seg.IsVisible = false;
+                btnFiscales.IsVisible = true;
+            }
+        }
+    }
 }

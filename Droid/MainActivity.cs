@@ -26,11 +26,11 @@ namespace GMX.Droid
                 var builder = new AlertDialog.Builder(this);
                 builder.SetMessage("¿Desea salir de la aplicación?");
                 builder.SetPositiveButton("SI", (s, e) =>
-                { /* do something on OK click */
+                {
                     base.OnBackPressed();
                 });
                 builder.SetNegativeButton("NO", (s, e) =>
-                { /* do something on Cancel click */
+                {
                 });
                 builder.Create().Show();
             }

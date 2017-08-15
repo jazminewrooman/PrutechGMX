@@ -5,6 +5,9 @@
     Title = "{Binding Title}"
     xmlns:controls="clr-namespace:GMX.SegmentedControl;"
     xmlns:local="clr-namespace:GMX.Helpers;">
+    <ContentPage.ToolbarItems> 
+        <ToolbarItem Name="Menu1" Command="{Binding NextCommand}" Icon="flecha.png" Order="Primary" Priority="0"/> 
+    </ContentPage.ToolbarItems>
 	<ContentPage.Content>
         <StackLayout>
             <StackLayout>
@@ -13,12 +16,12 @@
     		<ScrollView>
     			<StackLayout Padding="20" Spacing="10">
 
-                    <!--<controls:SegmentedControl x:Name="seg" Style="{StaticResource segmented}">
+                    <controls:SegmentedControl x:Name="seg" Style="{StaticResource segmented}">
                         <controls:SegmentedControl.Children>
-                            <controls:SegmentedControlOption Text="uno"/>
-                            <controls:SegmentedControlOption Text="dos"/>
+                            <controls:SegmentedControlOption Text="Persona Fisica"/>
+                            <controls:SegmentedControlOption Text="Persona Moral"/>
                         </controls:SegmentedControl.Children>
-                    </controls:SegmentedControl>-->
+                    </controls:SegmentedControl>
 
                     <Label Text="RFC (con homoclave)" Style="{StaticResource labels}"/>
     				<Entry Text="{Binding RFC}">
@@ -29,21 +32,37 @@
                     </Entry>
 
     				<Label Text="Nombre"  Style="{StaticResource labels}"/>
-    				<Entry Text="{Binding Nombre, Mode=TwoWay}"/>
+    				<Entry Text="{Binding Nombre, Mode=TwoWay}">
+                        <Entry.Behaviors>
+                            <local:MaxLengthValidator MaxLength="100"/>
+                        </Entry.Behaviors>
+                    </Entry>
 
     				<Label Text="Apellido paterno"  Style="{StaticResource labels}"/>
-    				<Entry Text="{Binding APaterno, Mode=TwoWay}"/>
+    				<Entry Text="{Binding APaterno, Mode=TwoWay}">
+                        <Entry.Behaviors>
+                            <local:MaxLengthValidator MaxLength="50"/>
+                        </Entry.Behaviors>
+                    </Entry>
 
     				<Label Text="Apellido materno"  Style="{StaticResource labels}"/>
-    				<Entry Text="{Binding AMaterno, Mode=TwoWay}"/>
+    				<Entry Text="{Binding AMaterno, Mode=TwoWay}">
+                        <Entry.Behaviors>
+                            <local:MaxLengthValidator MaxLength="50"/>
+                        </Entry.Behaviors>
+                    </Entry>
 
     				<Label Text="Calle, número exterior, número interior"  Style="{StaticResource labels}"/>
-    				<Editor HeightRequest="50" Text="{Binding Direccion, Mode=TwoWay}"/>
+    				<Editor x:Name="edtDirecc" HeightRequest="50" Text="{Binding Direccion, Mode=TwoWay}"/>
 
     				<Label Text="Teléfono (con lada)"  Style="{StaticResource labels}"/>
-    				<Entry Text="{Binding Telefono, Mode=TwoWay}"/>
+    				<Entry Text="{Binding Telefono, Mode=TwoWay}">
+                        <Entry.Behaviors>
+                            <local:MaxLengthValidator MaxLength="20"/>
+                        </Entry.Behaviors>
+                    </Entry>
 
-    				<Label Text="Código Postal"  Style="{StaticResource labels}"/>
+                    <Label Text="Código Postal"  Style="{StaticResource labels}"/>
     				<Entry Text="{Binding CP, Mode=TwoWay}">
                         <Entry.Behaviors>
                             <local:MaxLengthValidator MaxLength="5" />
@@ -63,10 +82,18 @@
     				<Picker SelectedIndex="{Binding Colonia, Mode=TwoWay}" ItemsSource="{Binding Colonias}"/>
 
     				<Label Text="Correo electrónico"  Style="{StaticResource labels}"/>
-    				<Entry Text="{Binding Correo, Mode=TwoWay}"/>
-    				
+    				<Entry Text="{Binding Correo}">
+                        <Entry.Behaviors>
+                            <local:MaxLengthValidator MaxLength="50" />
+                            <local:EmailValidationBehavior IsValid="{Binding CorreoValido, Mode=TwoWay}"/>
+                        </Entry.Behaviors>
+                    </Entry>
+                    
     			</StackLayout>
-    		</ScrollView>
+            </ScrollView>
+            <StackLayout>
+                <Button x:Name="btnFiscales" Text="Facturar a nombre de persona distinta al asegurado" Command="{Binding FiscalesCommand}" Style="{StaticResource botonVerde}"/>
+            </StackLayout>
         </StackLayout>
 	</ContentPage.Content>
 </ContentPage>

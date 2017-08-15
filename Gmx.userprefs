@@ -1,9 +1,24 @@
-﻿<Properties StartupConfiguration="{BA6AB127-05DF-447D-AE76-1287DE2FB771}|Default">
-  <MonoDevelop.Ide.ItemProperties.Gmx.Droid AndroidDesignerPreferredDevice="Nexus 4" PreferredExecutionTarget="Android.27d9f243" />
-  <MonoDevelop.Ide.Workbench />
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+﻿<Properties StartupConfiguration="{CE10328E-D6E5-4C2A-B0BD-121B16DB5327}|Default" GitUserInfo="UsingMD">
+  <MonoDevelop.Ide.ItemProperties.Gmx.Droid AndroidDesignerPreferredDevice="Nexus 4" PreferredExecutionTarget="Android.Nexus_5X_API_25" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="PrutechGMX Status">
+    <Files>
+      <File FileName="examenPrutech/ViewModels/VMDatosGenerales.cs" Line="32" Column="1" />
+      <File FileName="examenPrutech/ViewModels/VMCotizar.cs" Line="23" Column="9" />
+      <File FileName="examenPrutech/Views/DatosGenerales.xaml.cs" Line="42" Column="1" />
+      <File FileName="examenPrutech/ViewModels/VMAntecedentesPolizas.cs" Line="26" Column="51" />
+      <File FileName="examenPrutech/Views/MetodoPago.xaml" Line="8" Column="1" />
+      <File FileName="examenPrutech/ViewModels/VMMetodoPago.cs" Line="1" Column="1" />
+      <File FileName="PrutechGMX Status" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|iPhoneSimulator" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore />
+    <BreakpointStore>
+      <Breakpoint file="/Users/jazz/Projects/jazminewrooman/PrutechGMX/examenPrutech/Views/BasePage.cs" relfile="examenPrutech/Views/BasePage.cs" line="26" column="1" />
+      <Breakpoint file="/Users/jazz/Projects/jazminewrooman/PrutechGMX/examenPrutech/Views/BasePage.cs" relfile="examenPrutech/Views/BasePage.cs" line="44" column="1" />
+      <Breakpoint file="/Users/jazz/Projects/jazminewrooman/PrutechGMX/Droid/Renderers/MyMasterDetailRenderer.cs" relfile="Droid/Renderers/MyMasterDetailRenderer.cs" line="16" column="1" />
+      <Breakpoint file="/Users/jazz/Projects/jazminewrooman/PrutechGMX/Droid/Renderers/MyMasterDetailRenderer.cs" relfile="Droid/Renderers/MyMasterDetailRenderer.cs" line="14" column="1" />
+    </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.ItemProperties.Gmx.iOS PreferredExecutionTarget="MonoDevelop.IPhone.IPhoneSimulatorTarget.FC6EBC55-4EBF-471C-A3DF-128A6F97D265" />
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />

@@ -100,5 +100,17 @@ namespace GMX {
                 return ResourceManager.GetString("Manifiesto", resourceCulture);
             }
         }
+        
+        internal static string NoCP {
+            get {
+                return ResourceManager.GetString("NoCP", resourceCulture);
+            }
+        }
+        
+        internal static string UserNoExist {
+            get {
+                return ResourceManager.GetString("UserNoExist", resourceCulture);
+            }
+        }
     }
 }

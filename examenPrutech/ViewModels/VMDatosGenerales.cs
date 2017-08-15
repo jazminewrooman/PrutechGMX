@@ -20,6 +20,7 @@ namespace GMX
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public class VMDatosGenerales : VMGmx
 	{
+        VMCotizar vmcotizar;
 		INavigation nav;
 		private bool datosdeservicio = false;
         private Dictionary<string, estado> lstedos;
@@ -27,17 +28,83 @@ namespace GMX
         private Dictionary<string, ciudad> lstciud;
         private Dictionary<string, colonia> lstcols;
         public ICommand VerCotizaCommand { get; private set; }
+		public ICommand NextCommand { get; private set; }
+        public ICommand FiscalesCommand { get; private set; }
+        TipoDatos tipo;
 
-        public VMDatosGenerales(IUserDialogs diag, INavigation n, VMCotizar vmcot) : base(diag)
-		{
+        public VMDatosGenerales(IUserDialogs diag, INavigation n, VMCotizar vmcot, TipoDatos td) : base(diag)
+        {
             nav = n;
-            Title = "Datos Generales";
-			VerCotizaCommand = new Command(async () =>
-			{
-                await n.PushPopupAsync(new VerCotiza(vmcot), true);
-			});
+            vmcotizar = vmcot;
+            tipo = td;
+            VerCotizaCommand = new Command(async () =>
+            {
+                await nav.PushPopupAsync(new VerCotiza(vmcot), true);
+            });
+            NextCommand = new Command(async () =>
+            {
+                if (!Validar())
+                    await Diag.AlertAsync(Resources.FaltanOb, "Error", "Ok");
+                else
+                    await nav.PushAsync(new DatosProfesionales(vmcot));
+            });
+            FiscalesCommand = new Command(async () =>
+            {
+                if (!Validar())
+                    await Diag.AlertAsync(Resources.FaltanOb, "Error", "Ok");
+                else
+                {
+                    await nav.PushAsync(new DatosGenerales(vmcotizar.DatosFiscales, TipoDatos.Fiscales, vmcotizar));
+                }
+            });
+        }
+
+		private bool Validar()
+		{
+            if (String.IsNullOrEmpty(RFC) || String.IsNullOrEmpty(Nombre) || String.IsNullOrEmpty(APaterno)
+                || String.IsNullOrEmpty(AMaterno) || String.IsNullOrEmpty(Direccion) || String.IsNullOrEmpty(CP) 
+                || Estado < 0 || Municipio < 0 || Ciudad < 0 || Colonia < 0
+                || String.IsNullOrEmpty(Correo) || !RFCValido || !CorreoValido)
+                return false;
+            else
+            {
+                DatosGralesModel dg = new DatosGralesModel()
+                {
+                    RFC = RFC,
+                    Nombre = Nombre,
+                    APaterno = APaterno,
+                    AMaterno = AMaterno,
+                    Direccion = Direccion,
+                    Telefono = Telefono,
+                    CP = CP,
+                    Estado = int.Parse(lstedos.ElementAt(Estado).Value.cod_dpto),
+                    Municipio = int.Parse(lstmun.ElementAt(Municipio).Value.cod_municipio),
+                    Ciudad = int.Parse(lstciud.ElementAt(Ciudad).Value.cod_ciudad),
+                    Colonia = int.Parse(lstcols.ElementAt(Colonia).Value.cod_colonia),
+                    Correo = Correo,
+                    Persona = Persona,
+                };
+                if (tipo == TipoDatos.Generales)
+                    vmcotizar.DatosGrales = dg;
+                if (tipo == TipoDatos.Fiscales)
+                    vmcotizar.DatosFiscales = dg;
+				return true;
+            }
 		}
 
+		TipoPersona persona;
+        public TipoPersona Persona
+		{
+			get { return persona; }
+			set
+			{
+				if (persona != value)
+				{
+					persona = value;
+					OnPropertyChanged("Persona");
+				}
+			}
+		}
 		string rfc;
 		public string RFC
 		{
@@ -64,6 +131,20 @@ namespace GMX
                     if (value)
 					    CargaRFC();
 					OnPropertyChanged("RFCValido");
+				}
+			}
+		}
+
+		bool correovalido;
+		public bool CorreoValido
+		{
+			get { return correovalido; }
+			set
+			{
+				if (correovalido != value)
+				{
+					correovalido = value;
+					OnPropertyChanged("CorreoValido");
 				}
 			}
 		}
@@ -268,7 +349,7 @@ namespace GMX
 					Estado = -1;
                     Municipio = -1;
                     Ciudad = -1;
-                    await Diag.AlertAsync("No existe el Codigo Postal, favor de verificar", "Error", "OK");
+                    await Diag.AlertAsync(Resources.NoCP, "Error", "OK");
                 }
                 else
                 {
@@ -418,6 +499,7 @@ namespace GMX
 
 		public void CargaDatosGenerales(DatosGralesModel dgmodel, TipoDatos td)
 		{
+            datosdeservicio = true;
 			RFC = dgmodel.RFC;
 			Nombre = dgmodel.Nombre;
 			APaterno = dgmodel.APaterno;
@@ -430,11 +512,12 @@ namespace GMX
 			Ciudad = dgmodel.Ciudad;
 			Colonia = dgmodel.Colonia;
 			Correo = dgmodel.Correo;
-
+            Persona = dgmodel.Persona;
+            datosdeservicio = false;
 			if (td.Equals(TipoDatos.Fiscales))
-				Title = "DATOS FISCALES";
+				Title = "Datos Fiscales";
 			else
-				Title = "DATOS GENERALES";
+				Title = "Datos Generales";
 		}
 	}
 }

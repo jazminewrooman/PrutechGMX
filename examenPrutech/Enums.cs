@@ -10,4 +10,10 @@ namespace GMX
 		Generales = 0,
 		Fiscales = 1
 	};
+
+	public enum TipoPersona
+	{
+		Fisica = 0,
+		Moral = 1
+	};
 }
