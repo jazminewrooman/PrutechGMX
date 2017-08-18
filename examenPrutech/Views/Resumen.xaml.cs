@@ -22,12 +22,14 @@ namespace GMX.Views
 			//GMX.wspago.PaymentCenter ws = new GMX.wspago.PaymentCenter();
 			//GMX.wspago.KeyValue[] kv = ws.GetMerchantIds();
 
-			/*bindings b = new bindings();
+			bindings b = new bindings();
 			b.IniciaWS();
 			var cod = new Dictionary<string, string>();
-			cod.Add("clientRFC", "CELD821223NX6");
-			var crypdata = await b.getCatalog("GetClientByRFC", cod);
-			var strdata = await b.decrypt(crypdata.Result);*/
+			cod.Add("profesionId", "8");
+            cod.Add("descProfId", "22");
+			var crypdata = await b.getCatalog("GetEspecialidadesByProfesionAndDescProf", cod);
+            //var crypdata = await b.getCatalog("GetSTipoRiesgoDesByCveTipoRgoAndCveSTipoRgo", cod);
+			var strdata = await b.decrypt(crypdata.Result);
 		}
     }
 }
