@@ -9,6 +9,7 @@ using Newtonsoft.Json;
 using System.Windows.Input;
 using System.Linq;
 using System.Threading.Tasks;
+using GMX.Models;
 
 namespace GMX
 {
@@ -21,14 +22,16 @@ namespace GMX
         public ICommand EmailCommand { get; private set; }
         public ICommand ShopCommand { get; private set; }
 
+        public bool VerImg => !VerCuestionario;
+
 		public VMCotizar(IUserDialogs diag, INavigation n) : base(diag)
 		{
             nav = n;
             SumaAseg = "";
             TxtPlan = "Plan";
             ObservableCollection<opciones> lst = new ObservableCollection<opciones>();
-			lst.Add(new opciones() { idopc = "1", opc = "Médicos Tradicional" });
-            lst.Add(new opciones() { idopc = "2", opc = "Médicos Angeles" });
+            lst.Add(new opciones() { idopc = "1", opc = "Médicos Tradicional", sel = true });
+            lst.Add(new opciones() { idopc = "2", opc = "Médicos Angeles", sel = false });
             LstPlan = lst;
             TxtTipo = "Tipo de Póliza";
             ObservableCollection<opciones> lst2 = new ObservableCollection<opciones>();
@@ -71,7 +74,32 @@ namespace GMX
             else
                 return true;
         }
-
+        PolizasAnteriores antecedentes;
+		public PolizasAnteriores Antecedentes
+		{
+			get { return antecedentes; }
+			set
+			{
+				if (antecedentes != value)
+				{
+					antecedentes = value;
+					OnPropertyChanged("Antecedentes");
+				}
+			}
+		}
+        DatosProfesionales datosprof;
+		public DatosProfesionales DatosProf
+		{
+			get { return datosprof; }
+			set
+			{
+				if (datosprof != value)
+				{
+					datosprof = value;
+					OnPropertyChanged("DatosProf");
+				}
+			}
+		}
         DatosGralesModel datosfiscales;
 		public DatosGralesModel DatosFiscales
 		{
@@ -98,19 +126,6 @@ namespace GMX
 				}
 			}
 		}
-        /*bool fiscales = false;
-		public bool Fiscales
-		{
-			get { return fiscales; }
-			set
-			{
-				if (fiscales != value)
-				{
-					fiscales = value;
-					OnPropertyChanged("Fiscales");
-				}
-			}
-		}*/
 		string txtcontratar;
 		public string TxtContratar
 		{
@@ -181,6 +196,7 @@ namespace GMX
 				{
 					vercuestionario = value;
 					OnPropertyChanged("VerCuestionario");
+                    OnPropertyChanged("VerImg");
 				}
 			}
 		}
@@ -198,6 +214,53 @@ namespace GMX
 				}
 			}
 		}
+        private DateTime fretroactiva;
+        public DateTime FRetroactiva
+        {
+            get => fretroactiva;
+            set
+            {
+                if (fretroactiva != value)
+                {
+                    fretroactiva = value;
+                    OnPropertyChanged("FRetroactiva");
+                }
+            }
+        }
+        private DateTime fposterior;
+		public DateTime FPosterior
+		{
+			get => fposterior;
+			set
+			{
+				if (fposterior != value)
+				{
+					fposterior = value;
+					OnPropertyChanged("FPosterior");
+				}
+			}
+		}
+
+        private void CargaFechas(ListaFechaCotiz fechas)
+        {
+            FechaCotizacion f = fechas.Table.FirstOrDefault();
+            if (f.numMesesPost > -1 && f.numMesesRetro > -1)
+            {
+                FRetroactiva = DateTime.Now.AddMonths(f.numMesesRetro * -1);
+                FPosterior = DateTime.Now.AddMonths(f.numMesesPost);
+            }
+            else if (f.diasPosteriores > -1 && f.diasRetroactivos > -1)
+            {
+                FRetroactiva = DateTime.Now.AddDays(f.diasRetroactivos * -1).Date;
+                FPosterior = DateTime.Now.AddDays(f.diasPosteriores).Date;
+            }
+            else
+            {
+                FRetroactiva = (f.fecRetroactiva == null ? DateTime.MinValue : (DateTime)f.fecRetroactiva);
+                FPosterior = (f.fecPosterior == null ? DateTime.MinValue : (DateTime)f.fecPosterior);
+            }
+        }
+
         private async Task CargaSumas(){
             ObservableCollection<opciones> lst = null;
 			Ocupado = true;
@@ -212,6 +275,9 @@ namespace GMX
 				lst = new ObservableCollection<opciones>();
 				foreach (SumaAsegXPlan s in lstsumas.Table)
 					lst.Add(new opciones() { idopc = s.idSumAse_Categoria.ToString(), opc = s.SumaAsegurada.ToString("c") });
+                json = ws.get_catalogos("getConfigFecCotizacion", "@nomPlan = 'Tradicional'");
+                ListaFechaCotiz fechas = JsonConvert.DeserializeObject<ListaFechaCotiz>(json);
+                CargaFechas(fechas);
 			}
             if (idplan == "2") //angeles
             {
@@ -220,11 +286,15 @@ namespace GMX
 				lst = new ObservableCollection<opciones>();
                 foreach (SumaAsegAngeles s in lstangeles.Table)
                     lst.Add(new opciones() { idopc = s.idSumAseg_Angeles.ToString(), opc = s.SumaAsegurada.ToString("c") });
+				json = ws.get_catalogos("getConfigFecCotizacion", "@nomPlan = 'Angeles'");
+				ListaFechaCotiz fechas = JsonConvert.DeserializeObject<ListaFechaCotiz>(json);
+				CargaFechas(fechas);
 			}
 			LstSuma = lst;
 			Ocupado = false;
 			IdSuma = String.Empty;
             SumaAseg = " ";
+            IniVig = DateTime.Now.Date;
 		}
         private void EvaluaPrimaNeta(){
             string categoria = "";

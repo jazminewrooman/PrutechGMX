@@ -44,13 +44,13 @@ namespace GMX.Views
             //Si el modelo se encuentra vacio quiere decir que la vista servirá para captura de datos
             if (td == TipoDatos.Fiscales)
             {
-                Title = "Datos Fiscales";
+                //Title = "Datos Fiscales";
                 seg.IsVisible = true;
                 btnFiscales.IsVisible = false;
             }
             else
             {
-                Title = "Datos Generales";
+                //Title = "Datos Generales";
                 seg.IsVisible = false;
                 btnFiscales.IsVisible = true;
             }

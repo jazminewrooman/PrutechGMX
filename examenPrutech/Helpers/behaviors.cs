@@ -15,6 +15,46 @@ namespace GMX.Helpers
         }
     }
 
+	public class IntValidationBehavior : Behavior<Entry>
+	{
+        public int MaxLength { get; set; }
+		
+        static readonly BindablePropertyKey IsValidPropertyKey = BindableProperty.CreateReadOnly("IsValid", typeof(bool), typeof(IntValidationBehavior), false);
+		public static readonly BindableProperty IsValidProperty = IsValidPropertyKey.BindableProperty;
+		public bool IsValid
+		{
+			get { return (bool)base.GetValue(IsValidProperty); }
+			private set { base.SetValue(IsValidPropertyKey, value); }
+		}
+
+		protected override void OnAttachedTo(Entry entry)
+		{
+			entry.TextChanged += OnEntryTextChanged;
+			base.OnAttachedTo(entry);
+		}
+		protected override void OnDetachingFrom(Entry entry)
+		{
+			entry.TextChanged -= OnEntryTextChanged;
+			base.OnDetachingFrom(entry);
+		}
+		void OnEntryTextChanged(object sender, TextChangedEventArgs args)
+		{
+			int result;
+			IsValid = int.TryParse(args.NewTextValue, out result);
+			((Entry)sender).Text = (IsValid ? args.NewTextValue : "");
+
+            if (MaxLength > 0)
+            {
+                IsValid = IsValid && args.NewTextValue.Length == MaxLength;
+                if (args.NewTextValue.Length > MaxLength)
+                    ((Entry)sender).Text = args.OldTextValue;
+            }
+			//((Entry)sender).TextChanged -= OnEntryTextChanged;
+            ((Entry)sender).TextColor = IsValid ? Color.Default : Color.Red;
+
+		}
+	}
+
 	public class UpperValidator : Behavior<Entry>
 	{
 		protected override void OnAttachedTo(Entry bindable)
@@ -46,22 +86,25 @@ namespace GMX.Helpers
         {
             var entry = (Entry)sender;
 
-            if (entry.Text.Length > this.MaxLength)
+            if (!String.IsNullOrEmpty(entry.Text))
             {
-                string entryText = entry.Text;
-                entry.TextChanged -= OnEntryTextChanged;
-                if (Upper)
-                    entry.Text = e.OldTextValue.ToUpper();
+                if (entry.Text.Length > this.MaxLength)
+                {
+                    string entryText = entry.Text;
+                    entry.TextChanged -= OnEntryTextChanged;
+                    if (Upper)
+                        entry.Text = e.OldTextValue.ToUpper();
+                    else
+                        entry.Text = e.OldTextValue;
+                    entry.TextChanged += OnEntryTextChanged;
+                }
                 else
-                    entry.Text = e.OldTextValue;
-                entry.TextChanged += OnEntryTextChanged;
-            }
-            else
-            {
-                //entry.TextChanged -= OnEntryTextChanged;
-                if (Upper)
-                    entry.Text = e.NewTextValue.ToUpper();
-                //entry.TextChanged += OnEntryTextChanged;
+                {
+                    if (Upper)
+                        entry.Text = e.NewTextValue.ToUpper();
+                }
+                if (entry.Text.Length == MaxLength)
+                    entry.Unfocus();
             }
         }
          protected override void OnDetachingFrom(Entry bindable)         {
@@ -116,6 +159,7 @@ namespace GMX.Helpers
 			string pattern = @"[A-Z,Ñ,&]{3,4}([0-9]{2})(0[1-9]|1[0-2])(0[1-9]|1[0-9]|2[0-9]|3[0-1])[A-Z|\d]{3}";
 			IsValid = (Regex.IsMatch(args.NewTextValue, pattern, RegexOptions.IgnoreCase, TimeSpan.FromMilliseconds(250)));
             ((Entry)sender).TextColor = IsValid ? Color.Default : Color.Red;
+            if (IsValid) ((Entry)sender).Unfocus();
 		}
 	}
 }

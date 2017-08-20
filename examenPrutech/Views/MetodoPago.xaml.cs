@@ -11,7 +11,7 @@ namespace GMX.Views
 		{
 			InitializeComponent();
 
-			var vm = new VMResumenDatos(UserDialogs.Instance, Navigation);
+            var vm = new VMMetodoPago(UserDialogs.Instance, Navigation);
 			BindingContext = vm;
 			Title = "Método de Pago";
 

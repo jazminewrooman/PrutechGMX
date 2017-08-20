@@ -25,10 +25,14 @@ namespace GMX.Views
 			bindings b = new bindings();
 			b.IniciaWS();
 			var cod = new Dictionary<string, string>();
-			cod.Add("profesionId", "8");
-            cod.Add("descProfId", "22");
-			var crypdata = await b.getCatalog("GetEspecialidadesByProfesionAndDescProf", cod);
-            //var crypdata = await b.getCatalog("GetSTipoRiesgoDesByCveTipoRgoAndCveSTipoRgo", cod);
+
+            //cod.Add("profesionId", "8");
+            //cod.Add("descProfId", "22");
+            //var crypdata = await b.getCatalog("GetEspecialidadesByProfesionAndDescProf", cod);
+
+            cod.Add("agentId", "100");
+            var crypdata = await b.getCatalog("GetAgentById", cod);
+
 			var strdata = await b.decrypt(crypdata.Result);
 		}
     }

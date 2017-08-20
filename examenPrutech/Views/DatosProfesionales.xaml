@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
 	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
-	x:Class="GMX.Views.DatosProfesionales">
+    Title="{Binding Title}"
+    xmlns:local="clr-namespace:GMX.Helpers;"
+	BackgroundColor="{StaticResource ligthgray}" x:Class="GMX.Views.DatosProfesionales">
     <ContentPage.ToolbarItems>
         <ToolbarItem Name="Menu1" Command="{Binding NextCommand}" Icon="flecha.png" Order="Primary" Priority="0"/>     </ContentPage.ToolbarItems>
 	<ContentPage.Content>
@@ -10,24 +12,36 @@
                 <Button Text="Ver Cotización" Command="{Binding VerCotizaCommand}" Style="{StaticResource botonVerde}"/>
             </StackLayout>
 		    <ScrollView>
-			<StackLayout>
+                <StackLayout Padding="20" Spacing="10">
 				
-				<Label Text="Descripción"  Style="{StaticResource labels}"/>
-				<Entry Text="{Binding Descripcion, Mode=TwoWay}"/>
+    				<Label Text="Descripción"  Style="{StaticResource labels}"/>
+    				<Entry IsEnabled="false" Text="{Binding Descripcion, Mode=TwoWay}"/>
 
-				<Label Text="Especialidad"  Style="{StaticResource labels}"/>
-				<Entry Text="{Binding Especialidad, Mode=TwoWay}"/>
+    				<Label Text="Especialidad"  Style="{StaticResource labels}"/>
+    				<Picker SelectedIndex="{Binding Especialidad, Mode=TwoWay}" ItemsSource="{Binding Especialidades}"/>
 
-				<Label Text="Número de cédula profesional"  Style="{StaticResource labels}"/>
-				<Entry Text="{Binding CedulaProf, Mode=TwoWay}" Keyboard="Numeric"/>
+    				<Label Text="Número de cédula profesional"  Style="{StaticResource labels}"/>
+    				<Entry Text="{Binding CedulaProf, Mode=TwoWay}" Keyboard="Numeric">
+                        <Entry.Behaviors>
+                            <local:MaxLengthValidator MaxLength="50" Upper="true" />
+                        </Entry.Behaviors>
+                    </Entry>
 
-				<Label Text="Número dé cédula especialidad"  Style="{StaticResource labels}"/>
-				<Entry Text="{Binding CedulaEsp, Mode=TwoWay}" Keyboard="Numeric"/>
+    				<Label Text="Número dé cédula especialidad"  Style="{StaticResource labels}"/>
+    				<Entry Text="{Binding CedulaEsp, Mode=TwoWay}" Keyboard="Numeric">
+                        <Entry.Behaviors>
+                            <local:MaxLengthValidator MaxLength="50" />
+                        </Entry.Behaviors>
+                    </Entry>
 
-				<Label Text="Diplomados u otros estudios"  Style="{StaticResource labels}"/>
-				<Entry Text="{Binding Diplomados, Mode=TwoWay}"/>
-				
-			</StackLayout>
+    				<Label Text="Diplomados u otros estudios"  Style="{StaticResource labels}"/>
+    				<Entry Text="{Binding Diplomados, Mode=TwoWay}">
+                        <Entry.Behaviors>
+                            <local:MaxLengthValidator MaxLength="80" />
+                        </Entry.Behaviors>
+                    </Entry>
+
+			    </StackLayout>
 		    </ScrollView>
         </StackLayout>
 	</ContentPage.Content>

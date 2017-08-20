@@ -1,5 +1,6 @@
 ﻿using System;
-namespace Gmx.Services.DTOs
+
+namespace GMX.Services.DTOs
 {
     public class especialidades
     {

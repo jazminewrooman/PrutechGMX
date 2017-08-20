@@ -1,37 +1,159 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
 	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
-	x:Class="GMX.Views.AntecedentesPolizas">
+    xmlns:controls="clr-namespace:GMX.SegmentedControl;"
+    xmlns:local="clr-namespace:GMX.Helpers;"
+	BackgroundColor="{StaticResource ligthgray}" x:Class="GMX.Views.AntecedentesPolizas">
     <ContentPage.ToolbarItems>
         <ToolbarItem Name="Menu1" Command="{Binding NextCommand}" Icon="flecha.png" Order="Primary" Priority="0"/>
     </ContentPage.ToolbarItems>
 
     <ContentPage.Content>
-		<ScrollView>
-			<StackLayout>
-				
-				<Label Text="Número de pólizas"  Style="{StaticResource labels}"/>
-				<Entry Text="{Binding NumPolizas, Mode=TwoWay}"/>
+        <StackLayout>
+        <StackLayout>
+            <Button Text="Ver Cotización" Command="{Binding VerCotizaCommand}" Style="{StaticResource botonVerde}"/>
+        </StackLayout>
+        <ScrollView>
+            <StackLayout Padding="20" Spacing="10">
+                <Label Text="Número de pólizas"  Style="{StaticResource labels}"/>
+                <controls:SegmentedControl x:Name="seg" Style="{StaticResource segmented}">
+                    <controls:SegmentedControl.Children>
+                        <controls:SegmentedControlOption Text="1"/>
+                        <controls:SegmentedControlOption Text="2"/>
+                        <controls:SegmentedControlOption Text="3"/>
+                    </controls:SegmentedControl.Children>
+                </controls:SegmentedControl>				
 
-				<Label Text="Oficina"  Style="{StaticResource labels}"/>
-				<Entry Text="{Binding Oficina, Mode=TwoWay}"/>
+                <Grid>
+                    <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="25*"/>
+                            <ColumnDefinition Width="25*"/>
+                            <ColumnDefinition Width="50*"/>
+                    </Grid.ColumnDefinitions>
+                    <Label Grid.Row="0" Grid.Column="0" Text="Oficina"  Style="{StaticResource labels}"/>
+    				<Entry Grid.Row="1" Grid.Column="0" IsEnabled="false" Text="{Binding poliza1.oficina}"/>
 
-				<Label Text="Producto"  Style="{StaticResource labels}"/>
-				<Entry Text="{Binding Producto, Mode=TwoWay}"/>
+    				<Label Grid.Row="0" Grid.Column="1" Text="Producto"  Style="{StaticResource labels}"/>
+    				<Entry Grid.Row="1" Grid.Column="1" IsEnabled="false" Text="{Binding poliza1.producto}"/>
 
-				<Label Text="Póliza"  Style="{StaticResource labels}"/>
-				<Entry Text="{Binding Poliza, Mode=TwoWay}" Keyboard="Numeric"/>
+    				<Label Grid.Row="0" Grid.Column="2" Text="Póliza"  Style="{StaticResource labels}"/>
+    				<Entry Grid.Row="1" Grid.Column="2" Text="{Binding poliza1.poliza, Mode=TwoWay}" Keyboard="Numeric">
+                            <Entry.Behaviors>
+                                <local:IntValidationBehavior MaxLength="7"/>
+                            </Entry.Behaviors>
+                    </Entry>
+                        
+    				<Label Grid.Row="2" Grid.Column="0" Text="Endoso"  Style="{StaticResource labels}"/>
+    				<Entry Grid.Row="3" Grid.Column="0" IsEnabled="false" Text="{Binding poliza1.endoso}"/>
 
-				<Label Text="Endoso"  Style="{StaticResource labels}"/>
-				<Entry Text="{Binding Endoso, Mode=TwoWay}"/>
+    				<Label Grid.Row="2" Grid.Column="1" Text="Renovación"  Style="{StaticResource labels}"/>
+    				<Entry Grid.Row="3" Grid.Column="1" Text="{Binding poliza1.renovacion, Mode=TwoWay}" Keyboard="Numeric">
+                        <Entry.Behaviors>
+                            <local:MaxLengthValidator MaxLength="2"/>
+                            <local:IntValidationBehavior/>
+                        </Entry.Behaviors>
+                    </Entry>
 
-				<Label Text="Renovación"  Style="{StaticResource labels}"/>
-				<Entry Text="{Binding Renovacion, Mode=TwoWay}"/>
+                </Grid>
+                    
+                <Grid IsVisible="{Binding Muestra2}">
+                    <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="25*"/>
+                            <ColumnDefinition Width="25*"/>
+                            <ColumnDefinition Width="50*"/>
+                    </Grid.ColumnDefinitions>
+                    <Label Grid.Row="0" Grid.Column="0" Text="Oficina"  Style="{StaticResource labels}"/>
+                    <Entry Grid.Row="1" Grid.Column="0" IsEnabled="false" Text="{Binding poliza2.oficina}"/>
 
-				<Label Text="Fecha de inicio de vigencia de la primera póliza contratada con GMX"  Style="{StaticResource labels}"/>
-				<Entry Text="{Binding FechaInicio, Mode=TwoWay}"/>
+                    <Label Grid.Row="0" Grid.Column="1" Text="Producto"  Style="{StaticResource labels}"/>
+                    <Entry Grid.Row="1" Grid.Column="1" IsEnabled="false" Text="{Binding poliza2.producto}"/>
+
+                    <Label Grid.Row="0" Grid.Column="2" Text="Póliza"  Style="{StaticResource labels}"/>
+                    <Entry Grid.Row="1" Grid.Column="2" Text="{Binding poliza2.poliza, Mode=TwoWay}" Keyboard="Numeric">
+                            <Entry.Behaviors>
+                                <local:IntValidationBehavior MaxLength="7"/>
+                            </Entry.Behaviors>
+                    </Entry>
+
+                    <Label Grid.Row="2" Grid.Column="0" Text="Endoso"  Style="{StaticResource labels}"/>
+                    <Entry Grid.Row="3" Grid.Column="0" IsEnabled="false" Text="{Binding poliza2.endoso}"/>
+
+                    <Label Grid.Row="2" Grid.Column="1" Text="Renovación"  Style="{StaticResource labels}"/>
+                    <Entry Grid.Row="3" Grid.Column="1" Text="{Binding poliza2.renovacion, Mode=TwoWay}" Keyboard="Numeric">
+                        <Entry.Behaviors>
+                            <local:MaxLengthValidator MaxLength="2"/>
+                            <local:IntValidationBehavior/>
+                        </Entry.Behaviors>
+                    </Entry>
+                </Grid>
+
+                <Grid IsVisible="{Binding Muestra3}">
+                    <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="25*"/>
+                            <ColumnDefinition Width="25*"/>
+                            <ColumnDefinition Width="50*"/>
+                    </Grid.ColumnDefinitions>
+                    <Label Grid.Row="0" Grid.Column="0" Text="Oficina"  Style="{StaticResource labels}"/>
+                    <Entry Grid.Row="1" Grid.Column="0" IsEnabled="false" Text="{Binding poliza3.oficina}"/>
+
+                    <Label Grid.Row="0" Grid.Column="1" Text="Producto"  Style="{StaticResource labels}"/>
+                    <Entry Grid.Row="1" Grid.Column="1" IsEnabled="false" Text="{Binding poliza3.producto}"/>
+
+                    <Label Grid.Row="0" Grid.Column="2" Text="Póliza"  Style="{StaticResource labels}"/>
+                    <Entry Grid.Row="1" Grid.Column="2" Text="{Binding poliza3.poliza, Mode=TwoWay}" Keyboard="Numeric">
+                            <Entry.Behaviors>
+                                <local:IntValidationBehavior MaxLength="7"/>
+                            </Entry.Behaviors>
+                    </Entry>
+
+                    <Label Grid.Row="2" Grid.Column="0" Text="Endoso"  Style="{StaticResource labels}"/>
+                    <Entry Grid.Row="3" Grid.Column="0" IsEnabled="false" Text="{Binding poliza3.endoso}"/>
+
+                    <Label Grid.Row="2" Grid.Column="1" Text="Renovación"  Style="{StaticResource labels}"/>
+                    <Entry Grid.Row="3" Grid.Column="1" Text="{Binding poliza3.renovacion, Mode=TwoWay}" Keyboard="Numeric">
+                        <Entry.Behaviors>
+                            <local:MaxLengthValidator MaxLength="2"/>
+                            <local:IntValidationBehavior/>
+                        </Entry.Behaviors>
+                    </Entry>
+                </Grid>
+
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="25*"/>
+                            <ColumnDefinition Width="25*"/>
+                            <ColumnDefinition Width="50*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Text="Fecha de inicio de vigencia de la primera póliza contratada con GMX"  Style="{StaticResource labels}"/>
+                        <Entry Grid.Row="1" Grid.Column="0" IsEnabled="false" Text="{Binding polizas.dia}"/>
+                        <Entry Grid.Row="1" Grid.Column="1" IsEnabled="false" Text="{Binding polizas.mes}"/>
+                        <Picker Grid.Row="1" Grid.Column="2" ItemsSource="{Binding LstAnos}" SelectedItem="{Binding Anno, Mode=TwoWay}" />
+                    </Grid>
 				
 			</StackLayout>
 		</ScrollView>
+        </StackLayout>
 	</ContentPage.Content>
 </ContentPage>

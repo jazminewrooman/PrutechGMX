@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 using Acr.UserDialogs;
+using Plugin.Connectivity;
 
 namespace GMX.Views
 {
@@ -24,6 +25,14 @@ namespace GMX.Views
 			//(App.Current.MainPage as NavigationPage).BarBackgroundColor = Color.FromHex("#04b5b5");
 			//(App.Current.MainPage as NavigationPage).BarTextColor = Color.White;
 			base.OnAppearing();
+            ChecaCnx();
         }
+
+		private async void ChecaCnx()
+		{
+			if (!CrossConnectivity.Current.IsConnected)
+                await UserDialogs.Instance.AlertAsync(GMX.Resources.NoInternet, "Aviso", "OK");
+		}
+
 	}
 }

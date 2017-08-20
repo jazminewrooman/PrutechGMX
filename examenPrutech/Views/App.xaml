@@ -12,6 +12,7 @@
                 <!--<Setter Property="TextColor" Value="Blue" />-->
             </Style>
             <Color x:Key="ligthgray">#e5e5e5</Color>
+            <Color x:Key="turquesa">#04b5b5</Color>
             <Style x:Key="segmented" TargetType="controls:SegmentedControl">
                 <Setter Property="TintColor" Value="#04b5b5"/>
                 <Setter Property="SelectedTextColor" Value="White"/>

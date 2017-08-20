@@ -13,7 +13,6 @@ namespace GMX.Views
 
 			var vm = new VMDatosProfesionales(UserDialogs.Instance, Navigation, vmcotiz);
 			BindingContext = vm;
-			Title = "Datos profesionales";
 		}
 	}
 }

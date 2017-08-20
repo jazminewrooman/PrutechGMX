@@ -112,5 +112,23 @@ namespace GMX {
                 return ResourceManager.GetString("UserNoExist", resourceCulture);
             }
         }
+        
+        internal static string NoInternet {
+            get {
+                return ResourceManager.GetString("NoInternet", resourceCulture);
+            }
+        }
+        
+        internal static string SinCirugia {
+            get {
+                return ResourceManager.GetString("SinCirugia", resourceCulture);
+            }
+        }
+        
+        internal static string ConCirugia {
+            get {
+                return ResourceManager.GetString("ConCirugia", resourceCulture);
+            }
+        }
     }
 }

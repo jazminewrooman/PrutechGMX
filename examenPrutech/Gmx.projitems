@@ -6,7 +6,7 @@
     <SharedGUID>{0273636C-24B0-4C37-988A-BB849DC79D8F}</SharedGUID>
   </PropertyGroup>
   <PropertyGroup Label="Configuration">
-    <Import_RootNamespace>Gmx</Import_RootNamespace>
+    <Import_RootNamespace>GMX</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)Interfaces\" />
@@ -109,6 +109,11 @@
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\converters.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\MyMasterDetail.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\Extensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\DTOs\especialidades.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\Documentos.xaml.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\DTOs\agente.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\DatosProfesionales.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\PolizasAnteriores.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\WelcomePage.xaml">
@@ -171,5 +176,6 @@
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\VerCotiza.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\Documentos.xaml" />
   </ItemGroup>
 </Project>

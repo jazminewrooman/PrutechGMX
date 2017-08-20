@@ -21,7 +21,7 @@ namespace GMX
 	public class VMDatosGenerales : VMGmx
 	{
         VMCotizar vmcotizar;
-		INavigation nav;
+		public INavigation nav;
 		private bool datosdeservicio = false;
         private Dictionary<string, estado> lstedos;
         private Dictionary<string, municipio> lstmun;
@@ -46,7 +46,7 @@ namespace GMX
                 if (!Validar())
                     await Diag.AlertAsync(Resources.FaltanOb, "Error", "Ok");
                 else
-                    await nav.PushAsync(new DatosProfesionales(vmcot));
+                    await nav.PushAsync(new GMX.Views.DatosProfesionales(vmcot));
             });
             FiscalesCommand = new Command(async () =>
             {
@@ -57,7 +57,12 @@ namespace GMX
                     await nav.PushAsync(new DatosGenerales(vmcotizar.DatosFiscales, TipoDatos.Fiscales, vmcotizar));
                 }
             });
-        }
+            if (td == TipoDatos.Fiscales)
+                Title = "Datos Fiscales";
+            else
+                Title = "Datos Generales";
+
+		}
 
 		private bool Validar()
 		{
@@ -266,6 +271,7 @@ namespace GMX
                     await CargaColonias(CP, c.cod_estado, c.cod_municipio, c.cod_ciudad);
                     Ciudad = Ciudades.IndexOf(lstciud.Where(x => x.Value.cod_ciudad == c.cod_ciudad).FirstOrDefault().Value.txt_desc);
                     Colonia = Colonias.IndexOf(lstcols.Where(x => x.Value.cod_colonia == c.cod_colonia).FirstOrDefault().Value.txt_desc);
+                    datosdeservicio = false;
                 }
                 else
                     datosdeservicio = false;

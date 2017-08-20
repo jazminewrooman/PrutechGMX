@@ -54,7 +54,8 @@ namespace GMX.Views
     }
 
 
-    public class opciones{
+    public class opciones
+    {
         public string idopc { get; set; }
         public string opc { get; set; }
         public bool sel { get; set; }

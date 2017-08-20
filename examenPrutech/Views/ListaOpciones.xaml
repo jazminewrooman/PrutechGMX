@@ -1,17 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <pages:PopupPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
+     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+     xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
+     xmlns:local="clr-namespace:GMX.Helpers;"
     x:Class="GMX.Views.ListaOpciones">
+    <pages:PopupPage.Resources>  
+        <ResourceDictionary>  
+            <local:AlternatingHighlightColorConverter x:Key="AlternatingHighlightColorConverter"/>  
+        </ResourceDictionary>  
+    </pages:PopupPage.Resources> 
     <ScrollView HorizontalOptions="Center" VerticalOptions="Center">
         <Frame Margin="30,100,30,100" Padding="10">
-        <StackLayout BackgroundColor="{StaticResource ligthgray}" Padding="0" HorizontalOptions="Fill" Orientation="Vertical" VerticalOptions="Fill">
+        <StackLayout BackgroundColor="{StaticResource turquesa}" Padding="0" HorizontalOptions="Fill" Orientation="Vertical" VerticalOptions="Fill">
             <StackLayout HeightRequest="20"/>
             <ListView x:Name="lvOpciones" RowHeight="50" VerticalOptions="FillAndExpand" BackgroundColor="White">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
-                            <Grid Padding="10,15,10,15">
+                            <Grid Padding="10,15,10,15" BackgroundColor="{Binding .,Converter={StaticResource AlternatingHighlightColorConverter}, ConverterParameter={x:Reference lvOpciones}}">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="32"/>

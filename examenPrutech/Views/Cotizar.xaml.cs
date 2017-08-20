@@ -24,11 +24,11 @@ namespace GMX.Views
         protected override void OnAppearing()
         {
             base.OnAppearing();
-            if (primeravez)
+            /*if (primeravez)
             {
                 primeravez = false;
                 vm.ClickAuto = true;
-            }
+            }*/
 		}
 
 	}

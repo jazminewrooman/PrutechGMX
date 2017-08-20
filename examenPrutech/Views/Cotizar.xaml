@@ -17,9 +17,9 @@
                     <local:VwSwitch Title="{Binding TxtEjerce}" On="{Binding Ejerce, Mode=TwoWay}"/>
                     <local:VwOpcion Lst="{Binding LstSuma}" IdDetail="{Binding IdSuma, Mode=TwoWay}" SubTxt="{Binding LySumaAseg}" Detail="{Binding SumaAseg, Mode=TwoWay}" Title="{Binding TxtSuma}" />
                     <local:VwSwitch Title="{Binding TxtContratar}" On="{Binding Adicional, Mode=TwoWay}"/>
-                    <local:VwCal Title="{Binding TxtVig}" DateSel="{Binding IniVig}"/>
+                    <local:VwCal Title="{Binding TxtVig}" DateSel="{Binding IniVig}" Fini="{Binding FRetroactiva}" Ffin="{Binding FPosterior}" />
                 </StackLayout>
-                <Image Source="medicosneg" Opacity="0.3" Aspect="AspectFit"/>
+                <Image Source="medicosneg" IsVisible="{Binding VerImg}" Opacity="0.3" Aspect="AspectFit"/>
             </StackLayout>
         </ScrollView>
 	</ContentPage.Content>

@@ -11,39 +11,53 @@ namespace GMX.Views
     {
         public ListView Menu { get; set; }
         StackLayout layout;
-        private GMX.wsUser.bUsers muser;
+        private GMX.Services.DTOs.agente agent;
 
         public void Refrescamenu()
         {
-            cargamenu(muser);
+            cargamenu(agent);
         }
 
-        public menu(GMX.wsUser.bUsers user)
+        public menu(GMX.Services.DTOs.agente a)
         {
             Title = "Menu";
             Icon = "slideout.png";
-            muser = user;
-            cargamenu(muser);
+            agent = a;
+            cargamenu(a);
         }
 
 		void NavigateTo(MenuItem menu)
 		{
 			Page displayPage = (Page)Activator.CreateInstance(menu.TargetType);
-            var det = new NavigationPage(displayPage);
+			var det = new NavigationPage(displayPage)
+			{
+                Icon = "slideout.png",
+				BarTextColor = Color.FromHex("#04b5b5"),
+				BarBackgroundColor = Color.White,
+			};
             App.navigation = det.Navigation;
             (App.Current.MainPage as MasterDetailPage).Detail = det;
 		}
 
-        public void cargamenu(GMX.wsUser.bUsers user)
+        public void cargamenu(GMX.Services.DTOs.agente a)
         {
-            Menu = new MenuListView();
+            string displayname = String.Empty;
+            if (a.cod_tipo_persona == "F")
+                displayname = $"({a.cod_agente}) {a.txt_apellido1} {a.txt_apellido2} {a.txt_nombre}";
+			if (a.cod_tipo_persona == "J")
+                displayname = $"({a.cod_agente}) {a.txt_apellido1}";
+			Menu = new MenuListView();
             Menu.ItemSelected += (sender, e) =>
             {
                 if ((e.SelectedItem as MenuItem).TargetType == null)
                 {
-                    //Navigation.InsertPageBefore(new LoginUser(), Navigation.NavigationStack.FirstOrDefault());
-                    //await Navigation.PopToRootAsync();
-                    var det = new NavigationPage(new LoginUser());
+					//Navigation.InsertPageBefore(new LoginUser(), Navigation.NavigationStack.FirstOrDefault());
+					//await Navigation.PopToRootAsync();
+                    var det = new NavigationPage(new LoginUser())
+					{
+						BarTextColor = Color.FromHex("#04b5b5"),
+						BarBackgroundColor = Color.White,
+					};
                     App.navigation = det.Navigation;
                     App.Current.MainPage = det;
                 }
@@ -66,7 +80,7 @@ namespace GMX.Views
                     new StackLayout(){ BackgroundColor = Color.White, Padding = 20,
                         Children = { 
                             new Label(){ FontSize = 14, FontAttributes = FontAttributes.None, Text = "Bienvenido"},
-                            new Label(){ FontSize = 16, FontAttributes = FontAttributes.Bold, Text = muser.DisplayName} 
+                            new Label(){ FontSize = 16, FontAttributes = FontAttributes.Bold, Text = displayname } 
                         },
                     },
                     Menu

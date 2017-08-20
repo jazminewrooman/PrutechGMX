@@ -5,5 +5,5 @@
     "APIUsuarios" : "http://148.243.230.134/wsUserAdmin/security.asmx",
     "APIIntegracion": "http://desa.gmx.com.mx/IntegrationService/EmissionService.svc",
     "APIBD": "http://desa.gmx.com.mx/WS_Database_Access_PVLs/Service.asmx",
-    "DerechosPoliza": "350.00"
+    "APIPayment": "http: //desa.gmx.com.mx/wsPagoTB/PaymentCenter.asmx",
 }

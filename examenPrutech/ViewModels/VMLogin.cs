@@ -11,6 +11,8 @@ using Xamarin.Forms.Xaml;
 using Acr.UserDialogs;
 using System.Linq;
 using GMX.Views;
+using GMX.Services;
+using GMX.Services.DTOs;
 
 namespace GMX
 {
@@ -83,8 +85,6 @@ namespace GMX
             set { errorvisible = value; }
         }
 
-        #region Eventos
-
         private async void Boton()
         {
             LoginUsers luser = new LoginUsers();
@@ -94,31 +94,43 @@ namespace GMX
                 await System.Threading.Tasks.Task.Delay(TimeSpan.FromMilliseconds(100));
                 GMX.wsUser.Security ws = new GMX.wsUser.Security(config.Config["APIUsuarios"]);
                 GMX.wsUser.bUsers user = ws.AuthenticateUser(Usuario, Contrasena, 1);
-                GMX.wsUser.bUsers usrId = ws.GetUser(user.ExtId, 1);
-                luser = ConvertUser(user);
-                Ocupado = false;
-                var Welcome = new Cotizar();
-                App.navigation.InsertPageBefore(Welcome, App.navigation.NavigationStack.FirstOrDefault());
-                await App.navigation.PopToRootAsync();
-                var MainP = new NavigationPage(Welcome)
-				{
-                    //Icon = "slideout.png",
-					BarTextColor = Color.FromHex("#04b5b5"),
-					BarBackgroundColor = Color.White,
-				};
-                //var md = new GMX.Controls.MyMasterDetail();
-                var md = new MasterDetailPage();
-                md.Master = new menu(user);
-                md.Detail = MainP;
-
-                App.Current.MainPage = md;
-
-				
+                bindings b = new bindings();
+                b.IniciaWS();
+                var cod = new Dictionary<string, string>();
+                cod.Add("agentId", user.ExtId.ToString());
+                var crypdata = await b.getCatalog("GetAgentById", cod);
+                var strdata = await b.decrypt(crypdata.Result);
+                if (!String.IsNullOrEmpty(strdata.Result))
+                {
+                    Dictionary<int, agente> agent = Newtonsoft.Json.JsonConvert.DeserializeObject<Dictionary<int, agente>>(strdata.Result);
+                    App.agent = agent.FirstOrDefault().Value;
+                    //var Welcome = new Cotizar();
+                    var Welcome = new MetodoPago();
+                    //App.navigation.InsertPageBefore(Welcome, App.navigation.NavigationStack.FirstOrDefault());
+                    await App.navigation.PopToRootAsync();
+                    var MainP = new NavigationPage(Welcome)
+                    {
+                        BarTextColor = Color.FromHex("#04b5b5"),
+                        BarBackgroundColor = Color.White,
+                    };
+                    //var md = new GMX.Controls.MyMasterDetail();
+                    var md = new MasterDetailPage();
+                    md.Master = new menu(agent.FirstOrDefault().Value);
+                    md.Detail = MainP;
+                    App.Current.MainPage = md;
+                    (Welcome.BindingContext as VMCotizar).ClickAuto = true;
+                }
+                else
+                    throw new Exception();
             }
-            catch(Exception ex)
+            catch (Exception ex)
+            {
+                Ocupado = false; 
+                await Diag.AlertAsync(Resources.UserNoExist, "Error", "OK");
+            }
+            finally
             {
                 Ocupado = false;
-                await Diag.AlertAsync(Resources.UserNoExist, "Error", "OK");
             }
         }
 
@@ -127,32 +139,10 @@ namespace GMX
             App.navigation.PushAsync(new RecoverPage());
 		}
 
-        private void Registrar(){
+        private void Registrar()
+        {
             App.navigation.PushAsync(new WelcomePage());
         }
 
-        #endregion
-
-        #region Metodos
-
-        public LoginUsers ConvertUser(GMX.wsUser.bUsers user)
-        {
-            LoginUsers usr = new LoginUsers();
-
-            usr.CryptPwd = user.CryptPwd;
-            usr.DisplayName = user.DisplayName;
-            usr.Email = user.Email;
-            usr.ExpDate = user.ExpDte;
-            usr.ExtId = user.ExtId;
-            usr.ParentId = user.ParentId;
-            usr.Roles = user.Roles;
-            usr.Source = user.Source;
-            usr.UserId = user.UserId;
-            usr.UserName = user.UserName;
-
-            return usr;
-        }
-
-        #endregion
     }
 }

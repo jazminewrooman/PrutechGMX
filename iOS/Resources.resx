@@ -46,6 +46,13 @@
 	<data name="UserNoExist" xml:space="preserve">
        <value>Usuario y/o contraseña no valido, favor de verificar</value>
     </data>
-
-	
+	<data name="NoInternet" xml:space="preserve">
+        <value>No hay conexión a internet, revise su configuración WiFi o 3G</value>
+	</data>
+	<data name="SinCirugia" xml:space="preserve">
+		<value>Consulta  y Diagnostico S/ Cirugía</value>
+	</data>
+	<data name="ConCirugia" xml:space="preserve">
+		<value>Cirugía / Proc. Invasivos</value>
+	</data>
 </root>

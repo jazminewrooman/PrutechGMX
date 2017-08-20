@@ -211,10 +211,10 @@
     <AndroidResource Include="Resources\drawable\loading.xml" />
     <AndroidResource Include="Resources\drawable\logogmxblanco.png" />
     <AndroidResource Include="Resources\drawable\medicosneg.png" />
-    <AndroidResource Include="Resources\drawable\splash.jpg" />
-    <AndroidResource Include="Resources\drawable-hdpi\splash.jpg" />
     <AndroidResource Include="Resources\drawable\icon152.png" />
     <AndroidResource Include="Resources\drawable\check.png" />
+    <AndroidResource Include="Resources\drawable\splash.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\splash.png" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Dependencies\" />

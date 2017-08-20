@@ -36,4 +36,21 @@ namespace GMX.Services.DTOs
 	{
 		public IList<SumaAsegAngeles> Table { get; set; }
 	}
+
+	public class FechaCotizacion
+	{
+		public int id { get; set; }
+		public string nombrePlan { get; set; }
+        public object fecRetroactiva { get; set; }
+        public object fecPosterior { get; set; }
+		public int diasRetroactivos { get; set; }
+		public int diasPosteriores { get; set; }
+		public int numMesesRetro { get; set; }
+		public int numMesesPost { get; set; }
+	}
+
+	public class ListaFechaCotiz
+	{
+        public IList<FechaCotizacion> Table { get; set; }
+	}
 }
