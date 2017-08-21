@@ -158,6 +158,9 @@
     <Reference Include="Rg.Plugins.Popup.Platform">
       <HintPath>..\packages\Rg.Plugins.Popup.1.0.4\lib\Xamarin.IOS\Rg.Plugins.Popup.Platform.dll</HintPath>
     </Reference>
+    <Reference Include="CreditCardValidator">
+      <HintPath>..\packages\CreditCardValidator.1.4.0\lib\portable-net45+wp8+win8\CreditCardValidator.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Contents.json" />
@@ -219,6 +222,9 @@
     <BundleResource Include="Resources\check.png" />
     <BundleResource Include="Resources\check%402x.png" />
     <BundleResource Include="Resources\check%403x.png" />
+    <BundleResource Include="Resources\genericcard.png" />
+    <BundleResource Include="Resources\visa.png" />
+    <BundleResource Include="Resources\master.png" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="settings.json" />

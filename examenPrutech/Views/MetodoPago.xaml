@@ -9,21 +9,26 @@
     </ContentPage.ToolbarItems>
 	<ContentPage.Content>
 		<StackLayout>
-			<StackLayout Padding="20" Spacing="10" BackgroundColor="White">
-				<controls:SegmentedControl x:Name="seg" Style="{StaticResource segmented}">
-                    <controls:SegmentedControl.Children>
-                        <controls:SegmentedControlOption Text="Tarjeta bancaria"/>
-                        <controls:SegmentedControlOption Text="Pago directo en banco"/>
-                    </controls:SegmentedControl.Children>
-                </controls:SegmentedControl>
-            </StackLayout>
             <StackLayout>
-				<local:VwSwitch Title="{Binding TxtTerminos}" On="{Binding Terminos, Mode=TwoWay}"/>
-
-				<local:VwSwitch Title="{Binding TxtManifiesto}" On="{Binding Manifiesto, Mode=TwoWay}"/>
-
-                <Image Source="medicosneg" Opacity="0.3" Aspect="AspectFit"/>
-			</StackLayout>
+                <Button Text="Ver Cotización" Command="{Binding VerCotizaCommand}" Style="{StaticResource botonVerde}"/>
+            </StackLayout>
+            <ScrollView VerticalOptions="FillAndExpand">
+                <StackLayout>
+        			<StackLayout Padding="20" Spacing="10" BackgroundColor="White">
+        				<controls:SegmentedControl x:Name="seg" Style="{StaticResource segmented}">
+                            <controls:SegmentedControl.Children>
+                                <controls:SegmentedControlOption Text="Tarjeta bancaria"/>
+                                <controls:SegmentedControlOption Text="Pago directo en banco"/>
+                            </controls:SegmentedControl.Children>
+                        </controls:SegmentedControl>
+                    </StackLayout>
+                    <StackLayout VerticalOptions="Center">
+        				<local:VwSwitch Title="{Binding TxtTerminos}" On="{Binding Terminos, Mode=TwoWay}"/>
+        				<local:VwSwitch Title="{Binding TxtManifiesto}" On="{Binding Manifiesto, Mode=TwoWay}"/>
+                        <Image Source="medicosneg" Opacity="0.3" Aspect="AspectFit"/>
+        			</StackLayout>
+                </StackLayout>
+            </ScrollView>                
 		</StackLayout>
 	</ContentPage.Content>
 </ContentPage>

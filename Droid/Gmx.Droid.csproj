@@ -161,6 +161,9 @@
     <Reference Include="Rg.Plugins.Popup.Platform">
       <HintPath>..\packages\Rg.Plugins.Popup.1.0.4\lib\MonoAndroid\Rg.Plugins.Popup.Platform.dll</HintPath>
     </Reference>
+    <Reference Include="CreditCardValidator">
+      <HintPath>..\packages\CreditCardValidator.1.4.0\lib\portable-net45+wp8+win8\CreditCardValidator.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MainActivity.cs" />
@@ -215,6 +218,9 @@
     <AndroidResource Include="Resources\drawable\check.png" />
     <AndroidResource Include="Resources\drawable\splash.png" />
     <AndroidResource Include="Resources\drawable-hdpi\splash.png" />
+    <AndroidResource Include="Resources\drawable\genericcard.png" />
+    <AndroidResource Include="Resources\drawable\master.png" />
+    <AndroidResource Include="Resources\drawable\visa.png" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Dependencies\" />

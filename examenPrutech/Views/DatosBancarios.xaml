@@ -1,30 +1,77 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
 	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+    xmlns:local="clr-namespace:GMX.Helpers;"
 	x:Class="GMX.Views.DatosBancarios">
+    <ContentPage.ToolbarItems> 
+        <ToolbarItem Name="Menu1" Command="{Binding NextCommand}" Icon="flecha.png" Order="Primary" Priority="0"/> 
+    </ContentPage.ToolbarItems>
+
 	<ContentPage.Content>
-		<ScrollView>
-			<StackLayout Padding="20" Spacing="10">
-				
-				<Label Text="Nombre del tarjetahabiente"  Style="{StaticResource labels}"/>
-				<Entry Text="{Binding NombreTB, Mode=TwoWay}"/>
+        <StackLayout>
+            <StackLayout>
+                <Button Text="Ver Cotización" Command="{Binding VerCotizaCommand}" Style="{StaticResource botonVerde}"/>
+            </StackLayout>
+            
+    		<ScrollView>
+    			<StackLayout Padding="20" Spacing="10">
+    				
+    				<Label Text="Nombre del tarjetahabiente"  Style="{StaticResource labels}"/>
+    				<Entry Text="{Binding Nombre, Mode=TwoWay}"/>
 
-				<Label Text="Tipo de Tarjeta"  Style="{StaticResource labels}"/>
-				<Entry Text="{Binding TipoTar, Mode=TwoWay}"/>
+    				<!--<Label Text="Tipo de Tarjeta"  Style="{StaticResource labels}"/>
+    				<Entry Text="{Binding TipoTar, Mode=TwoWay}"/>-->
 
-				<Label Text="Forma de Pago"  Style="{StaticResource labels}"/>
-				<Entry Text="{Binding FormaPago, Mode=TwoWay}"/>
+    				<Label Text="Forma de Pago"  Style="{StaticResource labels}"/>
+    				<Picker ItemsSource="{Binding FormasPago}" SelectedItem="{Binding FormaPago, Mode=TwoWay}"/>
 
-				<Label Text="Número de Tarjeta"  Style="{StaticResource labels}"/>
-				<Entry Text="{Binding NumTarjeta, Mode=TwoWay}" Keyboard="Numeric"/>
+    				<Label Text="Número de Tarjeta"  Style="{StaticResource labels}"/>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="40"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Image Grid.Column="0" Source="{Binding ImgCard}"/>
+        				<Entry Grid.Column="1" Text="{Binding NumTarjeta, Mode=TwoWay}" Keyboard="Numeric">
+                            <Entry.Behaviors>
+                                <local:CardValidationBehavior CardIssuer="{Binding TipoTarj, Mode=TwoWay}" IsValid="{Binding NumTarjetaValido, Mode=TwoWay}"/>
+                            </Entry.Behaviors>
+                        </Entry>
+                    </Grid>
 
-				<Label Text="Fecha de Vencimiento"  Style="{StaticResource labels}"/>
-				<Entry Text="{Binding FechaVenc, Mode=TwoWay}"/>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="70*"/>
+                            <ColumnDefinition Width="30*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <Label Grid.Column="0" Grid.Row="0" Text="Fecha de Vencimiento"  Style="{StaticResource labels}"/>
+                        <Grid Grid.Column="0" Grid.Row="1">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="20*"/>
+                                <ColumnDefinition Width="30*"/>
+                                <ColumnDefinition Width="20*"/>
+                                <ColumnDefinition Width="30*"/>
+                            </Grid.ColumnDefinitions>
+                            <Label Grid.Column="0" Text="Mes"/>
+                            <Picker Grid.Column="1" ItemsSource="{Binding Meses}" SelectedItem="{Binding Mes, Mode=TwoWay}"/>
+                            <Label Grid.Column="2" Text="Año"/>
+                            <Picker Grid.Column="3" ItemsSource="{Binding Anios}" SelectedItem="{Binding Anio, Mode=TwoWay}"/>
+                        </Grid>
+                        <Label Grid.Column="1" Grid.Row="0" Text="Código de Seguridad"  Style="{StaticResource labels}"/>
+                        <Entry Grid.Column="1" Grid.Row="1" Text="{Binding CodigoSeg, Mode=TwoWay}">
+                            <Entry.Behaviors>
+                                <local:IntValidationBehavior/>
+                                <local:MaxLengthValidator MaxLength="3"/>
+                            </Entry.Behaviors>
+                        </Entry>
+                    </Grid>
+    			</StackLayout>
+    		</ScrollView>
+        </StackLayout>
 
-				<Label Text="Código de Seguridad"  Style="{StaticResource labels}"/>
-				<Entry Text="{Binding CodigoSeg, Mode=TwoWay}"/>
-				
-			</StackLayout>
-		</ScrollView>
-	</ContentPage.Content>
+    </ContentPage.Content>
 </ContentPage>

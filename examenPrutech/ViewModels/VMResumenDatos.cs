@@ -93,33 +93,33 @@ namespace GMX
 					break;
 				case 3:
 					//Para Datos Profesionales
-					var Welcome3 = new DatosBancarios();
-					App.navigation.InsertPageBefore(Welcome3, App.navigation.NavigationStack.FirstOrDefault());
-					await App.navigation.PopToRootAsync();
-					var MainP3 = new NavigationPage(Welcome3)
-					{
-						BarTextColor = Color.White,
-						BarBackgroundColor = Color.FromHex("#04b5b5"),
-					};
-					var md3 = new MasterDetailPage();
-					//md.Master = new menu(user);
-					md3.Detail = MainP3;
-					App.Current.MainPage = md3;
+					//var Welcome3 = new DatosBancarios();
+					//App.navigation.InsertPageBefore(Welcome3, App.navigation.NavigationStack.FirstOrDefault());
+					//await App.navigation.PopToRootAsync();
+					//var MainP3 = new NavigationPage(Welcome3)
+					//{
+					//	BarTextColor = Color.White,
+					//	BarBackgroundColor = Color.FromHex("#04b5b5"),
+					//};
+					//var md3 = new MasterDetailPage();
+					////md.Master = new menu(user);
+					//md3.Detail = MainP3;
+					//App.Current.MainPage = md3;
 					break;
 				case 4:
 					//Para Datos Bancarios
-					var Welcome4 = new DatosBancarios();
-					App.navigation.InsertPageBefore(Welcome4, App.navigation.NavigationStack.FirstOrDefault());
-					await App.navigation.PopToRootAsync();
-					var MainP4 = new NavigationPage(Welcome4)
-					{
-						BarTextColor = Color.White,
-						BarBackgroundColor = Color.FromHex("#04b5b5"),
-					};
-					var md4 = new MasterDetailPage();
-					//md.Master = new menu(user);
-					md4.Detail = MainP4;
-					App.Current.MainPage = md4;
+					//var Welcome4 = new DatosBancarios();
+					//App.navigation.InsertPageBefore(Welcome4, App.navigation.NavigationStack.FirstOrDefault());
+					//await App.navigation.PopToRootAsync();
+					//var MainP4 = new NavigationPage(Welcome4)
+					//{
+					//	BarTextColor = Color.White,
+					//	BarBackgroundColor = Color.FromHex("#04b5b5"),
+					//};
+					//var md4 = new MasterDetailPage();
+					////md.Master = new menu(user);
+					//md4.Detail = MainP4;
+					//App.Current.MainPage = md4;
 					break;
 			}
 		}

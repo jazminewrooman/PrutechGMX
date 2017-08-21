@@ -15,11 +15,6 @@ namespace GMX.Views
 			BindingContext = vm;
 			Title = "Resumen";
 
-			lstResumen.ItemSelected += (s, e) =>
-			 {
-				var id = (int)e.SelectedItem;
-
-			 };
 		}
 	}
 }

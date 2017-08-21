@@ -3,17 +3,72 @@ using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Text;
 using System.Collections.Generic;
-
+using CreditCardValidator;
 using Xamarin.Forms;
 
 namespace GMX.Helpers
 {
-    public class behaviors
-    {
-        public behaviors()
+	public class CardValidationBehavior : Behavior<Entry>
+	{
+        static readonly BindablePropertyKey CardIssuerPropertyKey = BindableProperty.CreateReadOnly("CardIssuer", typeof(CardIssuer), typeof(CardValidationBehavior), CardIssuer.Unknown);
+		public static readonly BindableProperty CardIssuerProperty = CardIssuerPropertyKey.BindableProperty;
+		public CardIssuer CardIssuer
+		{
+			get { return (CardIssuer)base.GetValue(CardIssuerProperty); }
+			private set { base.SetValue(CardIssuerPropertyKey, value); }
+		}
+		
+        static readonly BindablePropertyKey IsValidPropertyKey = BindableProperty.CreateReadOnly("IsValid", typeof(bool), typeof(CardValidationBehavior), false);
+		public static readonly BindableProperty IsValidProperty = IsValidPropertyKey.BindableProperty;
+		public bool IsValid
+		{
+			get { return (bool)base.GetValue(IsValidProperty); }
+			private set { base.SetValue(IsValidPropertyKey, value); }
+		}
+
+		protected override void OnAttachedTo(BindableObject bindable)
+		{
+			base.OnAttachedTo(bindable);
+			bindable.BindingContextChanged += (sender, _) => this.BindingContext = ((BindableObject)sender).BindingContext;
+		}
+
+		protected override void OnAttachedTo(Entry entry)
+		{
+			entry.TextChanged += OnEntryTextChanged;
+			base.OnAttachedTo(entry);
+		}
+		protected override void OnDetachingFrom(Entry entry)
+		{
+			entry.TextChanged -= OnEntryTextChanged;
+			base.OnDetachingFrom(entry);
+		}
+        void OnEntryTextChanged(object sender, TextChangedEventArgs args)
         {
-        }
-    }
+            CreditCardDetector det = null;
+            long lng;
+            if (!long.TryParse(args.NewTextValue.Replace("-", "").Trim().Replace(" ", ""), out lng))
+            {
+                IsValid = false;
+                CardIssuer = CardIssuer.Unknown;
+            }
+            else
+            {
+                if (!String.IsNullOrEmpty(args.NewTextValue))
+                {
+                    det = new CreditCardDetector(args.NewTextValue.Replace("-", ""));
+                    IsValid = det.IsValid();
+                    //((Entry)sender).Text = det.CardNumber;
+                    CardIssuer = det.Brand;
+                }
+                else
+                {
+                    IsValid = false;
+                    CardIssuer = CardIssuer.Unknown;
+                }
+            }
+            ((Entry)sender).TextColor = IsValid ? Color.Default : Color.Red;
+		}
+	}
 
 	public class IntValidationBehavior : Behavior<Entry>
 	{

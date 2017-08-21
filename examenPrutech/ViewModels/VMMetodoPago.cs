@@ -9,6 +9,7 @@ using Newtonsoft.Json;
 using System.Windows.Input;
 using System.Linq;
 using System.Threading.Tasks;
+using Rg.Plugins.Popup.Extensions;
 
 namespace GMX
 {
@@ -17,28 +18,41 @@ namespace GMX
 		INavigation nav;
 
 		public ICommand NextCommand { get; private set; }
+        public ICommand VerCotizaCommand { get; private set; }
+        VMCotizar vmcotizar;
+        public TipoPago tipopago { get; set; }
 
-		public VMMetodoPago(IUserDialogs diag, INavigation n) : base(diag)
+		public VMMetodoPago(IUserDialogs diag, INavigation n, VMCotizar vmc) : base(diag)
 		{
+            nav = n;
+            vmcotizar = vmc;
 			TxtTerminos = Resources.Terminos;
 			TxtManifiesto = Resources.Manifiesto;
-
+            VerCotizaCommand = new Command(async () =>
+            {
+                await nav.PushPopupAsync(new VerCotiza(vmcotizar), true);
+            });
 			NextCommand = new Command(async () =>
 			{
-				if (!Validar())
-					await Diag.AlertAsync(Resources.FaltanOb, "Error", "Ok");
-				else
-					await nav.PushAsync(new DatosBancarios());
+                if (!Validar())
+                    await Diag.AlertAsync(Resources.FaltanOb, "Error", "Ok");
+                else
+                {
+                    if (tipopago == TipoPago.tarjeta)
+                        await nav.PushAsync(new DatosBancarios(vmcotizar));
+                    if (tipopago == TipoPago.banco)
+                        await nav.PushAsync(new ResumenDatos());
+                }
 			});
 
 		}
 
 		private bool Validar()
 		{
-			if ((!Manifiesto && !Terminos) || (Manifiesto && !Terminos) || (!Manifiesto && Terminos))
-				return false;
-			else
-				return true;
+            if ((Manifiesto && Terminos))
+                return true;
+            else
+                return false;
 		}
 
 
@@ -56,7 +70,6 @@ namespace GMX
 
 			}
 		}
-
 		string txtmanifiesto;
 		public string TxtManifiesto
 		{

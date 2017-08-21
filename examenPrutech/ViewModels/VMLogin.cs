@@ -104,9 +104,8 @@ namespace GMX
                 {
                     Dictionary<int, agente> agent = Newtonsoft.Json.JsonConvert.DeserializeObject<Dictionary<int, agente>>(strdata.Result);
                     App.agent = agent.FirstOrDefault().Value;
-                    //var Welcome = new Cotizar();
-                    var Welcome = new MetodoPago();
-                    //App.navigation.InsertPageBefore(Welcome, App.navigation.NavigationStack.FirstOrDefault());
+                    var Welcome = new Cotizar();
+                    //var Welcome = new MetodoPago(new VMCotizar(UserDialogs.Instance, App.navigation));
                     await App.navigation.PopToRootAsync();
                     var MainP = new NavigationPage(Welcome)
                     {

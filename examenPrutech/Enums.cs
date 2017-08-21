@@ -16,4 +16,10 @@ namespace GMX
 		Fisica = 0,
 		Moral = 1
 	};
+
+
+    public enum TipoPago{
+        tarjeta = 1,
+        banco = 2
+    }
 }

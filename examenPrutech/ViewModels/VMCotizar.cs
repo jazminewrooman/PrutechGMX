@@ -18,14 +18,14 @@ namespace GMX
         INavigation nav;
         ListaSumasAseg lstsumas;
         ListaSumaAngeles lstangeles;
-		public ICommand NextCommand { get; private set; }
+        public ICommand NextCommand { get; private set; }
         public ICommand EmailCommand { get; private set; }
         public ICommand ShopCommand { get; private set; }
 
         public bool VerImg => !VerCuestionario;
 
-		public VMCotizar(IUserDialogs diag, INavigation n) : base(diag)
-		{
+        public VMCotizar(IUserDialogs diag, INavigation n) : base(diag)
+        {
             nav = n;
             SumaAseg = "";
             TxtPlan = "Plan";
@@ -35,8 +35,8 @@ namespace GMX
             LstPlan = lst;
             TxtTipo = "Tipo de Póliza";
             ObservableCollection<opciones> lst2 = new ObservableCollection<opciones>();
-			lst2.Add(new opciones() { idopc = "1", opc = "Póliza nueva" });
-			lst2.Add(new opciones() { idopc = "2", opc = "Renovación" });
+            lst2.Add(new opciones() { idopc = "1", opc = "Póliza nueva" });
+            lst2.Add(new opciones() { idopc = "2", opc = "Renovación" });
             LstTipo = lst2;
             TxtSuma = Resources.Sumaasegurada;
             TxtCirugias = Resources.RealizaCirugias;
@@ -45,34 +45,51 @@ namespace GMX
             LySumaAseg = Resources.Montosexpresados;
             TxtVig = Resources.IniVig;
 
-            NextCommand = new Command(async () => {
+            NextCommand = new Command(async () =>
+            {
                 if (!Validar())
                     await Diag.AlertAsync(Resources.FaltanOb, "Error", "Ok");
                 else
                     await nav.PushAsync(new Cotizacion(this));
             });
-			ShopCommand = new Command(async () =>
-			{
+            ShopCommand = new Command(async () =>
+            {
                 await nav.PushAsync(new DatosGenerales(datosgrales, TipoDatos.Generales, this));
-			});
+            });
             /*EmailCommand = new Command(() => 
 			{
                 ;
 			});*/
-		}
+        }
 
-        public void IniciaCarga(){
+        public void IniciaCarga()
+        {
             Ocupado = true;
-			IdPlan = "1";
-			IniVig = DateTime.Now;
+            IdPlan = "1";
+            IniVig = DateTime.Now;
             Ocupado = false;
-		}
+        }
 
-        private bool Validar(){
+        private bool Validar()
+        {
             if (String.IsNullOrEmpty(IdTipo) || String.IsNullOrEmpty(IdPlan) || String.IsNullOrEmpty(IdSuma) || IniVig == DateTime.MinValue)
                 return false;
             else
                 return true;
+        }
+
+        GMX.Models.DatosBancarios datosbank;
+        public GMX.Models.DatosBancarios DatosBank
+        {
+            get => datosbank;
+            set
+            {
+                if (datosbank != value)
+                {
+                    datosbank = value;
+                    OnPropertyChanged("DatosBank");
+                }
+            }
         }
         PolizasAnteriores antecedentes;
 		public PolizasAnteriores Antecedentes

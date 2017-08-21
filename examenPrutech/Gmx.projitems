@@ -114,6 +114,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Services\DTOs\agente.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\DatosProfesionales.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\PolizasAnteriores.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\DatosBancarios.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\WelcomePage.xaml">

@@ -34,10 +34,10 @@
     <data name="FaltanOb" xml:space="preserve">
        <value>Faltan algunos campos obligatorios, revise por favor</value>
     </data>
-	<data name="Terminos" xml:space="preserve">
+    <data name="Terminos" xml:space="preserve">
        <value>Acepto términos y condiciones</value>
     </data>
-	<data name="Manifiesto" xml:space="preserve">
+    <data name="Manifiesto" xml:space="preserve">
        <value>Manifiesto  que los datos personales y profesionales son correctos y fueron verificados con el Asegurado</value>
     </data>
     <data name="NoCP" xml:space="preserve">
@@ -45,6 +45,15 @@
     </data>
     <data name="UserNoExist" xml:space="preserve">
        <value>Usuario y/o contraseña no valido, favor de verificar</value>
+    </data>
+    <data name="NoInternet" xml:space="preserve">
+        <value>No hay conexión a internet, revise su configuración WiFi o 3G</value>
+    </data>
+    <data name="SinCirugia" xml:space="preserve">
+        <value>Consulta  y Diagnostico S/ Cirugía</value>
+    </data>
+    <data name="ConCirugia" xml:space="preserve">
+        <value>Cirugía / Proc. Invasivos</value>
     </data>
     	
 </root>

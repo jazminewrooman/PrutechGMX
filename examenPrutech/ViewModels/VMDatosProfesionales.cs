@@ -41,7 +41,7 @@ namespace GMX
                     if (vmcotizar.IdTipo == "2") //renovacion
                         await nav.PushAsync(new AntecedentesPolizas(vmcotizar));
 					if (vmcotizar.IdTipo == "1") //nueva
-						await nav.PushAsync(new MetodoPago());
+                        await nav.PushAsync(new MetodoPago(vmcotizar));
 				}
             });
             CargaDatosProfesionales(vmcot.DatosProf);

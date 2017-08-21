@@ -37,7 +37,7 @@ namespace GMX
                 else
                 {
                     vmcotizar.Antecedentes = polizas;
-                    await nav.PushAsync(new MetodoPago());
+                    await nav.PushAsync(new MetodoPago(vmcotizar));
                 }
             });
             List<string> temp = new List<string>();
