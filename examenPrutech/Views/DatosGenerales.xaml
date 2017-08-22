@@ -82,7 +82,7 @@
     				<Picker SelectedIndex="{Binding Colonia, Mode=TwoWay}" ItemsSource="{Binding Colonias}"/>
 
     				<Label Text="Correo electrónico"  Style="{StaticResource labels}"/>
-    				<Entry Text="{Binding Correo}">
+    				<Entry Text="{Binding Correo}" Keyboard="Email">
                         <Entry.Behaviors>
                             <local:MaxLengthValidator MaxLength="50" />
                             <local:EmailValidationBehavior IsValid="{Binding CorreoValido, Mode=TwoWay}"/>

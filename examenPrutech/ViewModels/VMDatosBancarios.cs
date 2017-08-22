@@ -38,10 +38,13 @@ namespace GMX
             CargaFormaPago();
             NextCommand = new Command(async () =>
             {
-				if (!Validar())
-					await diag.AlertAsync(Resources.FaltanOb, "Error", "Ok");
-				else
+                if (!Validar())
+                    await diag.AlertAsync(Resources.FaltanOb, "Error", "Ok");
+                else
+                {
+                    FormatText();
                     await nav.PushAsync(new ResumenDatos());
+                }
             });
 			VerCotizaCommand = new Command(async () =>
 			{
@@ -214,6 +217,23 @@ namespace GMX
             Ocupado = false;
 		}
 
+
+		private FormattedString FormatText()
+		{
+			var fs = new FormattedString();
+			fs.Spans.Add(new Span { Text = "Nombre Tarjetahabiente: ", ForegroundColor = Color.Black, FontAttributes = FontAttributes.Bold });
+			fs.Spans.Add(new Span { Text = Nombre + "\\n", ForegroundColor = Color.Black, FontAttributes = FontAttributes.Bold });
+			fs.Spans.Add(new Span { Text = "Forma de Pago: ", ForegroundColor = Color.Black, FontAttributes = FontAttributes.Bold });
+            fs.Spans.Add(new Span { Text = FormaPago + "\\n", ForegroundColor = Color.Black, FontAttributes = FontAttributes.Bold });
+			fs.Spans.Add(new Span { Text = "Número de Tarjeta: ", ForegroundColor = Color.Black, FontAttributes = FontAttributes.Bold });
+            fs.Spans.Add(new Span { Text = NumTarjeta + "\\n", ForegroundColor = Color.Black, FontAttributes = FontAttributes.Bold });
+			fs.Spans.Add(new Span { Text = "Fecha Vencimiento: ", ForegroundColor = Color.Black, FontAttributes = FontAttributes.Bold });
+            fs.Spans.Add(new Span { Text = Mes + "/" + Anio + "\\n", ForegroundColor = Color.Black, FontAttributes = FontAttributes.Bold });
+			fs.Spans.Add(new Span { Text = "Código Seguridad: ", ForegroundColor = Color.Black, FontAttributes = FontAttributes.Bold });
+            fs.Spans.Add(new Span { Text = CodigoSeg + "\\n", ForegroundColor = Color.Black, FontAttributes = FontAttributes.Bold });
+			
+			return fs;
+		}
         private string ValidaFormatCard(){
 			string numberMasked = "";
 			int count = numtarjeta.Length;

@@ -38,6 +38,7 @@ namespace GMX
                     await Diag.AlertAsync(Resources.FaltanOb, "Error", "Ok");
                 else
                 {
+                    FormatText();
                     if (vmcotizar.IdTipo == "2") //renovacion
                         await nav.PushAsync(new AntecedentesPolizas(vmcotizar));
 					if (vmcotizar.IdTipo == "1") //nueva
@@ -158,6 +159,23 @@ namespace GMX
                 return true;
             }
         }
+
+		private FormattedString FormatText()
+		{
+			var fs = new FormattedString();
+			fs.Spans.Add(new Span { Text = "Descripcion: ", ForegroundColor = Color.Black, FontAttributes = FontAttributes.Bold });
+            fs.Spans.Add(new Span { Text = Descripcion + "\\n", ForegroundColor = Color.Black, FontAttributes = FontAttributes.Bold });
+			fs.Spans.Add(new Span { Text = "Especialidad: ", ForegroundColor = Color.Black, FontAttributes = FontAttributes.Bold });
+            fs.Spans.Add(new Span { Text = Especialidades[Especialidad].ToString() +"\\n", ForegroundColor = Color.Black, FontAttributes = FontAttributes.Bold });
+			fs.Spans.Add(new Span { Text = "Número de cédula profesional: ", ForegroundColor = Color.Black, FontAttributes = FontAttributes.Bold });
+            fs.Spans.Add(new Span { Text = CedulaProf + "\\n", ForegroundColor = Color.Black, FontAttributes = FontAttributes.Bold });
+			fs.Spans.Add(new Span { Text = "Número de cédula especilidad: ", ForegroundColor = Color.Black, FontAttributes = FontAttributes.Bold });
+            fs.Spans.Add(new Span { Text = CedulaEsp + "\\n", ForegroundColor = Color.Black, FontAttributes = FontAttributes.Bold });
+			fs.Spans.Add(new Span { Text = "Diplomados y otros estudios: ", ForegroundColor = Color.Black, FontAttributes = FontAttributes.Bold });
+            fs.Spans.Add(new Span { Text = Diplomados + "\\n", ForegroundColor = Color.Black, FontAttributes = FontAttributes.Bold });
+
+			return fs;
+		}
 
         private void CargaDatosProfesionales(DatosProfesionales dp)
         {
