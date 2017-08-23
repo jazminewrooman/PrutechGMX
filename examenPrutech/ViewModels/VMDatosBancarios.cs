@@ -21,6 +21,8 @@ namespace GMX
         GMX.wspago.KeyValue[] lstformaspago;
         public ICommand NextCommand { get; set; }
         public ICommand VerCotizaCommand { get; set; }
+        FormattedString fs;
+
 
         public VMDatosBancarios(IUserDialogs diag, INavigation n, VMCotizar vmc) : base(diag)
         {
@@ -42,7 +44,8 @@ namespace GMX
                     await diag.AlertAsync(Resources.FaltanOb, "Error", "Ok");
                 else
                 {
-                    FormatText();
+                    fs = FormatText();
+                    vmc.DatosBancarios = fs;
                     await nav.PushAsync(new ResumenDatos());
                 }
             });

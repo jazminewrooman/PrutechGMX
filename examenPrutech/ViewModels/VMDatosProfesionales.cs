@@ -21,6 +21,7 @@ namespace GMX
         public ICommand NextCommand { get; private set; }
         Dictionary<string, especialidades> lstesp;
         VMCotizar vmcotizar;
+        FormattedString fs;
 
         public VMDatosProfesionales(IUserDialogs diag, INavigation n, VMCotizar vmcot) : base(diag)
         {
@@ -38,7 +39,8 @@ namespace GMX
                     await Diag.AlertAsync(Resources.FaltanOb, "Error", "Ok");
                 else
                 {
-                    FormatText();
+                    fs = FormatText();
+                    vmcot.DatosProfesionales = fs;
                     if (vmcotizar.IdTipo == "2") //renovacion
                         await nav.PushAsync(new AntecedentesPolizas(vmcotizar));
 					if (vmcotizar.IdTipo == "1") //nueva

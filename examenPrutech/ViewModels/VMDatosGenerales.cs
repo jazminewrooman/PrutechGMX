@@ -31,6 +31,7 @@ namespace GMX
 		public ICommand NextCommand { get; private set; }
         public ICommand FiscalesCommand { get; private set; }
         TipoDatos tipo;
+        FormattedString fs;
 
         public VMDatosGenerales(IUserDialogs diag, INavigation n, VMCotizar vmcot, TipoDatos td) : base(diag)
         {
@@ -47,7 +48,8 @@ namespace GMX
                     await Diag.AlertAsync(Resources.FaltanOb, "Error", "Ok");
                 else
                 {
-                    FormatText();
+                    fs = FormatText();
+                    vmcot.DatosGenerales = fs;
                     await nav.PushAsync(new GMX.Views.DatosProfesionales(vmcot));
                 }
             });

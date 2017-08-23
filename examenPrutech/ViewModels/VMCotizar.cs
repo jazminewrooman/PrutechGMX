@@ -671,5 +671,72 @@ namespace GMX
 				}
 			}
 		}
+
+        //Propiedades FormattedStrings
+        FormattedString datosbancarios;
+        public FormattedString DatosBancarios
+        {
+            get { return datosbancarios; }
+            set 
+            {
+                if (datosbancarios != value)
+                {
+                    datosbancarios = value;
+                    OnPropertyChanged("DatosBancarios");
+                }
+                
+            }
+        }
+
+        FormattedString datosfiskles;
+
+		public FormattedString DatosFiskles
+		{
+			get { return datosfiskles; }
+			set
+			{
+				if (datosfiskles != value)
+				{
+					datosfiskles = value;
+					OnPropertyChanged("DatosFiskles");
+				}
+
+			}
+		}
+
+        FormattedString datosprofesionales;
+
+
+        public FormattedString DatosProfesionales
+		{
+			get { return datosprofesionales; }
+			set
+			{
+				if (datosprofesionales != value)
+				{
+					datosbancarios = value;
+					OnPropertyChanged("DatosProfesionales");
+				}
+
+			}
+		}
+
+		FormattedString datosgenerales;
+
+
+		public FormattedString DatosGenerales
+		{
+			get { return datosgenerales; }
+			set
+			{
+				if (datosgenerales != value)
+				{
+					datosgenerales = value;
+					OnPropertyChanged("DatosGenerales");
+				}
+
+			}
+		}
+
     }
 }
