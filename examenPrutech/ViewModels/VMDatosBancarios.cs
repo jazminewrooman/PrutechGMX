@@ -46,7 +46,7 @@ namespace GMX
                 {
                     fs = FormatText();
                     vmc.DatosBancarios = fs;
-                    await nav.PushAsync(new ResumenDatos());
+                    await nav.PushAsync(new ResumenDatos(vmcotizar));
                 }
             });
 			VerCotizaCommand = new Command(async () =>

@@ -738,5 +738,19 @@ namespace GMX
 			}
 		}
 
+        FormattedString resumen;
+        public FormattedString Resumen1
+        {
+            get { return resumen; }
+            set 
+            {
+                if (resumen != value)
+                {
+                    resumen = value;
+                    OnPropertyChanged("Resumen1");
+                }
+            }
+        }
+
     }
 }

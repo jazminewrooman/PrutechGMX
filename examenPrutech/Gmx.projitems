@@ -115,6 +115,9 @@
     <Compile Include="$(MSBuildThisFileDirectory)Models\DatosProfesionales.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\PolizasAnteriores.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\DatosBancarios.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\VerResumen.xaml.cs">
+      <DependentUpon>VerResumen.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\WelcomePage.xaml">
@@ -178,5 +181,8 @@
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\Documentos.xaml" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\VerResumen.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
   </ItemGroup>
 </Project>

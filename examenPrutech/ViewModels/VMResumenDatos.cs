@@ -9,16 +9,20 @@ using Newtonsoft.Json;
 using System.Windows.Input;
 using System.Linq;
 using System.Threading.Tasks;
+using Rg.Plugins.Popup.Extensions;
 
 namespace GMX
 {
 	public class VMResumenDatos : VMGmx
 	{
+        VMCotizar vmcotizar;
 		INavigation nav;
 		public ICommand ShopCommand { get; private set; }
 
-		public VMResumenDatos(IUserDialogs diag, INavigation n) : base(diag)
+		public VMResumenDatos(IUserDialogs diag, INavigation n, VMCotizar vmc) : base(diag)
 		{
+            nav = n;
+            vmcotizar = vmc;
 			ObservableCollection<opciones> lst = new ObservableCollection<opciones>();
 			lst.Add(new opciones() { idopc = "1", opc = "Datos Generales" });
 			lst.Add(new opciones() { idopc = "2", opc = "Datos Fiscales" });
@@ -63,6 +67,7 @@ namespace GMX
 				case 1:
 					//Para Datos Generales
 					dgmodel = null;
+                    await nav.PushPopupAsync(new VerResumen(vmcotizar, vmcotizar.DatosGenerales), true);
 					//var Welcome1 = new DatosGenerales(dgmodel, TipoDatos.Generales);
 					//App.navigation.InsertPageBefore(Welcome1, App.navigation.NavigationStack.FirstOrDefault());
 					//await App.navigation.PopToRootAsync();
@@ -78,6 +83,7 @@ namespace GMX
 				case 2:
 					//Para Datos Fiscales
 					dgmodel = null;
+                    await nav.PushPopupAsync(new VerResumen(vmcotizar, vmcotizar.DatosFiskles), true);
 					//var Welcome2 = new DatosGenerales(dgmodel, TipoDatos.Fiscales);
 					//App.navigation.InsertPageBefore(Welcome2, App.navigation.NavigationStack.FirstOrDefault());
 					//await App.navigation.PopToRootAsync();
@@ -93,6 +99,7 @@ namespace GMX
 					break;
 				case 3:
 					//Para Datos Profesionales
+                    await nav.PushPopupAsync(new VerResumen(vmcotizar, vmcotizar.DatosProfesionales), true);
 					//var Welcome3 = new DatosBancarios();
 					//App.navigation.InsertPageBefore(Welcome3, App.navigation.NavigationStack.FirstOrDefault());
 					//await App.navigation.PopToRootAsync();
@@ -108,6 +115,7 @@ namespace GMX
 					break;
 				case 4:
 					//Para Datos Bancarios
+                    await nav.PushPopupAsync(new VerResumen(vmcotizar, vmcotizar.DatosBancarios), true);
 					//var Welcome4 = new DatosBancarios();
 					//App.navigation.InsertPageBefore(Welcome4, App.navigation.NavigationStack.FirstOrDefault());
 					//await App.navigation.PopToRootAsync();

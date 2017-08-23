@@ -7,11 +7,11 @@ namespace GMX.Views
 {
 	public partial class ResumenDatos : ContentPage
 	{
-		public ResumenDatos()
+		public ResumenDatos(VMCotizar vmc)
 		{
 			InitializeComponent();
 
-			var vm = new VMResumenDatos(UserDialogs.Instance, Navigation);
+			var vm = new VMResumenDatos(UserDialogs.Instance, Navigation, vmc);
 			BindingContext = vm;
 			Title = "Resumen";
 
