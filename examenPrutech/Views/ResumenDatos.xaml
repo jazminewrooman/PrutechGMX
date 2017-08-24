@@ -8,6 +8,15 @@
 	<ContentPage.Content>
         <ScrollView>
             <StackLayout Padding="10,20">
+                <ListView x:Name="LstResumenDatos" ItemsSource="{Binding ListaDatos}" Command="{Binding SelectList}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <Label Text="{Binding opc}"/>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
             </StackLayout>
         </ScrollView>
     </ContentPage.Content>

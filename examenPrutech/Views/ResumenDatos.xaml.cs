@@ -13,6 +13,7 @@ namespace GMX.Views
 
 			var vm = new VMResumenDatos(UserDialogs.Instance, Navigation, vmc);
 			BindingContext = vm;
+
 			Title = "Resumen";
 
 		}

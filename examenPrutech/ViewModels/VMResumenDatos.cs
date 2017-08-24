@@ -13,22 +13,24 @@ using Rg.Plugins.Popup.Extensions;
 
 namespace GMX
 {
-	public class VMResumenDatos : VMGmx
-	{
+    public class VMResumenDatos : VMGmx
+    {
         VMCotizar vmcotizar;
-		INavigation nav;
-		public ICommand ShopCommand { get; private set; }
+        INavigation nav;
+        public ICommand ShopCommand { get; private set; }
+        public ICommand SelectList { get; private set; }
 
-		public VMResumenDatos(IUserDialogs diag, INavigation n, VMCotizar vmc) : base(diag)
-		{
+        public VMResumenDatos(IUserDialogs diag, INavigation n, VMCotizar vmc) : base(diag)
+        {
             nav = n;
             vmcotizar = vmc;
-			ObservableCollection<opciones> lst = new ObservableCollection<opciones>();
-			lst.Add(new opciones() { idopc = "1", opc = "Datos Generales" });
-			lst.Add(new opciones() { idopc = "2", opc = "Datos Fiscales" });
-			lst.Add(new opciones() { idopc = "3", opc = "Datos Profesionales" });
-			lst.Add(new opciones() { idopc = "4", opc = "Datos Bancarios" });
-			LstResumenDatos = lst;
+            ObservableCollection<resum> lst = new ObservableCollection<resum>();
+            lst.Add(new resum { id=1, opc = "Datos Generales" });
+            lst.Add(new resum { id=2, opc = "Datos Fiscales" });
+            lst.Add(new resum { id=3, opc ="Datos Profesionales"});
+            lst.Add(new resum { id=4, opc = "Datos Bancarios"});
+
+			ListaDatos = lst;
 
 			ShopCommand = new Command(async () =>
 			{
@@ -36,22 +38,45 @@ namespace GMX
 				//var Welcome = new DatosGenerales(dgmodel, TipoDatos.Generales);
 				//await nav.PushAsync(new DatosGenerales(dgmodel, TipoDatos.Generales));
 			});
+
+            /*SelectList = new Command(async (e) =>
+            {
+                if (e.SelectedItem == null)
+                    return;
+                OnOpcionSeleccionada(new SelectedOptionEventArgs() {sel = (e.SelectedItem as resum)});
+                SeleccionaLista(e.SelectedItem);
+            });*/
 		}
+
+        public class SelectedOptionEventArgs : EventArgs
+        {
+            public resum sel { set; get; }
+        }
 
 		#region Declaraciones
 
-		ObservableCollection<opciones> lstresumendatos;
-		public ObservableCollection<opciones> LstResumenDatos
+		ObservableCollection<resum> listadatos;
+		public ObservableCollection<resum> ListaDatos
 		{
-			get { return lstresumendatos; }
+			get { return listadatos; }
 			set
 			{
-				if (lstresumendatos != value)
+				if (listadatos != value)
 				{
-					lstresumendatos = value;
-					OnPropertyChanged("LstResumenDatos");
+					listadatos = value;
+					OnPropertyChanged("ListaDatos");
 				}
 
+			}
+		}
+
+		public event EventHandler<SelectedOptionEventArgs> OpcionSeleccionada;
+		protected virtual void OnOpcionSeleccionada(SelectedOptionEventArgs e)
+		{
+			var handler = OpcionSeleccionada;
+			if (handler != null)
+			{
+				handler(this, e);
 			}
 		}
 
@@ -135,4 +160,11 @@ namespace GMX
   #endregion
 
 	}
+
+    public class resum 
+    {
+        public string opc { get; set; }
+        public int id { get; set; }
+        public bool sel { get; set; }
+    }
 }
