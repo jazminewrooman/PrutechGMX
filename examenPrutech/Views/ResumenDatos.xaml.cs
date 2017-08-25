@@ -7,7 +7,13 @@ namespace GMX.Views
 {
 	public partial class ResumenDatos : ContentPage
 	{
-		public ResumenDatos(VMCotizar vmc)
+        void Handle_ItemSelected(object sender, Xamarin.Forms.SelectedItemChangedEventArgs e)
+        {
+            
+            throw new NotImplementedException();
+        }
+
+        public ResumenDatos(VMCotizar vmc)
 		{
 			InitializeComponent();
 

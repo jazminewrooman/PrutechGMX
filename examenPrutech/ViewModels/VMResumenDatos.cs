@@ -39,13 +39,13 @@ namespace GMX
 				//await nav.PushAsync(new DatosGenerales(dgmodel, TipoDatos.Generales));
 			});
 
-            /*SelectList = new Command(async (e) =>
+            SelectList = new Command(async (e) =>
             {
-                if (e.SelectedItem == null)
+                /*if (e.SelectedItem == null)
                     return;
                 OnOpcionSeleccionada(new SelectedOptionEventArgs() {sel = (e.SelectedItem as resum)});
-                SeleccionaLista(e.SelectedItem);
-            });*/
+                SeleccionaLista(e.SelectedItem);*/
+            });
 		}
 
         public class SelectedOptionEventArgs : EventArgs
@@ -77,6 +77,25 @@ namespace GMX
 			if (handler != null)
 			{
 				handler(this, e);
+			}
+		}
+
+		private resum _ItemSelected;
+		public resum objItemSelected
+		{
+			get
+			{
+				return _ItemSelected;
+			}
+			set
+			{
+				if (_ItemSelected != value)
+				{
+					_ItemSelected = value;
+					OnPropertyChanged("ItemSelected");
+
+                    SeleccionaLista(_ItemSelected.id);
+				}
 			}
 		}
 

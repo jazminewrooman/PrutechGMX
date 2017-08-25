@@ -8,7 +8,7 @@
 	<ContentPage.Content>
         <ScrollView>
             <StackLayout Padding="10,20">
-                <ListView x:Name="LstResumenDatos" ItemsSource="{Binding ListaDatos}" Command="{Binding SelectList}">
+                <ListView x:Name="LstResumenDatos" ItemsSource="{Binding ListaDatos}" SelectedItem="{Binding objItemSelected, Mode=TwoWay}">
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell>
