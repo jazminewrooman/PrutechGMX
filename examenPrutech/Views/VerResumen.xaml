@@ -4,9 +4,9 @@
     xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
     x:Class="GMX.Views.VerResumen">
 	<ScrollView>
-        <Frame Margin="30" Padding="10">
+        <Frame Margin="20" Padding="10">
             <StackLayout>
-                <Label Text="{Binding Resumen1, Mode=TwoWay}"/>
+                <Label FormattedText="{Binding Resumen1, Mode=TwoWay}"/>
                 <Button x:Name="btnCerrar" Text="Cerrar" Style="{StaticResource botonVerde}"/>
             </StackLayout>
         </Frame>

@@ -111,7 +111,7 @@ namespace GMX
 				case 1:
 					//Para Datos Generales
 					dgmodel = null;
-                    await nav.PushPopupAsync(new VerResumen(vmcotizar, vmcotizar.DatosGenerales), true);
+                    await nav.PushPopupAsync(new VerResumen(vmcotizar, vmcotizar.DatosGenerales, TipoResumen.Generales), true);
 					//var Welcome1 = new DatosGenerales(dgmodel, TipoDatos.Generales);
 					//App.navigation.InsertPageBefore(Welcome1, App.navigation.NavigationStack.FirstOrDefault());
 					//await App.navigation.PopToRootAsync();
@@ -127,7 +127,7 @@ namespace GMX
 				case 2:
 					//Para Datos Fiscales
 					dgmodel = null;
-                    await nav.PushPopupAsync(new VerResumen(vmcotizar, vmcotizar.DatosFiskles), true);
+                    await nav.PushPopupAsync(new VerResumen(vmcotizar, vmcotizar.DatosFiskles, TipoResumen.Fiscales), true);
 					//var Welcome2 = new DatosGenerales(dgmodel, TipoDatos.Fiscales);
 					//App.navigation.InsertPageBefore(Welcome2, App.navigation.NavigationStack.FirstOrDefault());
 					//await App.navigation.PopToRootAsync();
@@ -143,7 +143,7 @@ namespace GMX
 					break;
 				case 3:
 					//Para Datos Profesionales
-                    await nav.PushPopupAsync(new VerResumen(vmcotizar, vmcotizar.DatosProfesionales), true);
+                    await nav.PushPopupAsync(new VerResumen(vmcotizar, vmcotizar.DatosProfesionales, TipoResumen.Profesionales), true);
 					//var Welcome3 = new DatosBancarios();
 					//App.navigation.InsertPageBefore(Welcome3, App.navigation.NavigationStack.FirstOrDefault());
 					//await App.navigation.PopToRootAsync();
@@ -159,7 +159,7 @@ namespace GMX
 					break;
 				case 4:
 					//Para Datos Bancarios
-                    await nav.PushPopupAsync(new VerResumen(vmcotizar, vmcotizar.DatosBancarios), true);
+                    await nav.PushPopupAsync(new VerResumen(vmcotizar, vmcotizar.DatosBancarios, TipoResumen.Bancarios), true);
 					//var Welcome4 = new DatosBancarios();
 					//App.navigation.InsertPageBefore(Welcome4, App.navigation.NavigationStack.FirstOrDefault());
 					//await App.navigation.PopToRootAsync();

@@ -22,4 +22,12 @@ namespace GMX
         tarjeta = 1,
         banco = 2
     }
+
+    public enum TipoResumen
+    {
+        Generales = 1,
+        Fiscales = 2,
+        Profesionales = 3,
+        Bancarios = 4
+    }
 }

@@ -165,16 +165,17 @@ namespace GMX
 		private FormattedString FormatText()
 		{
 			var fs = new FormattedString();
-			fs.Spans.Add(new Span { Text = "Descripcion: ", ForegroundColor = Color.Black, FontAttributes = FontAttributes.Bold });
-            fs.Spans.Add(new Span { Text = Descripcion + "\\n", ForegroundColor = Color.Black, FontAttributes = FontAttributes.Bold });
+            fs.Spans.Add(new Span { Text = " Datos Profesionales \n", ForegroundColor = Color.Red, FontSize = 18 });
+			fs.Spans.Add(new Span { Text = " Descripcion: ", ForegroundColor = Color.Black, FontAttributes = FontAttributes.Bold });
+            fs.Spans.Add(new Span { Text = Descripcion + " \n ", ForegroundColor = Color.Black });
 			fs.Spans.Add(new Span { Text = "Especialidad: ", ForegroundColor = Color.Black, FontAttributes = FontAttributes.Bold });
-            fs.Spans.Add(new Span { Text = Especialidades[Especialidad].ToString() +"\\n", ForegroundColor = Color.Black, FontAttributes = FontAttributes.Bold });
+            fs.Spans.Add(new Span { Text = Especialidades[Especialidad].ToString() +" \n ", ForegroundColor = Color.Black });
 			fs.Spans.Add(new Span { Text = "Número de cédula profesional: ", ForegroundColor = Color.Black, FontAttributes = FontAttributes.Bold });
-            fs.Spans.Add(new Span { Text = CedulaProf + "\\n", ForegroundColor = Color.Black, FontAttributes = FontAttributes.Bold });
+            fs.Spans.Add(new Span { Text = CedulaProf + " \n ", ForegroundColor = Color.Black });
 			fs.Spans.Add(new Span { Text = "Número de cédula especilidad: ", ForegroundColor = Color.Black, FontAttributes = FontAttributes.Bold });
-            fs.Spans.Add(new Span { Text = CedulaEsp + "\\n", ForegroundColor = Color.Black, FontAttributes = FontAttributes.Bold });
+            fs.Spans.Add(new Span { Text = CedulaEsp + " \n ", ForegroundColor = Color.Black });
 			fs.Spans.Add(new Span { Text = "Diplomados y otros estudios: ", ForegroundColor = Color.Black, FontAttributes = FontAttributes.Bold });
-            fs.Spans.Add(new Span { Text = Diplomados + "\\n", ForegroundColor = Color.Black, FontAttributes = FontAttributes.Bold });
+            fs.Spans.Add(new Span { Text = Diplomados + " \n ", ForegroundColor = Color.Black });
 
 			return fs;
 		}

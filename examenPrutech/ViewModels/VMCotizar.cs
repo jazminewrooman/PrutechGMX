@@ -714,7 +714,7 @@ namespace GMX
 			{
 				if (datosprofesionales != value)
 				{
-					datosbancarios = value;
+					datosprofesionales = value;
 					OnPropertyChanged("DatosProfesionales");
 				}
 
