@@ -15,7 +15,18 @@ namespace GMX.Views
 
 			BindingContext = vmc;
 
-            vmc.Resumen1 = resumen.ToString();
+            var cadena = resumen;
+
+            if (cadena != null)
+            {
+                vmc.Resumen1 = cadena;
+                OnPropertyChanged("Resumen1");
+            }
+            else
+            {
+                vmc.Resumen1 = "No hay información para mostrar";
+                OnPropertyChanged("Resumen1");
+            }
 
 			btnCerrar.Clicked += (s, e) =>
 			{
