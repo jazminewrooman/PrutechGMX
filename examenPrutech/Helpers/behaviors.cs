@@ -57,8 +57,10 @@ namespace GMX.Helpers
                 {
                     det = new CreditCardDetector(args.NewTextValue.Replace("-", ""));
                     IsValid = det.IsValid();
-                    //((Entry)sender).Text = det.CardNumber;
-                    CardIssuer = det.Brand;
+                    if (!IsValid)
+                        CardIssuer = CardIssuer.Unknown;
+                    else
+                        CardIssuer = det.Brand;
                 }
                 else
                 {

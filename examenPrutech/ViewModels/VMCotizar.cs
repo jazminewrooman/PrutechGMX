@@ -5,11 +5,14 @@ using System.Collections.Generic;
 using GMX.Views;
 using System.Collections.ObjectModel;
 using GMX.Services.DTOs;
+using GMX.Services;
 using Newtonsoft.Json;
 using System.Windows.Input;
 using System.Linq;
 using System.Threading.Tasks;
 using GMX.Models;
+using GMXHelper;
+using System.Text.RegularExpressions;
 
 namespace GMX
 {
@@ -56,10 +59,50 @@ namespace GMX
             {
                 await nav.PushAsync(new DatosGenerales(datosgrales, TipoDatos.Generales, this));
             });
-            /*EmailCommand = new Command(() => 
+            EmailCommand = new Command(async () => 
 			{
-                ;
-			});*/
+                PromptConfig cfg = new PromptConfig()
+                {
+                    InputType = InputType.Email,
+
+                    Message = "Introduzca el correo al cual enviar la cotización",
+                    OkText = "OK",
+                    OnTextChanged = args => args.IsValid = ValEmail(args.Value)
+                };
+                var email = await diag.PromptAsync(cfg);
+                if (!String.IsNullOrEmpty(email.Value))
+                {
+                    try
+                    {
+                        Ocupado = true;
+                        GMX.ViewModels.Emails.GetSlipCotizacion(this);
+                        bindings b = new bindings();
+                        b.IniciaWS(config.Config["APIGMXIT"]);
+                        var doc = await b.GenerateDocument(GMX.ViewModels.Emails.Sections.ToArray(), GMX.ViewModels.Emails.docPDF);
+                        var slip_cotizacion = new FilePropertiesManager { stream = doc.Result, fileName = "Cotizacion.pdf", length = doc.Result.Length };
+                        var res = await b.DistribuirDocumentacionPoliza(email.Value, slip_cotizacion);
+                        Ocupado = false;
+                        if (res.Result)
+                            await diag.AlertAsync("Correo enviado con exito", "Aviso", "OK");
+                        else
+                            await diag.AlertAsync("El correo no pudo ser enviado", "Error", "OK");
+                    }
+                    catch
+                    {
+                        Ocupado = false;
+                        await diag.AlertAsync("El correo no pudo ser enviado", "Error", "OK");
+                    }
+                }
+			});
+        }
+
+        private bool ValEmail(string email)
+        {
+            bool IsValid = false;
+			const string emailRegex = @"^(?("")("".+?(?<!\\)""@)|(([0-9a-z]((\.(?!\.))|[-!#\$%&'\*\+/=\?\^`\{\}\|~\w])*)(?<=[0-9a-z])@))" +
+	@"(?(\[)(\[(\d{1,3}\.){3}\d{1,3}\])|(([0-9a-z][-\w]*[0-9a-z]*\.)+[a-z0-9][\-a-z0-9]{0,22}[a-z0-9]))$";
+			IsValid = (Regex.IsMatch(email, emailRegex, RegexOptions.IgnoreCase, TimeSpan.FromMilliseconds(250)));
+            return IsValid;
         }
 
         public void IniciaCarga()
@@ -714,7 +757,7 @@ namespace GMX
 			{
 				if (datosprofesionales != value)
 				{
-					datosprofesionales = value;
+					datosbancarios = value;
 					OnPropertyChanged("DatosProfesionales");
 				}
 

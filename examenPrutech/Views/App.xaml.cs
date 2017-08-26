@@ -15,6 +15,8 @@ namespace GMX.Views
 
 		public static INavigation navigation;
         public static agente agent;
+        public static GMX.wsUser.bUsers usr;
+        public static susc suscriptor;
 
         public App()
         {

@@ -93,7 +93,8 @@ namespace GMX
                 Ocupado = true;
                 await System.Threading.Tasks.Task.Delay(TimeSpan.FromMilliseconds(100));
                 GMX.wsUser.Security ws = new GMX.wsUser.Security(config.Config["APIUsuarios"]);
-                GMX.wsUser.bUsers user = ws.AuthenticateUser(Usuario, Contrasena, 1);
+                GMX.wsUser.bUsers user = ws.AuthenticateUser(Usuario, Contrasena, 4);//4 es app id de medicos
+                App.usr = user;
                 bindings b = new bindings();
                 b.IniciaWS();
                 var cod = new Dictionary<string, string>();
@@ -104,6 +105,13 @@ namespace GMX
                 {
                     Dictionary<int, agente> agent = Newtonsoft.Json.JsonConvert.DeserializeObject<Dictionary<int, agente>>(strdata.Result);
                     App.agent = agent.FirstOrDefault().Value;
+
+                    wsbd.Service wsbd = new GMX.wsbd.Service();
+                    string json = wsbd.get_catalogos("GetPvSuscriptorByPv", "@appId='4', @pv='1'");
+                    suscriptor s = Newtonsoft.Json.JsonConvert.DeserializeObject<suscriptor>(json);
+                    if (s.Table.FirstOrDefault() != null)
+                        App.suscriptor = s.Table.FirstOrDefault();
+
                     var Welcome = new Cotizar();
                     //var Welcome = new MetodoPago(new VMCotizar(UserDialogs.Instance, App.navigation));
                     await App.navigation.PopToRootAsync();

@@ -10,6 +10,8 @@ using System.ServiceModel;
 using System.ComponentModel;
 using Newtonsoft.Json;
 using System.Net;
+using GMXHelper;
+using GMX.Views;
 
 namespace GMX.Services
 {
@@ -17,23 +19,35 @@ namespace GMX.Services
     {
         private EndpointAddress EndPoint = new EndpointAddress(config.Config["APIIntegracion"]);
         private EmissionServiceClient ws;
+        private GMXITServiceClient wsit;
 
-		public EmissionServiceClient Service
+		/*public EmissionServiceClient Service
         {
-            get{ return (ws); }
-        }
+            get { return (ws); }
+        }*/
 
         public bindings(){
-            InitializeServiceClient();
+            //InitializeServiceClient();
         }
 
-        public void IniciaWS()
+        public void IniciaWS(string api = "")
 		{
-			if (ws.State == CommunicationState.Closed)
-			{
-				BasicHttpBinding binding = CreateBasicHttp();
-				ws = new EmissionServiceClient(binding, EndPoint);
+            if (api != "")
+            {
+                if (wsit == null || wsit.State == CommunicationState.Closed)
+				{
+					BasicHttpBinding binding = CreateBasicHttp();
+                    wsit = new GMXITServiceClient(binding, new EndpointAddress(api));
+				}
 			}
+            else
+            {
+                if (ws == null || ws.State == CommunicationState.Closed)
+                {
+                    BasicHttpBinding binding = CreateBasicHttp();
+                    ws = new EmissionServiceClient(binding, EndPoint);
+                }
+            }
 		}
 
 		private void InitializeServiceClient()
@@ -51,13 +65,14 @@ namespace GMX.Services
 				MaxBufferSize = 2147483647,
 				MaxReceivedMessageSize = 2147483647,
 			};
-			TimeSpan timeout = new TimeSpan(0, 3, 0);
+			TimeSpan timeout = new TimeSpan(0, 0, 60);
 			binding.SendTimeout = timeout;
 			binding.OpenTimeout = timeout;
 			binding.ReceiveTimeout = timeout;
 			return binding;
 		}
 
+#region Integracion
         public Task<decryptCompletedEventArgs> decrypt(string request)
 		{
 			var tcs = CreateSource<decryptCompletedEventArgs>(null);
@@ -82,6 +97,30 @@ namespace GMX.Services
             ws.getCatalogAsync(json);
             return tcs.Task;
         }
+		#endregion
+
+		#region GMX IT
+        public Task<GenerateDocumentCompletedEventArgs> GenerateDocument(Section[] sections, DocumentPDF pdf)
+		{
+            var tcs = CreateSource<GenerateDocumentCompletedEventArgs>(null);
+			wsit.GenerateDocumentCompleted += (sender, e) => TransferCompletion(tcs, e, () => e, null);
+            wsit.GenerateDocumentAsync(sections, pdf);
+			return tcs.Task;
+		}
+
+        public Task<DistribuirDocumentacionPolizaCompletedEventArgs> DistribuirDocumentacionPoliza(string mailaseg, FilePropertiesManager slip)
+		{
+            Destinatario[] asegurado = new Destinatario[] { new Destinatario() { Nombre = "Asegurado", Mail = mailaseg } };
+            Destinatario[] agente = new Destinatario[] { new Destinatario() { Nombre = "Agente", Mail = App.usr.Email } };
+            Destinatario[] suscrip = new Destinatario[] { new Destinatario() { Nombre = "Suscriptor", Mail = App.suscriptor.email } };
+            Destinatario[] nicho = new Destinatario[] { new Destinatario() { Nombre = "Dynamic_CCO", Mail = config.Config["EmailNicho"] } };
+
+			var tcs = CreateSource<DistribuirDocumentacionPolizaCompletedEventArgs>(null);
+            wsit.DistribuirDocumentacionPolizaCompleted += (sender, e) => TransferCompletion(tcs, e, () => e, null);
+            wsit.DistribuirDocumentacionPolizaAsync("cotizacion", false, "PVLMED", "", asegurado, agente, suscrip, nicho, null, slip, null, null, null, null, null, null);
+			return tcs.Task;
+		}
+		#endregion
 
 		private static TaskCompletionSource<T> CreateSource<T>(object state)
 		{

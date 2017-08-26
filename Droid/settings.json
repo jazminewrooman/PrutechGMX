@@ -1,9 +1,11 @@
 ﻿{
-  "producto": "PVLM3D",
-  "clave": "AdKGEpIxQTR1XvtEpQLDYA==",
-  "llave": "PJUZpGkDfHaEca6I1kdw0iuSYJP8cJIw3F6L4a94uQo=",
-  "APIUsuarios": "http://148.243.230.134/wsUserAdmin/security.asmx",
-  "APIIntegracion": "http://desa.gmx.com.mx/IntegrationService/EmissionService.svc",
-  "APIBD": "http://desa.gmx.com.mx/WS_Database_Access_PVLs/Service.asmx",
-  "DerechosPoliza": "350.00"
+    "producto" : "PVLM3D",
+    "clave" : "AdKGEpIxQTR1XvtEpQLDYA==",
+    "llave" : "PJUZpGkDfHaEca6I1kdw0iuSYJP8cJIw3F6L4a94uQo=",
+    "APIUsuarios" : "http://148.243.230.134/wsUserAdmin/security.asmx",
+    "APIIntegracion": "http://desa.gmx.com.mx/IntegrationService/EmissionService.svc",
+    "APIBD": "http://desa.gmx.com.mx/WS_Database_Access_PVLs/Service.asmx",
+    "APIPayment": "http: //desa.gmx.com.mx/wsPagoTB/PaymentCenter.asmx",
+    "APIGMXIT": "http://desa.gmx.com.mx/WSMail/GMXITService.svc",
+    "EmailNicho": "daniel.celis@gmx.com.mx"
 }

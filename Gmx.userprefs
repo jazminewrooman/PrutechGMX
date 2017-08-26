@@ -2,12 +2,6 @@
   <MonoDevelop.Ide.ItemProperties.Gmx.Droid AndroidDesignerPreferredDevice="Nexus 4" PreferredExecutionTarget="Android.Nexus_5X_API_25" />
   <MonoDevelop.Ide.Workbench ActiveDocument="PrutechGMX Status">
     <Files>
-      <File FileName="examenPrutech/ViewModels/VMDatosGenerales.cs" Line="32" Column="1" />
-      <File FileName="examenPrutech/ViewModels/VMCotizar.cs" Line="23" Column="9" />
-      <File FileName="examenPrutech/Views/DatosGenerales.xaml.cs" Line="42" Column="1" />
-      <File FileName="examenPrutech/ViewModels/VMAntecedentesPolizas.cs" Line="26" Column="51" />
-      <File FileName="examenPrutech/Views/MetodoPago.xaml" Line="8" Column="1" />
-      <File FileName="examenPrutech/ViewModels/VMMetodoPago.cs" Line="1" Column="1" />
       <File FileName="PrutechGMX Status" />
     </Files>
   </MonoDevelop.Ide.Workbench>
