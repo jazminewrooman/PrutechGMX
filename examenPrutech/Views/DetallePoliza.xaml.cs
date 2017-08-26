@@ -11,7 +11,7 @@ namespace GMX.Views
 		{
 			InitializeComponent();
 
-            var vm = new VMDetallePoliza(UserDialogs.Instance, Navigation, vmc);
+            var vm = new VMDetallePoliza(UserDialogs.Instance, Navigation, vmc, id);
             BindingContext = vm;
             Title = "Pólizas Emitidas"
 		}

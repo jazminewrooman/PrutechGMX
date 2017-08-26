@@ -84,7 +84,7 @@ namespace GMX
     public class resultado
     {
         public string nom { get; set; }
-        public string tel { get; set; }
+        public string poliza { get; set; }
         public int id { get; set; }
         public bool sel { set; get; }
     }

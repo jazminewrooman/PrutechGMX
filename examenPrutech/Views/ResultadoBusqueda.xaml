@@ -11,7 +11,7 @@
     						<ViewCell>
     							<StackLayout>
     								<Label Text="{Binding Nombre}"  Style="{StaticResource labels}"/>
-    								<Label Text="{Binding Telefono}"  Style="{StaticResource labels}"/>
+    								<Label Text="{Binding Poliza}"  Style="{StaticResource labels}"/>
     							</StackLayout>
     						</ViewCell>
     					</DataTemplate>

@@ -27,7 +27,7 @@
 						<ColumnDefinition Width="20"/>
 					</Grid.ColumnDefinitions>
 					<Label Grid.Column="0" Text="Descargar Documentos" Style="{StaticResource labels}"/>
-					<Image Grid.Column="1" Source="next.png"/>
+                    <Button Grid.Column = "1" Image="next.png" Command="{Binding NextCommand}"/>
 				</Grid>
 				
 			</StackLayout>
