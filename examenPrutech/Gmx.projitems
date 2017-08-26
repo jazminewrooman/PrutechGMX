@@ -110,7 +110,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Controls\MyMasterDetail.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\Extensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\DTOs\especialidades.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Views\Documentos.xaml.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\DTOs\agente.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\DatosProfesionales.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\PolizasAnteriores.cs" />
@@ -118,6 +117,9 @@
     <Compile Include="$(MSBuildThisFileDirectory)Views\VerResumen.xaml.cs">
       <DependentUpon>VerResumen.xaml</DependentUpon>
     </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\VMResumen.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\VMResultadoBusqueda.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\VMDetallePoliza.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\WelcomePage.xaml">
@@ -184,5 +186,12 @@
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\VerResumen.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\ResultadoBusqueda.xaml.cs" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\DetallePoliza.xaml.cs" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\Documentos.xaml.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="$(MSBuildThisFileDirectory)Views\DetallePoliza.xaml" />
+    <None Include="$(MSBuildThisFileDirectory)Views\ResultadoBusqueda.xaml" />
   </ItemGroup>
 </Project>

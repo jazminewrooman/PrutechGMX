@@ -1,5 +1,36 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="Gmx.DetallePoliza">
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
+	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+	x:Class="GMX.Views.DetallePoliza">
 	<ContentPage.Content>
+		<ScrollView>
+			<StackLayout>
+				
+				<Label Text="Emisión"  Style="{StaticResource labels}"/>
+				<Label Text="{Binding Emision}"  Style="{StaticResource labels}"/>
+
+				<Label Text="Prima Neta"  Style="{StaticResource labels}"/>
+				<Label Text="{Binding PrimaNeta}"  Style="{StaticResource labels}"/>
+
+				<Label Text="Derechos"  Style="{StaticResource labels}"/>
+				<Label Text="{Binding Derechos}"  Style="{StaticResource labels}"/>
+
+				<Label Text="IVA"  Style="{StaticResource labels}"/>
+				<Label Text="{Binding IVA}"  Style="{StaticResource labels}"/>
+
+				<Label Text="Prima Total"  Style="{StaticResource labels}"/>
+				<Label Text="{Binding PrimaTotal}"  Style="{StaticResource labels}"/>
+
+				<Grid>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition />
+						<ColumnDefinition Width="20"/>
+					</Grid.ColumnDefinitions>
+					<Label Grid.Column="0" Text="Descargar Documentos" Style="{StaticResource labels}"/>
+					<Image Grid.Column="1" Source="next.png"/>
+				</Grid>
+				
+			</StackLayout>
+		</ScrollView>
 	</ContentPage.Content>
 </ContentPage>

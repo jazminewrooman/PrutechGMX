@@ -1,5 +1,25 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="Gmx.Documentos">
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
+	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+	x:Class="GMX.Views.Documentos">
 	<ContentPage.Content>
+		<ScrollView>
+			<StackLayout Padding="10" Spacing="20">
+				<Label Text="Carátula"  Style="{StaticResource labels}"/>
+
+				<Label Text="Condiciones Particulares"  Style="{StaticResource labels}"/>
+
+				<Label Text="Control de Pago"  Style="{StaticResource labels}"/>
+
+				<Label Text="Condiciones Generales"  Style="{StaticResource labels}"/>
+
+				<Label Text="Detalle de Coberturas"  Style="{StaticResource labels}"/>
+
+				<BoxView BackgroundColor="Gray" HeightRequest="5"/>
+
+				<Label Text="Reenviar documentos"  Style="{StaticResource labels}"/>
+				
+			</StackLayout>
+		</ScrollView>
 	</ContentPage.Content>
 </ContentPage>

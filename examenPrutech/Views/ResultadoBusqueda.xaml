@@ -1,5 +1,23 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="Gmx.ResultadoBusqueda">
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
+	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+	x:Class="GMX.Views.ResultadoBusqueda">
 	<ContentPage.Content>
+		<ScrollView>
+            <StackLayout Padding="10,20">
+    			<ListView x:Name="lstBusqueda" ItemsSource="{Binding ListaPolizas}" ItemTapped="{Binding Item_Tapped, Mode=TwoWay}">
+    				<ListView.ItemTemplate>
+    					<DataTemplate>
+    						<ViewCell>
+    							<StackLayout>
+    								<Label Text="{Binding Nombre}"  Style="{StaticResource labels}"/>
+    								<Label Text="{Binding Telefono}"  Style="{StaticResource labels}"/>
+    							</StackLayout>
+    						</ViewCell>
+    					</DataTemplate>
+    				</ListView.ItemTemplate>
+    			</ListView>
+             </StackLayout>
+		</ScrollView>
 	</ContentPage.Content>
 </ContentPage>

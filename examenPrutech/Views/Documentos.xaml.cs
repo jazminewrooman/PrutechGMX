@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 using Xamarin.Forms;
 
-namespace Gmx
+namespace GMX.Views
 {
 	public partial class Documentos : ContentPage
 	{
