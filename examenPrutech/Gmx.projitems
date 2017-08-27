@@ -124,6 +124,9 @@
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Emails.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\suscriptor.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\wsgmxit.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\cobertura.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)BD.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\DTOs\zonashuracan.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\WelcomePage.xaml">

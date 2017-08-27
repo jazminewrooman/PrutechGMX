@@ -72,12 +72,23 @@ namespace GMX.Services
 			return binding;
 		}
 
-#region Integracion
-        public Task<decryptCompletedEventArgs> decrypt(string request)
+		#region Integracion
+        public Task<createPolicyCompletedEventArgs> createPolicy(IntegrationServiceEntity.Emission emision)
+		{
+            var tcs = CreateSource<createPolicyCompletedEventArgs>(null);
+            ws.createPolicyCompleted += (sender, e) => TransferCompletion(tcs, e, () => e, null);
+            ws.createPolicyAsync(emision);
+			return tcs.Task;
+		}
+
+        public Task<decryptCompletedEventArgs> decrypt(string request, string llave = "")
 		{
 			var tcs = CreateSource<decryptCompletedEventArgs>(null);
             ws.decryptCompleted += (sender, e) => TransferCompletion(tcs, e, () => e, null);
-            ws.decryptAsync(request, config.Config["llave"]);
+            if (String.IsNullOrEmpty(llave.Trim()))
+                ws.decryptAsync(request, config.Config["llave"]);
+            else
+                ws.decryptAsync(request, llave);
 			return tcs.Task;
 		}
 

@@ -3,7 +3,7 @@
 	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
     xmlns:controls="clr-namespace:GMX.SegmentedControl;"
     xmlns:local="clr-namespace:GMX.Helpers;"
-	BackgroundColor="{StaticResource ligthgray}" x:Class="GMX.Views.AntecedentesPolizas">
+	x:Class="GMX.Views.AntecedentesPolizas">
     <ContentPage.ToolbarItems>
         <ToolbarItem Name="Menu1" Command="{Binding NextCommand}" Icon="flecha.png" Order="Primary" Priority="0"/>
     </ContentPage.ToolbarItems>

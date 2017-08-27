@@ -17,7 +17,7 @@ namespace GMX
     {
         VMCotizar vmcotizar;
         INavigation nav;
-        public ICommand ShopCommand { get; private set; }
+        public ICommand EmisionCommand { get; private set; }
         public ICommand SelectList { get; private set; }
 
         public VMResumenDatos(IUserDialogs diag, INavigation n, VMCotizar vmc) : base(diag)
@@ -32,11 +32,9 @@ namespace GMX
 
 			ListaDatos = lst;
 
-			ShopCommand = new Command(async () =>
+			EmisionCommand = new Command(async () =>
 			{
-				DatosGralesModel dgmodel = null;
-				//var Welcome = new DatosGenerales(dgmodel, TipoDatos.Generales);
-				//await nav.PushAsync(new DatosGenerales(dgmodel, TipoDatos.Generales));
+                await vmcotizar.MandarEmision();
 			});
 
             SelectList = new Command(async (e) =>

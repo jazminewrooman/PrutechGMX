@@ -41,7 +41,15 @@ namespace GMX
                     if (tipopago == TipoPago.tarjeta)
                         await nav.PushAsync(new DatosBancarios(vmcotizar));
                     if (tipopago == TipoPago.banco)
-                        await nav.PushAsync(new ResumenDatos(vmcotizar));
+                    {
+                        //await nav.PushAsync(new ResumenDatos(vmcotizar));
+                        var cotizar = nav.NavigationStack.OfType<Cotizar>().FirstOrDefault();
+                        if (cotizar != null)
+                        {
+                            nav.InsertPageBefore(new ResumenDatos(vmcotizar), cotizar);
+                            await nav.PopToRootAsync(true);
+                        }
+                    }
                 }
 			});
 

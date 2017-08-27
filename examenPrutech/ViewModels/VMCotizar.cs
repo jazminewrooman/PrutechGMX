@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 using GMX.Models;
 using GMXHelper;
 using System.Text.RegularExpressions;
+using System.Globalization;
 
 namespace GMX
 {
@@ -111,6 +112,135 @@ namespace GMX
             IdPlan = "1";
             IniVig = DateTime.Now;
             Ocupado = false;
+        }
+
+        public async Task MandarEmision(){
+            string usuario = "";
+            int agrupador = 0;
+            decimal sumaasegurada = decimal.Parse(SumaAseg, NumberStyles.AllowCurrencySymbol | NumberStyles.Number);
+            int tipoagente = int.Parse(App.agent.cod_tipo_agente);
+            decimal ComisionRamo1 = 0M; decimal ComisionRamo2 = 0M;
+
+			// coberturas
+			BD db = new BD(this);
+            List<cobertura> lscob = null;
+            if (IdPlan == "1") //tradicional
+            {
+                usuario = "GMX-MED"; agrupador = 0;
+                if (Adicional)
+				{
+					ComisionRamo1 = PrimaNeta * 0.3M;
+					ComisionRamo2 = PrimaNeta * 0.7M;
+					lscob = db.SelCoberturas().Where(x => x.IdPlan == 1 && x.RCArrendatario == 1).ToList();
+                }
+                else
+                {
+                    ComisionRamo1 = PrimaNeta * 0.1M;
+                    ComisionRamo2 = PrimaNeta * 0.9M;
+                    lscob = db.SelCoberturas().Where(x => x.IdPlan == 1 && x.RCArrendatario == 0).ToList();
+                }
+            }
+            if (IdPlan == "2") //angeles
+            {
+				ComisionRamo1 = PrimaNeta * 0.3M;
+				ComisionRamo2 = PrimaNeta * 0.7M;
+				usuario = "GMX-ANG"; agrupador = 2;
+                lscob = db.SelCoberturas().Where(x => x.IdPlan == 2).ToList();
+            }
+            string strcobertura = JsonConvert.SerializeObject(lscob);
+
+			// inciso
+			bindings b = new bindings();
+			b.IniciaWS();
+			var cod = new Dictionary<string, string>();
+            cod.Add("codpost", datosgrales.CP);
+			var crypdata = await b.getCatalog("GetZonasHuracanByCodpost", cod);
+			var strdata = await b.decrypt(crypdata.Result);
+            KeyValuePair<int, zonashuracan> zhuracan = JsonConvert.DeserializeObject<Dictionary<int, zonashuracan>>(strdata.Result).FirstOrDefault();
+			crypdata = await b.getCatalog("GetZonasTerremotoByCodpost", cod);
+			strdata = await b.decrypt(crypdata.Result);
+            KeyValuePair<int, zonasterremoto> zterremoto = JsonConvert.DeserializeObject<Dictionary<int, zonasterremoto>>(strdata.Result).FirstOrDefault();
+
+            IntegrationServiceEntity.Inciso inciso = new IntegrationServiceEntity.Inciso() { codItem = 1, codIndCob = 1, 
+                codGiroNegocio = 895, codPais = 10, codEstado = DatosGrales.Estado, codMuncp = DatosGrales.Municipio,
+                codCiudad = DatosGrales.Ciudad, codColonia = DatosGrales.Colonia, txtDireccion = DatosGrales.Direccion,
+                numExt = ".", codPostal = DatosGrales.CP, impDeremiMe = Derechos, impIvaMe = Iva, impPremioMe = PrimaTotal,
+                codSIC = "1", codCalifUw = "1", codTipoBenef1 = 1, txtNombreBenef1 = $"{DatosGrales.Nombre} {DatosGrales.APaterno} {DatosGrales.AMaterno}",
+                codProfe = "8", codDescrip = DatosProf.IdDescripcion.ToString(), codEspecialidad = DatosProf.Especialidad.ToString(),
+                codCedProf = DatosProf.CedulaProf, codCedEspecialidad = DatosProf.CedulaEsp, impParticipaMe = PrimaNeta
+            };
+            inciso.zonaAmisTerrem = zterremoto.Value.zona_amis;
+            inciso.zonaCrestaTerrem = zterremoto.Value.zona_cresta;
+            inciso.zonaAmisHuracan = zhuracan.Value.zona_amis;
+            inciso.zonaCrestaHuracan = zhuracan.Value.zona_cresta;
+
+            // poliza
+            IntegrationServiceEntity.Poliza p = new IntegrationServiceEntity.Poliza()
+            {
+                codGrupo = agrupador, codPtoVenta = 2, ramoComercial = 66, fecVigDesde = IniVig, fecVigHasta = FinVig,
+                codGrupoEndo = 1, codTipoEndo = 1, codTipoPoliza = 1, impSumaAsegurada = sumaasegurada,
+                impPrimaMe = PrimaNeta, impDesctoMe = 0, impDecretoMe = 0, impDeremiMe = Derechos, impDerPolizaTur = 0,
+                impIvaMe = Iva, impRecFinMe = 0, impPremioMe = PrimaTotal, codMoneda = 0, pjeIva = 16M, pjeRecargo = 0, pjeDecreto = 0,
+                pjeDescuento = 0, pjeGastosEmision = ((Derechos/PrimaNeta)*100), pjeDerPolizaTur = 0, polEstado = 0, codPeriodoPago = 5,
+                codUsuario = App.suscriptor.Pv.ToString(), fecTarifa = DateTime.Now, codNivFact = 1, codNivImpFact = 2, codOperacion = 1
+            };
+            if (Antecedentes != null && Antecedentes.anno > 0)
+                p.fecRetroactiva = new DateTime(Antecedentes.anno, Antecedentes.mes, Antecedentes.dia);
+
+            // agentes
+            IntegrationServiceEntity.Agente ag1 = new IntegrationServiceEntity.Agente()
+            {
+                ramoTecnico = 909, codTipoAgente = tipoagente, codAgente = int.Parse(App.agent.cod_agente), 
+                pjeComisNormal = (tipoagente == 3 ? 0 : 23), pjeComisExtra = 0, impComisNormalMe = (tipoagente == 3 ? 0 : (ComisionRamo1 * 0.23M)),
+                impComisExtraMe = 0, pjeTasaArt41 = 0, impArt41 = 0
+            };
+			IntegrationServiceEntity.Agente ag2 = new IntegrationServiceEntity.Agente()
+			{
+				ramoTecnico = 911, codTipoAgente = tipoagente, codAgente = int.Parse(App.agent.cod_agente),
+				pjeComisNormal = (tipoagente == 3 ? 0 : 23), pjeComisExtra = 0, impComisNormalMe = (tipoagente == 3 ? 0 : (ComisionRamo2 * 0.23M)),
+				impComisExtraMe = 0, pjeTasaArt41 = 0, impArt41 = 0
+			};
+
+            // cliente
+            List<IntegrationServiceEntity.Cliente> clientes = new List<IntegrationServiceEntity.Cliente>();
+            IntegrationServiceEntity.Cliente clientegrales = new IntegrationServiceEntity.Cliente()
+            {
+                tipoPersona = "F", codItem = 0, apPat = DatosGrales.APaterno, apMat = DatosGrales.AMaterno, nombre = DatosGrales.Nombre,
+                tipoDoc = 6, numDoc = "", lugNac = "", sexo = "M", estCivil = 6, nomFactura = "", codTipoDir1 = 1, codPais1 = 10,
+                codEstado1 = DatosGrales.Estado, codMuncp1 = DatosGrales.Municipio, codCiudad1 = DatosGrales.Ciudad,
+                codColonia1 = DatosGrales.Colonia, calle1 = DatosGrales.Direccion, numExt1 = ".", codTipoTel1 = 2,
+                tel1 = DatosGrales.Telefono, rfc = DatosGrales.RFC, codCondPago = 1, codBancEmisor = 1
+            };
+            clientes.Add(clientegrales);
+            if (DatosFiscales != null && !String.IsNullOrEmpty(DatosFiscales.RFC)){
+                IntegrationServiceEntity.Cliente clientefiscal = new IntegrationServiceEntity.Cliente()
+                {
+                    tipoPersona = (DatosFiscales.Persona == TipoPersona.Fisica ? "F" : "J"), codItem = 1, apPat = DatosFiscales.APaterno, apMat = DatosFiscales.AMaterno, nombre = DatosFiscales.Nombre,
+                    tipoDoc = 6, numDoc = "", lugNac = "", sexo = "M", estCivil = 6, nomFactura = "", codTipoDir1 = 1,
+                    codPais1 = 10, codEstado1 = DatosFiscales.Estado, codMuncp1 = DatosFiscales.Municipio, codCiudad1 = DatosFiscales.Ciudad,
+                    codColonia1 = DatosFiscales.Colonia, calle1 = DatosFiscales.Direccion, numExt1 = ".", codTipoTel1 = 2,
+                    tel1 = DatosFiscales.Telefono, rfc = DatosFiscales.RFC, codCondPago = 1, codBancEmisor = 1
+                };
+                clientes.Add(clientefiscal);
+            }
+
+			// cuota
+
+			// enviar al servicio
+			IntegrationServiceEntity.Emission emision = new IntegrationServiceEntity.Emission();
+            emision.codSuc = App.suscriptor.Pv;
+            emision.llave = config.Config["llave"];
+            emision.producto = App.suscriptor.clave.ToString();
+            emision.clave = App.suscriptor.clave.ToString();
+            emision.cobertura = JsonConvert.DeserializeObject<IntegrationServiceEntity.Cobertura[]>(strcobertura);
+            emision.inciso = new IntegrationServiceEntity.Inciso[] { inciso };
+            emision.poliza = p;
+            emision.agente = new IntegrationServiceEntity.Agente[] { ag1, ag2 };
+            emision.cliente = clientes.ToArray();
+			//bindings b = new bindings();
+			//b.IniciaWS();
+            var resp = await b.createPolicy(emision);
+            var jsonpoliza = await b.decrypt(resp.Result);
         }
 
         private bool Validar()
