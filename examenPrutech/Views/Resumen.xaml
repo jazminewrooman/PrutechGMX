@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
-    x:Class="GMX.Views.Resumen">
+    xmlns:local="clr-namespace:GMX.Views;"
+    x:Class="GMX.Views.Resumen" BackgroundColor="{StaticResource ligthgray}">
 	<ContentPage.Content>
         <ScrollView>
-            <StackLayout Padding="10" Spacing="10">
+            <StackLayout>
                 
-                <Label Text="Desde"  Style="{StaticResource labels}"/>
-                <DatePicker Text="{Binding FechaDesde, Mode=TwoWay}"/>
+                <local:VwCal Title="Desde" DateSel="{Binding FechaDesde}" />
 
-                <Label Text="Hasta"  Style="{StaticResource labels}"/>
-                <DatePicker Text="{Binding FechaHasta, Mode=TwoWay}"/>
+                <local:VwCal Title="Hasta" DateSel="{Binding FechaHasta}" />
 
-                <BoxView BackgroundColor="Gray"/>
+                <BoxView HeightRequest="20"/>
 
                 <Button Text="Buscar" Style="{StaticResource botonVerde}" Command="{Binding BuscarCommand}"/>
-                
+
+                <Image Source="medicosneg" IsVisible="{Binding VerImg}" Opacity="0.3" Aspect="AspectFit"/>
             </StackLayout>
         </ScrollView>
 	</ContentPage.Content>

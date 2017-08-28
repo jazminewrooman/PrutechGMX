@@ -15,29 +15,28 @@ namespace GMX
     public class VMResumen : VMGmx
 	{
 		INavigation nav;
-        VMCotizar vmcotizar;
+        //VMCotizar vmcotizar;
 
 		public ICommand BuscarCommand { get; private set; }
 
-        public VMResumen(IUserDialogs diag, INavigation n, VMCotizar vmc) : base(diag)
+        public VMResumen(IUserDialogs diag, INavigation n) : base(diag)
         {
             nav = n;
-            vmcotizar = vmc;
+            //vmcotizar = vmc;
             BuscarCommand = new Command(async () =>
             {
                 if (!Validar())
-                    await diag.AlertAsync(Resources.FaltanOb, "Error", "Ok");
+                    await diag.AlertAsync("Seleccione las fechas de busqueda", "Error", "Ok");
                 else
                 {
-                    int i = 0;
-					//await nav.PushAsync(new ResultadoBusqueda(vmc, FechaDesde, FechaHasta));
+					await nav.PushAsync(new ResultadoBusqueda(FechaDesde, FechaHasta));
 				}
                     
             });
         }
 
-        string fechadesde;
-		public string FechaDesde
+        DateTime fechadesde;
+        public DateTime FechaDesde
         {
             get { return fechadesde; }
             set
@@ -50,8 +49,8 @@ namespace GMX
             }
         }
 
-		string fechahasta;
-		public string FechaHasta
+		DateTime fechahasta;
+		public DateTime FechaHasta
         {
             get { return fechahasta; }
             set
@@ -66,7 +65,7 @@ namespace GMX
 
 		private bool Validar()
 		{
-            if (String.IsNullOrEmpty(FechaHasta) || String.IsNullOrEmpty(FechaDesde))
+            if (FechaHasta == DateTime.MinValue || FechaDesde == DateTime.MinValue)
 				return false;
 			else
 				return true;

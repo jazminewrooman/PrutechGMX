@@ -1,23 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
-	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
-	x:Class="GMX.Views.ResultadoBusqueda">
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+x:Class="GMX.Views.ResultadoBusqueda">
 	<ContentPage.Content>
 		<ScrollView>
-            <StackLayout Padding="10,20">
-    			<ListView x:Name="lstBusqueda" ItemsSource="{Binding ListaPolizas}" ItemTapped="{Binding Item_Tapped, Mode=TwoWay}">
-    				<ListView.ItemTemplate>
-    					<DataTemplate>
-    						<ViewCell>
-    							<StackLayout>
-    								<Label Text="{Binding Nombre}"  Style="{StaticResource labels}"/>
-    								<Label Text="{Binding Poliza}"  Style="{StaticResource labels}"/>
-    							</StackLayout>
-    						</ViewCell>
-    					</DataTemplate>
-    				</ListView.ItemTemplate>
-    			</ListView>
-             </StackLayout>
+			<StackLayout Padding="10,20">
+				<ListView x:Name="lstBusqueda" ItemsSource="{Binding ListaDatos}" HasUnevenRows="true">
+					<ListView.ItemTemplate>
+						<DataTemplate>
+							<ViewCell>
+                                <Grid Padding="10,15,10,15">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="32"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                    </Grid.RowDefinitions>
+                                    <Label Grid.Column="0" Grid.Row="0" FontSize="Medium" FontAttributes="Bold" Text="{Binding Nombre}"/>
+                                    <Label Grid.Column="0" Grid.Row="1" FontSize="Medium" Text="{Binding Poliza}"/>
+                                    <Image Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" Source="next"/>
+                                </Grid>
+							</ViewCell>
+						</DataTemplate>
+					</ListView.ItemTemplate>
+				</ListView>
+			</StackLayout>
 		</ScrollView>
 	</ContentPage.Content>
 </ContentPage>

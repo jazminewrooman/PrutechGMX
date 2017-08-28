@@ -35,6 +35,8 @@ namespace GMX.Views
 			};
             App.navigation = det.Navigation;
             (App.Current.MainPage as MasterDetailPage).Detail = det;
+			(App.Current.MainPage as MasterDetailPage).IsPresented = false;
+
 		}
 
         public void cargamenu()
@@ -47,10 +49,10 @@ namespace GMX.Views
 			Menu = new MenuListView();
             Menu.ItemSelected += (sender, e) =>
             {
+				if (e.SelectedItem == null)
+					return;
                 if ((e.SelectedItem as MenuItem).TargetType == null)
                 {
-					//Navigation.InsertPageBefore(new LoginUser(), Navigation.NavigationStack.FirstOrDefault());
-					//await Navigation.PopToRootAsync();
                     var det = new NavigationPage(new LoginUser())
 					{
 						BarTextColor = Color.FromHex("#04b5b5"),
@@ -61,6 +63,8 @@ namespace GMX.Views
                 }
                 else
                     NavigateTo(e.SelectedItem as MenuItem);
+                (sender as ListView).SelectedItem = null;
+
             };
 
             StackLayout menuLabel = new StackLayout
@@ -123,14 +127,15 @@ namespace GMX.Views
             this.Add(new MenuItem()
             {
                 Titulo = "Cotizar",
-                Icono = "nocash.png",
+                Icono = "document2.png",
                 Color = Color.White,
                 TextColor = Color.Black,
+                TargetType = typeof(Cotizar)
             });
 			this.Add(new MenuItem()
 			{
 				Titulo = "Polizas emitidas",
-				Icono = "document2.png",
+				Icono = "nocash.png",
 				Color = Color.White,
 				TextColor = Color.Black,
                 TargetType = typeof(Resumen)

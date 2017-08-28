@@ -16,18 +16,14 @@ namespace GMX
 {
     public class VMResultadoBusqueda : VMGmx
     {
-		VMCotizar vmcotizar;
 		INavigation nav;
 
         public ICommand Item_Tapped { get; private set; }
 
-        public VMResultadoBusqueda(IUserDialogs diag, INavigation n, VMCotizar vmc) : base(diag)
+        public VMResultadoBusqueda(DateTime FechaDesde, DateTime FechaHasta, IUserDialogs diag, INavigation n) : base(diag)
         {
             nav = n;
-            vmcotizar = vmc;
-
-
-
+            Cargar(FechaDesde.ToString("yyyy/MM/dd"), FechaHasta.ToString("yyyy/MM/dd"));
         }
 
 		public class ItemTappedEventArgs : EventArgs
@@ -59,8 +55,24 @@ namespace GMX
             }
         }
 
-        ObservableCollection<resultado> listadatos;
-        public ObservableCollection<resultado> ListaDatos
+        private async Task Cargar(string fini, string ffin)
+        {
+            Ocupado = true;
+            try
+            {
+                await System.Threading.Tasks.Task.Delay(TimeSpan.FromMilliseconds(100));
+                wsbd.Service ws = new wsbd.Service(config.Config["APIBD"]);
+                ws.Timeout = 2000;
+                string jsonpolizas = ws.get_catalogos("GetEmisionMedicoByIdAgenteAndEmisionALL", $"@Emision_Low='{fini}',@Emision_Hgh='{ffin}'");
+                datospolizaemitida lst = JsonConvert.DeserializeObject<datospolizaemitida>(jsonpolizas);
+                ListaDatos = lst.Table.Select(x => new resultado { Nombre = x.Nombre_Cliente, Poliza = x.Poliza }).ToList();
+            }
+            catch { }
+            Ocupado = false;
+        }
+
+        List<resultado> listadatos;
+        public List<resultado> ListaDatos
 		{
 			get { return listadatos; }
 			set
@@ -83,8 +95,8 @@ namespace GMX
 
     public class resultado
     {
-        public string nom { get; set; }
-        public string poliza { get; set; }
+        public string Nombre { get; set; }
+        public string Poliza { get; set; }
         public int id { get; set; }
         public bool sel { set; get; }
     }
