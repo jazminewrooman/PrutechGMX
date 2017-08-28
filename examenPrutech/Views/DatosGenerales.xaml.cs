@@ -18,11 +18,11 @@ namespace GMX.Views
             InitializeComponent();
         }
 
-        public DatosGenerales(DatosGralesModel dg, TipoDatos td, VMCotizar v)
+        public DatosGenerales(DatosGralesModel dg, TipoDatos td, VMCotizar v, Modo modo)
         {
             InitializeComponent();
             vmcot = v;
-            vm = new VMDatosGenerales(UserDialogs.Instance, Navigation, vmcot, td);
+            vm = new VMDatosGenerales(UserDialogs.Instance, Navigation, vmcot, td, modo);
             this.BindingContext = vm;
 
             edtDirecc.TextChanged += (sender, e) => edtDirecc.UpdateLayout();
@@ -52,7 +52,10 @@ namespace GMX.Views
             {
                 //Title = "Datos Generales";
                 seg.IsVisible = false;
-                btnFiscales.IsVisible = true;
+                if (modo == Modo.Captura)
+                    btnFiscales.IsVisible = true;
+                if (modo == Modo.Edicion)
+                    btnFiscales.IsVisible = false;
             }
         }
     }

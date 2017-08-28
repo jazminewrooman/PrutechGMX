@@ -12,5 +12,6 @@ namespace GMX.Models
         public string Mes { get; set; }
         public string Anio { get; set; }
         public string CodigoSeg { get; set; }
+        public string Merchant { get; set; }
     }
 }

@@ -122,7 +122,7 @@ namespace GMX
                     };
                     //var md = new GMX.Controls.MyMasterDetail();
                     var md = new MasterDetailPage();
-                    md.Master = new menu(agent.FirstOrDefault().Value);
+                    md.Master = new menu();
                     md.Detail = MainP;
                     App.Current.MainPage = md;
                     (Welcome.BindingContext as VMCotizar).ClickAuto = true;

@@ -7,11 +7,11 @@ namespace GMX.Views
 {
 	public partial class DatosProfesionales : ContentPage
 	{
-        public DatosProfesionales(VMCotizar vmcotiz)
+        public DatosProfesionales(VMCotizar vmcotiz, Modo modo)
 		{
 			InitializeComponent();
 
-			var vm = new VMDatosProfesionales(UserDialogs.Instance, Navigation, vmcotiz);
+			var vm = new VMDatosProfesionales(UserDialogs.Instance, Navigation, vmcotiz, modo);
 			BindingContext = vm;
 		}
 	}

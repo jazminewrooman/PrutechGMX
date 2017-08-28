@@ -9,8 +9,16 @@ namespace GMX.Views
 {
     public partial class VerResumen : PopupPage
     {
-        public VerResumen(VMCotizar vmc, FormattedString resumen, TipoResumen tr)
+        INavigation nav;
+
+        public VerResumen()
         {
+
+        }
+
+        public VerResumen(VMCotizar vmc, FormattedString resumen, TipoResumen tr, INavigation n)
+        {
+            nav = n;
             InitializeComponent();
 
 			BindingContext = vmc;
@@ -31,9 +39,21 @@ namespace GMX.Views
                 OnPropertyChanged("Resumen1");
             }
 
-			btnCerrar.Clicked += (s, e) =>
+			btnCerrar.Clicked += async (s, e) =>
 			{
-				Navigation.PopPopupAsync(true);
+				await Navigation.PopPopupAsync(true);
+			};
+            btnEditar.Clicked += async (s, e) =>
+            {
+                await Navigation.PopPopupAsync(true);
+                if (tr == TipoResumen.Generales)
+                    await nav.PushAsync(new DatosGenerales(vmc.DatosGrales, TipoDatos.Generales, vmc, Modo.Edicion));
+                if (tr == TipoResumen.Fiscales)
+                    await nav.PushAsync(new DatosGenerales(vmc.DatosFiscales, TipoDatos.Fiscales, vmc, Modo.Edicion));
+                if (tr == TipoResumen.Profesionales)
+                    await nav.PushAsync(new DatosProfesionales(vmc, Modo.Edicion));
+                if (tr == TipoResumen.Bancarios)
+                    await nav.PushAsync(new DatosBancarios(vmc, Modo.Edicion));
 			};
         }
     }

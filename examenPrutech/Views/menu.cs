@@ -11,19 +11,17 @@ namespace GMX.Views
     {
         public ListView Menu { get; set; }
         StackLayout layout;
-        private GMX.Services.DTOs.agente agent;
 
         public void Refrescamenu()
         {
-            cargamenu(agent);
+            cargamenu();
         }
 
-        public menu(GMX.Services.DTOs.agente a)
+        public menu()
         {
             Title = "Menu";
             Icon = "slideout.png";
-            agent = a;
-            cargamenu(a);
+            cargamenu();
         }
 
 		void NavigateTo(MenuItem menu)
@@ -39,13 +37,13 @@ namespace GMX.Views
             (App.Current.MainPage as MasterDetailPage).Detail = det;
 		}
 
-        public void cargamenu(GMX.Services.DTOs.agente a)
+        public void cargamenu()
         {
             string displayname = String.Empty;
-            if (a.cod_tipo_persona == "F")
-                displayname = $"({a.cod_agente}) {a.txt_apellido1} {a.txt_apellido2} {a.txt_nombre}";
-			if (a.cod_tipo_persona == "J")
-                displayname = $"({a.cod_agente}) {a.txt_apellido1}";
+            if (App.agent.cod_tipo_persona == "F")
+                displayname = $"({App.agent.cod_agente}) {App.agent.txt_apellido1} {App.agent.txt_apellido2} {App.agent.txt_nombre}";
+			if (App.agent.cod_tipo_persona == "J")
+                displayname = $"({App.agent.cod_agente}) {App.agent.txt_apellido1}";
 			Menu = new MenuListView();
             Menu.ItemSelected += (sender, e) =>
             {

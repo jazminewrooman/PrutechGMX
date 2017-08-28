@@ -127,6 +127,9 @@
     <Compile Include="$(MSBuildThisFileDirectory)Services\cobertura.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)BD.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\DTOs\zonashuracan.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\Confirmacion.xaml.cs">
+      <DependentUpon>Confirmacion.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\WelcomePage.xaml">
@@ -196,6 +199,9 @@
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\ResultadoBusqueda.xaml.cs" />
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\DetallePoliza.xaml.cs" />
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\Documentos.xaml.cs" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\Confirmacion.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)Views\DetallePoliza.xaml" />

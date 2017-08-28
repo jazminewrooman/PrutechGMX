@@ -33,7 +33,7 @@ namespace GMX
         TipoDatos tipo;
         FormattedString fs;
 
-        public VMDatosGenerales(IUserDialogs diag, INavigation n, VMCotizar vmcot, TipoDatos td) : base(diag)
+        public VMDatosGenerales(IUserDialogs diag, INavigation n, VMCotizar vmcot, TipoDatos td, Modo modo) : base(diag)
         {
             nav = n;
             vmcotizar = vmcot;
@@ -53,7 +53,10 @@ namespace GMX
                         vmcot.DatosGenerales = fs;
                     else
                         vmcot.DatosFiskles = fs;
-                    await nav.PushAsync(new GMX.Views.DatosProfesionales(vmcot));
+                    if (modo == Modo.Captura)
+                        await nav.PushAsync(new GMX.Views.DatosProfesionales(vmcot, Modo.Captura));
+                    if (modo == Modo.Edicion)
+                        await nav.PopAsync(true);
                 }
             });
             FiscalesCommand = new Command(async () =>
@@ -64,7 +67,7 @@ namespace GMX
                 {
 					fs = FormatText(td);
 				    vmcot.DatosGenerales = fs;
-                    await nav.PushAsync(new DatosGenerales(vmcotizar.DatosFiscales, TipoDatos.Fiscales, vmcotizar));
+                    await nav.PushAsync(new DatosGenerales(vmcotizar.DatosFiscales, TipoDatos.Fiscales, vmcotizar, Modo.Captura));
                 }
             });
             if (td == TipoDatos.Fiscales)
@@ -109,34 +112,33 @@ namespace GMX
 
         private FormattedString FormatText(TipoDatos td)
         {
-			var fs = new FormattedString();
+            var fs = new FormattedString();
             if (td.Equals(TipoDatos.Generales))
-                fs.Spans.Add(new Span { Text = "Datos Generales \n", ForegroundColor = Color.Red, FontSize = 18 });
+                fs.Spans.Add(new Span { Text = $"Datos Generales{Environment.NewLine}", ForegroundColor = Color.Red, FontSize = 18 });
             else
             {
-                fs.Spans.Add(new Span { Text = " Datos Fiscales \n", ForegroundColor = Color.Red, FontSize = 18 });
-                fs.Spans.Add(new Span { Text = " Persona: ", ForegroundColor = Color.Black, FontAttributes = FontAttributes.Bold });
-                fs.Spans.Add(new Span { Text = Persona.ToString() + " \n ", ForegroundColor = Color.Black });
+                fs.Spans.Add(new Span { Text = $"Datos Fiscales{Environment.NewLine}", ForegroundColor = Color.Red, FontSize = 18 });
+                fs.Spans.Add(new Span { Text = $"Persona: ", ForegroundColor = Color.Black, FontAttributes = FontAttributes.Bold });
+                fs.Spans.Add(new Span { Text = $"{Persona.ToString()}{Environment.NewLine}", ForegroundColor = Color.Black });
             }
-            fs.Spans.Add(new Span { Text = " RFC: ", ForegroundColor = Color.Black, FontAttributes = FontAttributes.Bold });
-            fs.Spans.Add(new Span { Text = RFC + " \n ", ForegroundColor = Color.Black });
+            fs.Spans.Add(new Span { Text = "RFC: ", ForegroundColor = Color.Black, FontAttributes = FontAttributes.Bold });
+            fs.Spans.Add(new Span { Text = RFC + Environment.NewLine, ForegroundColor = Color.Black });
             fs.Spans.Add(new Span { Text = "Nombre: ", ForegroundColor = Color.Black, FontAttributes = FontAttributes.Bold });
-            fs.Spans.Add(new Span { Text = Nombre + " " + APaterno + " " + AMaterno + " " + " \n ", ForegroundColor = Color.Black });
+            fs.Spans.Add(new Span { Text = Nombre + " " + APaterno + " " + AMaterno + Environment.NewLine, ForegroundColor = Color.Black });
             fs.Spans.Add(new Span { Text = "Correo Electrónico: ", ForegroundColor = Color.Black, FontAttributes = FontAttributes.Bold });
-            fs.Spans.Add(new Span { Text = Correo + " \n ", ForegroundColor = Color.Black });
+            fs.Spans.Add(new Span { Text = Correo + Environment.NewLine, ForegroundColor = Color.Black });
             fs.Spans.Add(new Span { Text = "Calle: ", ForegroundColor = Color.Black, FontAttributes = FontAttributes.Bold });
-            fs.Spans.Add(new Span { Text = Direccion + " \n ", ForegroundColor = Color.Black });
+            fs.Spans.Add(new Span { Text = Direccion + Environment.NewLine, ForegroundColor = Color.Black });
             fs.Spans.Add(new Span { Text = "Colonia: ", ForegroundColor = Color.Black, FontAttributes = FontAttributes.Bold });
-            fs.Spans.Add(new Span { Text = Colonias[Colonia].ToString() + " \n ", ForegroundColor = Color.Black });
+            fs.Spans.Add(new Span { Text = Colonias[Colonia].ToString() + Environment.NewLine, ForegroundColor = Color.Black });
             fs.Spans.Add(new Span { Text = "C.P.: ", ForegroundColor = Color.Black, FontAttributes = FontAttributes.Bold });
-            fs.Spans.Add(new Span { Text = CP + " \n ", ForegroundColor = Color.Black });
+            fs.Spans.Add(new Span { Text = CP + Environment.NewLine, ForegroundColor = Color.Black });
             fs.Spans.Add(new Span { Text = "Municipio: ", ForegroundColor = Color.Black, FontAttributes = FontAttributes.Bold });
-            fs.Spans.Add(new Span { Text = Municipios[Municipio].ToString() + " \n ", ForegroundColor = Color.Black });
+            fs.Spans.Add(new Span { Text = Municipios[Municipio].ToString() + Environment.NewLine, ForegroundColor = Color.Black });
             fs.Spans.Add(new Span { Text = "Estado: ", ForegroundColor = Color.Black, FontAttributes = FontAttributes.Bold });
-            fs.Spans.Add(new Span { Text = Estados[Estado].ToString() + " \n ", ForegroundColor = Color.Black });
+            fs.Spans.Add(new Span { Text = Estados[Estado].ToString() + Environment.NewLine, ForegroundColor = Color.Black });
             fs.Spans.Add(new Span { Text = "Teléfono: ", ForegroundColor = Color.Black, FontAttributes = FontAttributes.Bold });
-            fs.Spans.Add(new Span { Text = Telefono + " \n ", ForegroundColor = Color.Black });
-
+            fs.Spans.Add(new Span { Text = Telefono + Environment.NewLine, ForegroundColor = Color.Black });
             return fs;
         }
 

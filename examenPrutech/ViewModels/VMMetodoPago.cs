@@ -39,15 +39,27 @@ namespace GMX
                 else
                 {
                     if (tipopago == TipoPago.tarjeta)
-                        await nav.PushAsync(new DatosBancarios(vmcotizar));
+                        await nav.PushAsync(new DatosBancarios(vmcotizar, Modo.Captura));
                     if (tipopago == TipoPago.banco)
                     {
                         //await nav.PushAsync(new ResumenDatos(vmcotizar));
                         var cotizar = nav.NavigationStack.OfType<Cotizar>().FirstOrDefault();
                         if (cotizar != null)
                         {
-                            nav.InsertPageBefore(new ResumenDatos(vmcotizar), cotizar);
+                            //nav.InsertPageBefore(new ResumenDatos(vmcotizar), cotizar);
+                            //await nav.PopToRootAsync(true);
+
                             await nav.PopToRootAsync(true);
+                            var resumen = new ResumenDatos(vmcotizar);
+							var MainP = new NavigationPage(resumen)
+							{
+								BarTextColor = Color.FromHex("#04b5b5"),
+								BarBackgroundColor = Color.White,
+							};
+							var md = new MasterDetailPage();
+							md.Master = new menu();
+							md.Detail = MainP;
+							App.Current.MainPage = md;
                         }
                     }
                 }

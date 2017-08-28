@@ -23,7 +23,7 @@ namespace GMX
         VMCotizar vmcotizar;
         FormattedString fs;
 
-        public VMDatosProfesionales(IUserDialogs diag, INavigation n, VMCotizar vmcot) : base(diag)
+        public VMDatosProfesionales(IUserDialogs diag, INavigation n, VMCotizar vmcot, Modo modo) : base(diag)
         {
             nav = n;
             vmcotizar = vmcot;
@@ -40,14 +40,19 @@ namespace GMX
                 else
                 {
                     fs = FormatText();
-                    vmcot.DatosProfesionales = fs;
-                    if (vmcotizar.IdTipo == "2") //renovacion
-                        await nav.PushAsync(new AntecedentesPolizas(vmcotizar));
-					if (vmcotizar.IdTipo == "1") //nueva
-                        await nav.PushAsync(new MetodoPago(vmcotizar));
+                    vmcotizar.DatosProfesionales = fs;
+                    if (modo == Modo.Captura)
+                    {
+                        if (vmcotizar.IdTipo == "2") //renovacion
+                            await nav.PushAsync(new AntecedentesPolizas(vmcotizar));
+                        if (vmcotizar.IdTipo == "1") //nueva
+                            await nav.PushAsync(new MetodoPago(vmcotizar));
+                    }
+                    if (modo == Modo.Edicion)
+                        await nav.PopAsync(true);
 				}
             });
-            CargaDatosProfesionales(vmcot.DatosProf);
+            CargaDatosProfesionales(vmcotizar.DatosProf);
         }
 
         private string descripcion;
@@ -165,17 +170,17 @@ namespace GMX
 		private FormattedString FormatText()
 		{
 			var fs = new FormattedString();
-            fs.Spans.Add(new Span { Text = " Datos Profesionales \n", ForegroundColor = Color.Red, FontSize = 18 });
-			fs.Spans.Add(new Span { Text = " Descripcion: ", ForegroundColor = Color.Black, FontAttributes = FontAttributes.Bold });
-            fs.Spans.Add(new Span { Text = Descripcion + " \n ", ForegroundColor = Color.Black });
+            fs.Spans.Add(new Span { Text = "Datos Profesionales" + Environment.NewLine, ForegroundColor = Color.Red, FontSize = 18 });
+			fs.Spans.Add(new Span { Text = "Descripcion: ", ForegroundColor = Color.Black, FontAttributes = FontAttributes.Bold });
+            fs.Spans.Add(new Span { Text = Descripcion + Environment.NewLine, ForegroundColor = Color.Black });
 			fs.Spans.Add(new Span { Text = "Especialidad: ", ForegroundColor = Color.Black, FontAttributes = FontAttributes.Bold });
-            fs.Spans.Add(new Span { Text = Especialidades[Especialidad].ToString() +" \n ", ForegroundColor = Color.Black });
+            fs.Spans.Add(new Span { Text = Especialidades[Especialidad].ToString() + Environment.NewLine, ForegroundColor = Color.Black });
 			fs.Spans.Add(new Span { Text = "Número de cédula profesional: ", ForegroundColor = Color.Black, FontAttributes = FontAttributes.Bold });
-            fs.Spans.Add(new Span { Text = CedulaProf + " \n ", ForegroundColor = Color.Black });
+            fs.Spans.Add(new Span { Text = CedulaProf + Environment.NewLine, ForegroundColor = Color.Black });
 			fs.Spans.Add(new Span { Text = "Número de cédula especilidad: ", ForegroundColor = Color.Black, FontAttributes = FontAttributes.Bold });
-            fs.Spans.Add(new Span { Text = CedulaEsp + " \n ", ForegroundColor = Color.Black });
+            fs.Spans.Add(new Span { Text = CedulaEsp + Environment.NewLine, ForegroundColor = Color.Black });
 			fs.Spans.Add(new Span { Text = "Diplomados y otros estudios: ", ForegroundColor = Color.Black, FontAttributes = FontAttributes.Bold });
-            fs.Spans.Add(new Span { Text = Diplomados + " \n ", ForegroundColor = Color.Black });
+            fs.Spans.Add(new Span { Text = Diplomados + Environment.NewLine, ForegroundColor = Color.Black });
 
 			return fs;
 		}

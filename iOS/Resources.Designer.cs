@@ -130,5 +130,29 @@ namespace GMX {
                 return ResourceManager.GetString("ConCirugia", resourceCulture);
             }
         }
+        
+        internal static string SeEnvio {
+            get {
+                return ResourceManager.GetString("SeEnvio", resourceCulture);
+            }
+        }
+        
+        internal static string NoLocaliza {
+            get {
+                return ResourceManager.GetString("NoLocaliza", resourceCulture);
+            }
+        }
+        
+        internal static string CompraSeha {
+            get {
+                return ResourceManager.GetString("CompraSeha", resourceCulture);
+            }
+        }
+        
+        internal static string Imprima {
+            get {
+                return ResourceManager.GetString("Imprima", resourceCulture);
+            }
+        }
     }
 }

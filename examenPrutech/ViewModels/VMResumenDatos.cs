@@ -34,10 +34,12 @@ namespace GMX
 
 			EmisionCommand = new Command(async () =>
 			{
-                await vmcotizar.MandarEmision();
+                var result = await diag.PromptAsync("Se mandara la emision de la poliza con prima de " + vmcotizar.PrimaNeta.ToString("c") + ". ¿Desea continuar?", "Aviso", "Ok", "Cancelar");
+                if (result.Ok)
+                    await vmcotizar.MandarEmision();
 			});
 
-            SelectList = new Command(async (e) =>
+            SelectList = new Command( (e) =>
             {
                 /*if (e.SelectedItem == null)
                     return;
@@ -89,10 +91,10 @@ namespace GMX
 			{
 				if (_ItemSelected != value)
 				{
-					_ItemSelected = value;
-					OnPropertyChanged("ItemSelected");
-
-                    SeleccionaLista(_ItemSelected.id);
+					//_ItemSelected = value;
+                    SeleccionaLista(value.id); 
+                    _ItemSelected = null;
+					OnPropertyChanged("objItemSelected");
 				}
 			}
 		}
@@ -103,73 +105,23 @@ namespace GMX
 
 		public async void SeleccionaLista(int id)
 		{
-			DatosGralesModel dgmodel;
 			switch (id)
 			{
 				case 1:
 					//Para Datos Generales
-					dgmodel = null;
-                    await nav.PushPopupAsync(new VerResumen(vmcotizar, vmcotizar.DatosGenerales, TipoResumen.Generales), true);
-					//var Welcome1 = new DatosGenerales(dgmodel, TipoDatos.Generales);
-					//App.navigation.InsertPageBefore(Welcome1, App.navigation.NavigationStack.FirstOrDefault());
-					//await App.navigation.PopToRootAsync();
-					//var MainP1 = new NavigationPage(Welcome1)
-					//{
-					//	BarTextColor = Color.White,
-					//	BarBackgroundColor = Color.FromHex("#04b5b5"),
-					//};
-					//var md1 = new MasterDetailPage();
-					//md1.Detail = MainP1;
-					//App.Current.MainPage = md1;
+                    await nav.PushPopupAsync(new VerResumen(vmcotizar, vmcotizar.DatosGenerales, TipoResumen.Generales, nav), true);
 					break;
 				case 2:
 					//Para Datos Fiscales
-					dgmodel = null;
-                    await nav.PushPopupAsync(new VerResumen(vmcotizar, vmcotizar.DatosFiskles, TipoResumen.Fiscales), true);
-					//var Welcome2 = new DatosGenerales(dgmodel, TipoDatos.Fiscales);
-					//App.navigation.InsertPageBefore(Welcome2, App.navigation.NavigationStack.FirstOrDefault());
-					//await App.navigation.PopToRootAsync();
-					//var MainP2 = new NavigationPage(Welcome2)
-					//{
-					//	BarTextColor = Color.White,
-					//	BarBackgroundColor = Color.FromHex("#04b5b5"),
-					//};
-					//var md2 = new MasterDetailPage();
-					////md.Master = new menu(user);
-					//md2.Detail = MainP2;
-					//App.Current.MainPage = md2;
+                    await nav.PushPopupAsync(new VerResumen(vmcotizar, vmcotizar.DatosFiskles, TipoResumen.Fiscales, nav), true);
 					break;
 				case 3:
 					//Para Datos Profesionales
-                    await nav.PushPopupAsync(new VerResumen(vmcotizar, vmcotizar.DatosProfesionales, TipoResumen.Profesionales), true);
-					//var Welcome3 = new DatosBancarios();
-					//App.navigation.InsertPageBefore(Welcome3, App.navigation.NavigationStack.FirstOrDefault());
-					//await App.navigation.PopToRootAsync();
-					//var MainP3 = new NavigationPage(Welcome3)
-					//{
-					//	BarTextColor = Color.White,
-					//	BarBackgroundColor = Color.FromHex("#04b5b5"),
-					//};
-					//var md3 = new MasterDetailPage();
-					////md.Master = new menu(user);
-					//md3.Detail = MainP3;
-					//App.Current.MainPage = md3;
+                    await nav.PushPopupAsync(new VerResumen(vmcotizar, vmcotizar.DatosProfesionales, TipoResumen.Profesionales, nav), true);
 					break;
 				case 4:
 					//Para Datos Bancarios
-                    await nav.PushPopupAsync(new VerResumen(vmcotizar, vmcotizar.DatosBancarios, TipoResumen.Bancarios), true);
-					//var Welcome4 = new DatosBancarios();
-					//App.navigation.InsertPageBefore(Welcome4, App.navigation.NavigationStack.FirstOrDefault());
-					//await App.navigation.PopToRootAsync();
-					//var MainP4 = new NavigationPage(Welcome4)
-					//{
-					//	BarTextColor = Color.White,
-					//	BarBackgroundColor = Color.FromHex("#04b5b5"),
-					//};
-					//var md4 = new MasterDetailPage();
-					////md.Master = new menu(user);
-					//md4.Detail = MainP4;
-					//App.Current.MainPage = md4;
+                    await nav.PushPopupAsync(new VerResumen(vmcotizar, vmcotizar.DatosBancarios, TipoResumen.Bancarios, nav), true);
 					break;
 			}
 		}

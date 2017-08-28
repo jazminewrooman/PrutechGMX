@@ -24,7 +24,7 @@ namespace GMX
         FormattedString fs;
 
 
-        public VMDatosBancarios(IUserDialogs diag, INavigation n, VMCotizar vmc) : base(diag)
+        public VMDatosBancarios(IUserDialogs diag, INavigation n, VMCotizar vmc, Modo modo) : base(diag)
         {
             nav = n;
             vmcotizar = vmc;
@@ -45,16 +45,31 @@ namespace GMX
                 else
                 {
                     fs = FormatText();
-                    vmc.DatosBancarios = fs;
-                    await nav.PushAsync(new ResumenDatos(vmcotizar));
+                    vmcotizar.DatosBancarios = fs;
+                    if (modo == Modo.Captura)
+                    {
+                        await nav.PopToRootAsync(true);
+                        var resumen = new ResumenDatos(vmcotizar);
+                        var MainP = new NavigationPage(resumen)
+                        {
+                            BarTextColor = Color.FromHex("#04b5b5"),
+                            BarBackgroundColor = Color.White,
+                        };
+                        var md = new MasterDetailPage();
+                        md.Master = new menu();
+                        md.Detail = MainP;
+                        App.Current.MainPage = md;
+                    }
+                    if (modo == Modo.Edicion)
+                        await nav.PopAsync(true);
                 }
             });
 			VerCotizaCommand = new Command(async () =>
 			{
                 await nav.PushPopupAsync(new VerCotiza(vmcotizar), true);
 			});
-            if (vmc.DatosBank != null)
-                CargaBancarios(vmc.DatosBank);
+            if (vmcotizar.DatosBank != null)
+                CargaBancarios(vmcotizar.DatosBank);
         }
 
         public List<string> Meses { get; set; }
@@ -88,6 +103,19 @@ namespace GMX
                 }
             }
         }
+        private string merchant;
+        public string Merchant
+        {
+            get => merchant;
+            set
+            {
+                if (merchant != value)
+                {
+                    merchant = value;
+                    OnPropertyChanged("Merchant");
+                }
+            }
+        }
         private List<string> formaspago;
 		public List<string> FormasPago
 		{
@@ -109,6 +137,7 @@ namespace GMX
             {
                 if (formapago != value){
                     formapago = value;
+                    Merchant = lstformaspago.Where(x => x.Key == $"MERCHANT_{value}").FirstOrDefault().Value;
                     OnPropertyChanged("FormaPago");
                 }
             }
@@ -202,7 +231,8 @@ namespace GMX
                     NumTarjeta = NumTarjeta,
                     Mes = Mes,
                     Anio = Anio,
-                    CodigoSeg = CodigoSeg
+                    CodigoSeg = CodigoSeg,
+                    Merchant = Merchant
                 };
                 vmcotizar.DatosBank = db;
                 return true;
@@ -224,20 +254,21 @@ namespace GMX
 		private FormattedString FormatText()
 		{
 			var fs = new FormattedString();
-            fs.Spans.Add(new Span { Text = "Datos Bancarios \n", ForegroundColor = Color.Red, FontSize = 18 });
-			fs.Spans.Add(new Span { Text = " Nombre Tarjetahabiente: ", ForegroundColor = Color.Black, FontAttributes = FontAttributes.Bold });
-			fs.Spans.Add(new Span { Text = Nombre + " \n ", ForegroundColor = Color.Black });
+            fs.Spans.Add(new Span { Text = "Datos Bancarios" + Environment.NewLine, ForegroundColor = Color.Red, FontSize = 18 });
+			fs.Spans.Add(new Span { Text = "Nombre Tarjetahabiente: ", ForegroundColor = Color.Black, FontAttributes = FontAttributes.Bold });
+			fs.Spans.Add(new Span { Text = Nombre + Environment.NewLine, ForegroundColor = Color.Black });
 			fs.Spans.Add(new Span { Text = "Forma de Pago: ", ForegroundColor = Color.Black, FontAttributes = FontAttributes.Bold });
-            fs.Spans.Add(new Span { Text = FormaPago + " \n ", ForegroundColor = Color.Black });
+            fs.Spans.Add(new Span { Text = FormaPago + Environment.NewLine, ForegroundColor = Color.Black });
 			fs.Spans.Add(new Span { Text = "Número de Tarjeta: ", ForegroundColor = Color.Black, FontAttributes = FontAttributes.Bold });
-            fs.Spans.Add(new Span { Text = NumTarjeta + " \n ", ForegroundColor = Color.Black });
+            fs.Spans.Add(new Span { Text = NumTarjeta + Environment.NewLine, ForegroundColor = Color.Black });
 			fs.Spans.Add(new Span { Text = "Fecha Vencimiento: ", ForegroundColor = Color.Black, FontAttributes = FontAttributes.Bold });
-            fs.Spans.Add(new Span { Text = Mes + "/" + Anio + " \n ", ForegroundColor = Color.Black });
+            fs.Spans.Add(new Span { Text = Mes + "/" + Anio + Environment.NewLine, ForegroundColor = Color.Black });
 			fs.Spans.Add(new Span { Text = "Código Seguridad: ", ForegroundColor = Color.Black, FontAttributes = FontAttributes.Bold });
-            fs.Spans.Add(new Span { Text = CodigoSeg + " \n ", ForegroundColor = Color.Black });
+            fs.Spans.Add(new Span { Text = CodigoSeg + Environment.NewLine, ForegroundColor = Color.Black });
 			
 			return fs;
 		}
+
         private string ValidaFormatCard(){
 			string numberMasked = "";
 			int count = numtarjeta.Length;

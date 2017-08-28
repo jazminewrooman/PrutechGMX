@@ -55,4 +55,17 @@
 	<data name="ConCirugia" xml:space="preserve">
 		<value>Cirugía / Proc. Invasivos</value>
 	</data>
+	<data name="SeEnvio" xml:space="preserve">
+		<value>Se ha enviado un correo electrónico a la cuenta</value>
+	</data>
+    <data name="NoLocaliza" xml:space="preserve">
+        <value>si no localiza el correo en su bandeja de entrada revise su carpeta de correo no deseado</value>
+    </data>
+    <data name="CompraSeha" xml:space="preserve">
+        <value>La compra se ha completado exitosamente</value>
+    </data>
+    <data name="Imprima" xml:space="preserve">
+        <value>Por favor imprima el recibo y pague directamente en el banco</value>
+    </data>
+	
 </root>

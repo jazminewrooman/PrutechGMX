@@ -7,11 +7,11 @@ namespace GMX.Views
 {
 	public partial class DatosBancarios : ContentPage
 	{
-        public DatosBancarios(VMCotizar vmc)
+        public DatosBancarios(VMCotizar vmc, Modo modo)
 		{
 			InitializeComponent();
 
-			var vm = new VMDatosBancarios(UserDialogs.Instance, Navigation, vmc);
+			var vm = new VMDatosBancarios(UserDialogs.Instance, Navigation, vmc, modo);
 			BindingContext = vm;
 			Title = "Datos bancarios";
 		}
