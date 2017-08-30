@@ -327,6 +327,26 @@ namespace GMX
                 }
 
                 // cuota
+                IntegrationServiceEntity.Cuota cuota = new IntegrationServiceEntity.Cuota()
+                {
+                    codItem = 1,
+                    numCuota = 1,
+                    fecVenc = p.fecVigHasta,
+                    impPrimaMe = p.impPrimaMe,
+                    impIvaMe = p.pjeIva,
+                    impRecFinMe = 0,
+                    impDerPoliza = p.impDeremiMe,
+                    impPremio = p.impPremioMe,
+                    impDerPolizaTur = 0,
+                    numComprobante = 0,
+                    numSerie = "0",
+                    snNumerado = 0,
+                    fecIniVigCuota = p.fecVigDesde,
+                    fecFinVigCuota = p.fecVigHasta,
+                    codEstado = 1,
+                    fecPago = p.fecTarifa.ToString(),
+                    fecEmiComprobante = p.fecTarifa
+                };
 
                 // enviar al servicio
                 IntegrationServiceEntity.Emission emision = new IntegrationServiceEntity.Emission();
@@ -337,11 +357,12 @@ namespace GMX
                 emision.cobertura = JsonConvert.DeserializeObject<IntegrationServiceEntity.Cobertura[]>(strcobertura);
                 emision.inciso = new IntegrationServiceEntity.Inciso[] { inciso };
                 emision.poliza = p;
+                emision.cuota = new IntegrationServiceEntity.Cuota[] { cuota };
                 emision.agente = new IntegrationServiceEntity.Agente[] { ag1, ag2 };
                 emision.cliente = clientes.ToArray();
 
                 var resp = await b.createPolicy(emision);
-                //var jsonpoliza = await b.decrypt(resp.Result);
+                var jsonpoliza = await b.decrypt(resp.Result);
                 MandarPagar("01171000066513992265");
                 Ocupado = false;
             }
