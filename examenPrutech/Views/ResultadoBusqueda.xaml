@@ -4,7 +4,7 @@ x:Class="GMX.Views.ResultadoBusqueda">
 	<ContentPage.Content>
 		<ScrollView>
 			<StackLayout Padding="10,20">
-				<ListView x:Name="lstBusqueda" ItemsSource="{Binding ListaDatos}" HasUnevenRows="true">
+				<ListView x:Name="lstBusqueda" ItemsSource="{Binding ListaDatos}" SelectedItem="{Binding objItemSelected, Mode=TwoWay}" HasUnevenRows="true">
 					<ListView.ItemTemplate>
 						<DataTemplate>
 							<ViewCell>

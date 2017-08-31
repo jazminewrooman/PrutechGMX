@@ -16,7 +16,7 @@ namespace GMX
 {
     public class VMResultadoBusqueda : VMGmx
     {
-		INavigation nav;
+        INavigation nav;
 
         public ICommand Item_Tapped { get; private set; }
 
@@ -26,29 +26,31 @@ namespace GMX
             Cargar(FechaDesde.ToString("yyyy/MM/dd"), FechaHasta.ToString("yyyy/MM/dd"));
         }
 
-		public class ItemTappedEventArgs : EventArgs
-		{
-			public resum sel { set; get; }
-		}
 
-        public event EventHandler<ItemTappedEventArgs> OpcionSeleccionada;
-        protected virtual void OnOpcionSeleccionada(ItemTappedEventArgs e)
+        public class SelectedOptionEventArgs : EventArgs
+        {
+            public resum sel { set; get; }
+        }
+
+        public event EventHandler<SelectedOptionEventArgs> OpcionSeleccionada;
+        protected virtual void OnOpcionSeleccionada(SelectedOptionEventArgs e)
         {
             var handler = OpcionSeleccionada;
             if (handler != null)
                 handler(this, e);
         }
 
-        private resultado tappeditem;
-        public resultado TappedItem
+        private resultado _ItemSelected;
+        public resultado objItemSelected
         {
-            get { return tappeditem; }
-            set 
+            get { return _ItemSelected; }
+            set
             {
-                if (tappeditem != value)
+                if (_ItemSelected != value)
                 {
-                    tappeditem = value;
-                    OnPropertyChanged("TappedItem");
+                    DetalleBusqueda(value, value.id);
+                    _ItemSelected = null;
+                    OnPropertyChanged("objItemSelected");
 
                     //Evento para llamar el detalle de la búsqueda
                 }
@@ -65,7 +67,7 @@ namespace GMX
                 ws.Timeout = 2000;
                 string jsonpolizas = ws.get_catalogos("GetEmisionMedicoByIdAgenteAndEmisionALL", $"@Emision_Low='{fini}',@Emision_Hgh='{ffin}'");
                 datospolizaemitida lst = JsonConvert.DeserializeObject<datospolizaemitida>(jsonpolizas);
-                ListaDatos = lst.Table.Select(x => new resultado { Nombre = x.Nombre_Cliente, Poliza = x.Poliza }).ToList();
+                ListaDatos = lst.Table.Select(x => new resultado { Nombre = x.Nombre_Cliente, Poliza = x.Poliza, Emision = x.Emision, PrimaNeta = x.PrimaNeta, Derechos = x.Derechos, Iva = x.Iva, PrimaTotal = x.PrimaTotal}).ToList();
             }
             catch { }
             Ocupado = false;
@@ -73,22 +75,22 @@ namespace GMX
 
         List<resultado> listadatos;
         public List<resultado> ListaDatos
-		{
-			get { return listadatos; }
-			set
-			{
-				if (listadatos != value)
-				{
-					listadatos = value;
-					OnPropertyChanged("ListaDatos");
-				}
+        {
+            get { return listadatos; }
+            set
+            {
+                if (listadatos != value)
+                {
+                    listadatos = value;
+                    OnPropertyChanged("ListaDatos");
+                }
 
-			}
-		}
+            }
+        }
 
         public async void DetalleBusqueda(resultado lst, int id)
         {
-            //await nav.PushAsync(new DetallePoliza(vmcotizar, lst, id));
+            await nav.PushAsync(new DetallePolizas(lst, id));
         }
 
     }
@@ -97,6 +99,11 @@ namespace GMX
     {
         public string Nombre { get; set; }
         public string Poliza { get; set; }
+        public DateTime Emision { get; set; }
+        public double PrimaNeta { get; set; }
+        public double Derechos { get; set; }
+		public double Iva { get; set; }
+		public double PrimaTotal { get; set; }
         public int id { get; set; }
         public bool sel { set; get; }
     }

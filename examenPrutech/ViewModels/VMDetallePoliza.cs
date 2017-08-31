@@ -16,16 +16,23 @@ namespace GMX
 {
     public class VMDetallePoliza : VMGmx
     {
-		VMCotizar vmcotizar;
 		INavigation nav;
 
         public ICommand NextCommand { get; private set; }
+        public ICommand CaratulaCommand { get; set; }
+        public ICommand GeneralesCommand { get; set; }
+        public ICommand ControlCommand { get; set; }
+        public ICommand ParticularesCommand { get; set; }
+        public ICommand DetalleCommand { get; set; }
+        public ICommand ReenviarCommand { get; set; }
 
-        public VMDetallePoliza(IUserDialogs diag, INavigation n, VMCotizar vmc, int id) : base(diag)
+        public VMDetallePoliza(resultado res, IUserDialogs diag, INavigation n) : base(diag)
         {
-            nav = n;
-            vmcotizar = vmc;
+			//public VMDetallePoliza(IUserDialogs diag, INavigation n, resultado res) : base(diag)
+			nav = n;
             Title = "Pólizas Emitidas";
+
+            cargaDatos(res);
 
 			NextCommand = new Command(async () =>
 			{
@@ -33,11 +40,47 @@ namespace GMX
 					
 			});
 
+            CaratulaCommand = new Command(async () => 
+            {
+                
+            });
+			GeneralesCommand = new Command(async () =>
+			{
+
+			});
+			ControlCommand = new Command(async () =>
+			{
+
+			});
+			ParticularesCommand = new Command(async () =>
+			{
+
+			});
+			DetalleCommand = new Command(async () =>
+			{
+
+			});
+			ReenviarCommand = new Command(async () =>
+			{
+
+			});
+
+
 
         }
 
-        string emision;
-        public string Emision
+        public void cargaDatos(resultado res)
+        {
+            Emision = res.Emision;
+            PrimaNeta = res.PrimaNeta;
+            Derechos = res.Derechos;
+            IVA = res.Iva;
+            PrimaTotal = res.PrimaTotal;
+
+        }
+
+        DateTime emision;
+        public DateTime Emision
         {
             get => emision;
             set 
@@ -50,8 +93,8 @@ namespace GMX
             }
         }
 
-		string primaneta;
-		public string PrimaNeta
+		double primaneta;
+		public double PrimaNeta
 		{
 			get => primaneta;
 			set
@@ -64,8 +107,8 @@ namespace GMX
 			}
 		}
 
-		string derechos;
-		public string Derechos
+		double derechos;
+		public double Derechos
 		{
             get => derechos;
 			set
@@ -78,8 +121,8 @@ namespace GMX
 			}
 		}
 
-		string iva;
-		public string IVA
+		double iva;
+		public double IVA
 		{
 			get => iva;
 			set
@@ -92,8 +135,8 @@ namespace GMX
 			}
 		}
 
-		string primatotal;
-		public string PrimaTotal
+		double primatotal;
+		public double PrimaTotal
 		{
 			get => primatotal;
 			set
@@ -108,4 +151,5 @@ namespace GMX
 
 
     }
+
 }

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+    x:Class="GMX.Views.DetallePolizas">
+	<ContentPage.Content>
+        <ScrollView Padding = "20">
+            <StackLayout Spacing="10">
+                
+                <Label Text="Emisión:"  Style="{StaticResource labels}" FontSize="Medium" FontAttributes="Bold" TextColor="#04b5b5"/>
+                <Label Text="{Binding Emision}"  Style="{StaticResource labels}" FontSize="Medium"/>
+                 
+                <Label Text="Prima Neta"  Style="{StaticResource labels}" FontSize="Medium" FontAttributes="Bold" TextColor="#04b5b5"/>
+                <Label Text="{Binding PrimaNeta}"  Style="{StaticResource labels}" FontSize="Medium"/>
+
+                <Label Text="Derechos:"  Style="{StaticResource labels}" FontSize="Medium" FontAttributes="Bold" TextColor="#04b5b5"/>
+                <Label Text="{Binding Derechos}"  Style="{StaticResource labels}" FontSize="Medium"/>
+
+                <Label Text="IVA:"  Style="{StaticResource labels}" FontSize="Medium" FontAttributes="Bold" TextColor="#04b5b5"/>
+                <Label Text="{Binding IVA}"  Style="{StaticResource labels}" FontSize="Medium"/>
+
+                <Label Text="Prima Total:"  Style="{StaticResource labels}" FontSize="Medium" FontAttributes="Bold" TextColor="#04b5b5"/>
+                <Label Text="{Binding PrimaTotal}"  Style="{StaticResource labels}" FontSize="Medium"/>
+
+
+                <BoxView BackgroundColor="Gray" HeightRequest="5"/>
+                
+                <Label Text="Descargar Documentos" Style="{StaticResource labels}" FontSize="Medium" FontAttributes="Bold" TextColor="#04b5b5"/>
+
+                <!--<Grid HeightRequest="20">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition Width="20"/>
+                    </Grid.ColumnDefinitions>
+                    <Label Grid.Column="0" Text="Descargar Documentos" Style="{StaticResource labels}"/>
+                    <Button Grid.Column = "1" Image="next.png" Command="{Binding NextCommand}"/>
+                </Grid>-->
+
+                <Button Text="Carátula"  Style="{StaticResource botonBlanco}" HorizontalOptions="Start" Command="{Binding CaratulaCommand}"/>
+
+                <Button Text="Condiciones Particulares"  Style="{StaticResource botonBlanco}" HorizontalOptions="Start" Command="{Binding GeneralesCommand}"/>
+
+                <Button Text="Control de Pago"  Style="{StaticResource botonBlanco}" HorizontalOptions="Start" Command="{Binding ControlCommand}"/>
+
+                <Button Text="Condiciones Generales"  Style="{StaticResource botonBlanco}" HorizontalOptions="Start" Command="{Binding ParticularesCommand}"/>
+
+                <Button Text="Detalle de Coberturas"  Style="{StaticResource botonBlanco}" HorizontalOptions="Start" Command="{Binding DetalleCommand}"/>
+
+                <BoxView BackgroundColor="Gray" HeightRequest="5"/>
+
+                <Button Text="Reenviar documentos"  Style="{StaticResource botonBlancoVerde}" Command="{Binding ReenviarCommand}"/>
+                
+            </StackLayout>
+        </ScrollView>
+	</ContentPage.Content>
+</ContentPage>
