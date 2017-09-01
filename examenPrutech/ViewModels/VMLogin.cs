@@ -112,15 +112,14 @@ namespace GMX
                     if (s.Table.FirstOrDefault() != null)
                         App.suscriptor = s.Table.FirstOrDefault();
 
-                    var Welcome = new Cotizar();
-                    //var Welcome = new MetodoPago(new VMCotizar(UserDialogs.Instance, App.navigation));
+                    //var Welcome = new Cotizar();
+                    var Welcome = new MetodoPago(new VMCotizar(UserDialogs.Instance, App.navigation));
                     await App.navigation.PopToRootAsync();
                     var MainP = new NavigationPage(Welcome)
                     {
                         BarTextColor = Color.FromHex("#04b5b5"),
                         BarBackgroundColor = Color.White,
                     };
-                    //var md = new GMX.Controls.MyMasterDetail();
                     var md = new MasterDetailPage();
                     md.Master = new menu();
                     md.Detail = MainP;

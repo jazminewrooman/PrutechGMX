@@ -68,7 +68,6 @@ namespace GMX
                 PromptConfig cfg = new PromptConfig()
                 {
                     InputType = InputType.Email,
-
                     Message = "Introduzca el correo al cual enviar la cotización",
                     OkText = "OK",
                     OnTextChanged = args => args.IsValid = ValEmail(args.Value)
@@ -79,9 +78,14 @@ namespace GMX
                     try
                     {
                         Ocupado = true;
-                        GMX.ViewModels.Emails.GetSlipCotizacion(this);
-                        bindings b = new bindings();
-                        b.IniciaWS(config.Config["APIGMXIT"]);
+
+						bindings b = new bindings();
+                        b.IniciaWS(apidoc: config.Config["APIDocs"]);
+                        var waterm = await b.ReturnDocument("Watermark.jpg", false);
+
+						GMX.ViewModels.Emails.GetSlipCotizacion(this);
+                        GMX.ViewModels.Emails.docPDF.Watermark = waterm.Result;
+                        b.IniciaWS(api: config.Config["APIGMXIT"]);
                         var doc = await b.GenerateDocument(GMX.ViewModels.Emails.Sections.ToArray(), GMX.ViewModels.Emails.docPDF);
                         var slip_cotizacion = new FilePropertiesManager { stream = doc.Result, fileName = "Cotizacion.pdf", length = doc.Result.Length };
                         var res = await b.DistribuirDocumentacionPoliza(email.Value, slip_cotizacion);
@@ -156,6 +160,44 @@ namespace GMX
                 }
                 string strcobertura = JsonConvert.SerializeObject(lscob);
 
+				// poliza
+				IntegrationServiceEntity.Poliza p = new IntegrationServiceEntity.Poliza()
+				{
+					codGrupo = agrupador,
+					codPtoVenta = 2,
+					ramoComercial = 66,
+					fecVigDesde = IniVig,
+					fecVigHasta = FinVig,
+					codGrupoEndo = 1,
+					codTipoEndo = 1,
+					codTipoPoliza = 1,
+					impSumaAsegurada = sumaasegurada,
+					impPrimaMe = PrimaNeta,
+					impDesctoMe = 0,
+					impDecretoMe = 0,
+					impDeremiMe = Derechos,
+					impDerPolizaTur = 0,
+					impIvaMe = Iva,
+					impRecFinMe = 0,
+					impPremioMe = PrimaTotal,
+					codMoneda = 0,
+					pjeIva = 16M,
+					pjeRecargo = 0,
+					pjeDecreto = 0,
+					pjeDescuento = 0,
+					pjeGastosEmision = ((Derechos / PrimaNeta) * 100),
+					pjeDerPolizaTur = 0,
+					polEstado = 0,
+					codPeriodoPago = 5,
+					codUsuario = App.suscriptor.clave.ToString(), //App.suscriptor.Pv.ToString(),
+					fecTarifa = DateTime.Now,
+					codNivFact = 1,
+					codNivImpFact = 2,
+					codOperacion = 1
+				};
+				if (Antecedentes != null && Antecedentes.anno > 0)
+					p.fecRetroactiva = new DateTime(Antecedentes.anno, Antecedentes.mes, Antecedentes.dia);
+                
                 // inciso
                 bindings b = new bindings();
                 b.IniciaWS();
@@ -181,9 +223,9 @@ namespace GMX
                     txtDireccion = DatosGrales.Direccion,
                     numExt = ".",
                     codPostal = DatosGrales.CP,
-                    impDeremiMe = Derechos,
-                    impIvaMe = Iva,
-                    impPremioMe = PrimaTotal,
+                    impDeremiMe = p.impDeremiMe,
+                    impIvaMe = p.impIvaMe,
+                    impPremioMe = p.impPremioMe,
                     codSIC = "1",
                     codCalifUw = "1",
                     codTipoBenef1 = 1,
@@ -193,50 +235,12 @@ namespace GMX
                     codEspecialidad = DatosProf.Especialidad.ToString(),
                     codCedProf = DatosProf.CedulaProf,
                     codCedEspecialidad = DatosProf.CedulaEsp,
-                    impParticipaMe = PrimaNeta
+                    impParticipaMe = p.impPrimaMe
                 };
                 inciso.zonaAmisTerrem = zterremoto.Value.zona_amis;
                 inciso.zonaCrestaTerrem = zterremoto.Value.zona_cresta;
                 inciso.zonaAmisHuracan = zhuracan.Value.zona_amis;
                 inciso.zonaCrestaHuracan = zhuracan.Value.zona_cresta;
-
-                // poliza
-                IntegrationServiceEntity.Poliza p = new IntegrationServiceEntity.Poliza()
-                {
-                    codGrupo = agrupador,
-                    codPtoVenta = 2,
-                    ramoComercial = 66,
-                    fecVigDesde = IniVig,
-                    fecVigHasta = FinVig,
-                    codGrupoEndo = 1,
-                    codTipoEndo = 1,
-                    codTipoPoliza = 1,
-                    impSumaAsegurada = sumaasegurada,
-                    impPrimaMe = PrimaNeta,
-                    impDesctoMe = 0,
-                    impDecretoMe = 0,
-                    impDeremiMe = Derechos,
-                    impDerPolizaTur = 0,
-                    impIvaMe = Iva,
-                    impRecFinMe = 0,
-                    impPremioMe = PrimaTotal,
-                    codMoneda = 0,
-                    pjeIva = 16M,
-                    pjeRecargo = 0,
-                    pjeDecreto = 0,
-                    pjeDescuento = 0,
-                    pjeGastosEmision = ((Derechos / PrimaNeta) * 100),
-                    pjeDerPolizaTur = 0,
-                    polEstado = 0,
-                    codPeriodoPago = 5,
-                    codUsuario = App.suscriptor.Pv.ToString(),
-                    fecTarifa = DateTime.Now,
-                    codNivFact = 1,
-                    codNivImpFact = 2,
-                    codOperacion = 1
-                };
-                if (Antecedentes != null && Antecedentes.anno > 0)
-                    p.fecRetroactiva = new DateTime(Antecedentes.anno, Antecedentes.mes, Antecedentes.dia);
 
                 // agentes
                 IntegrationServiceEntity.Agente ag1 = new IntegrationServiceEntity.Agente()
@@ -333,7 +337,7 @@ namespace GMX
                     numCuota = 1,
                     fecVenc = p.fecVigHasta,
                     impPrimaMe = p.impPrimaMe,
-                    impIvaMe = p.pjeIva,
+                    impIvaMe = p.impIvaMe,
                     impRecFinMe = 0,
                     impDerPoliza = p.impDeremiMe,
                     impPremio = p.impPremioMe,

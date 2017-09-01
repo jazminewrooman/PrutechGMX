@@ -20,6 +20,7 @@ namespace GMX.Services
         private EndpointAddress EndPoint = new EndpointAddress(config.Config["APIIntegracion"]);
         private EmissionServiceClient ws;
         private GMXITServiceClient wsit;
+        private GMXDocumentRepositoryClient wsdoc;
 
 		/*public EmissionServiceClient Service
         {
@@ -30,9 +31,17 @@ namespace GMX.Services
             //InitializeServiceClient();
         }
 
-        public void IniciaWS(string api = "")
+        public void IniciaWS(string api = "", string apidoc = "")
 		{
-            if (api != "")
+			if (apidoc != "")
+			{
+				if (wsdoc == null || wsdoc.State == CommunicationState.Closed)
+				{
+					BasicHttpBinding binding = CreateBasicHttp();
+					wsdoc = new GMXDocumentRepositoryClient(binding, new EndpointAddress(apidoc));
+				}
+			}
+			if (api != "")
             {
                 if (wsit == null || wsit.State == CommunicationState.Closed)
 				{
@@ -72,8 +81,19 @@ namespace GMX.Services
 			return binding;
 		}
 
+		#region Docs
+		public Task<ReturnDocumentCompletedEventArgs> ReturnDocument(string name, bool grales)
+		{
+            var tcs = CreateSource<ReturnDocumentCompletedEventArgs>(null);
+            wsdoc.ReturnDocumentCompleted += (sender, e) => TransferCompletion(tcs, e, () => e, null);
+            wsdoc.ReturnDocumentAsync(config.Config["producto"], config.Config["clave"], config.Config["llave"], name, grales);
+			return tcs.Task;
+		}
+
+		#endregion
+
 		#region Integracion
-        public Task<createPolicyCompletedEventArgs> createPolicy(IntegrationServiceEntity.Emission emision)
+		public Task<createPolicyCompletedEventArgs> createPolicy(IntegrationServiceEntity.Emission emision)
 		{
             var tcs = CreateSource<createPolicyCompletedEventArgs>(null);
             ws.createPolicyCompleted += (sender, e) => TransferCompletion(tcs, e, () => e, null);

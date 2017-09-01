@@ -1,17 +1,19 @@
-﻿<Properties StartupConfiguration="{CE10328E-D6E5-4C2A-B0BD-121B16DB5327}|Default" GitUserInfo="UsingMD">
-  <MonoDevelop.Ide.ItemProperties.Gmx.Droid AndroidDesignerPreferredDevice="Nexus 4" PreferredExecutionTarget="Android.Nexus_5X_API_25" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="PrutechGMX Status">
+﻿<Properties StartupConfiguration="{CE10328E-D6E5-4C2A-B0BD-121B16DB5327}|Default">
+  <MonoDevelop.Ide.Workbench ActiveDocument="examenPrutech/ViewModels/VMCotizar.cs">
     <Files>
-      <File FileName="PrutechGMX Status" />
+      <File FileName="examenPrutech/ViewModels/VMCotizar.cs" Line="366" Column="1" />
+      <File FileName="examenPrutech/ViewModels/VMDatosBancarios.cs" Line="248" Column="49" />
+      <File FileName="examenPrutech/Services/cobertura.cs" Line="27" Column="48" />
+      <File FileName="../../../../../Volumes/KINGSTON/GMX/EmisionPolizaPVLMedicos.cs" Line="55" Column="58" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|iPhoneSimulator" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore>
-      <Breakpoint file="/Users/jazz/Projects/jazminewrooman/PrutechGMX/examenPrutech/Views/BasePage.cs" relfile="examenPrutech/Views/BasePage.cs" line="26" column="1" />
-      <Breakpoint file="/Users/jazz/Projects/jazminewrooman/PrutechGMX/examenPrutech/Views/BasePage.cs" relfile="examenPrutech/Views/BasePage.cs" line="44" column="1" />
-      <Breakpoint file="/Users/jazz/Projects/jazminewrooman/PrutechGMX/Droid/Renderers/MyMasterDetailRenderer.cs" relfile="Droid/Renderers/MyMasterDetailRenderer.cs" line="16" column="1" />
-      <Breakpoint file="/Users/jazz/Projects/jazminewrooman/PrutechGMX/Droid/Renderers/MyMasterDetailRenderer.cs" relfile="Droid/Renderers/MyMasterDetailRenderer.cs" line="14" column="1" />
+      <Breakpoint file="/Users/jazz/Projects/jazminewrooman/PrutechGMX/examenPrutech/ViewModels/VMCotizar.cs" relfile="examenPrutech/ViewModels/VMCotizar.cs" line="364" column="1" />
+      <Breakpoint file="/Users/jazz/Projects/jazminewrooman/PrutechGMX/examenPrutech/ViewModels/VMCotizar.cs" relfile="examenPrutech/ViewModels/VMCotizar.cs" line="366" column="1" />
+      <Breakpoint file="/Users/jazz/Projects/jazminewrooman/PrutechGMX/examenPrutech/ViewModels/VMCotizar.cs" relfile="examenPrutech/ViewModels/VMCotizar.cs" line="384" column="1" />
+      <Breakpoint file="/Users/jazz/Projects/jazminewrooman/PrutechGMX/examenPrutech/ViewModels/VMCotizar.cs" relfile="examenPrutech/ViewModels/VMCotizar.cs" line="230" column="31" />
     </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.ItemProperties.Gmx.iOS PreferredExecutionTarget="MonoDevelop.IPhone.IPhoneSimulatorTarget.FC6EBC55-4EBF-471C-A3DF-128A6F97D265" />

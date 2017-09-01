@@ -134,9 +134,14 @@
       <DependentUpon>ResultadoBusqueda.xaml</DependentUpon>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Services\DTOs\datospolizaemitida.cs" />
+<<<<<<< Updated upstream
     <Compile Include="$(MSBuildThisFileDirectory)Views\DetallePolizas.xaml.cs">
       <DependentUpon>DetallePolizas.xaml</DependentUpon>
     </Compile>
+=======
+    <Compile Include="$(MSBuildThisFileDirectory)Services\DTOs\resultadopoliza.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\wsdocs.cs" />
+>>>>>>> Stashed changes
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\WelcomePage.xaml">

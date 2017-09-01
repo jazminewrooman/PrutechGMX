@@ -40,8 +40,14 @@ namespace GMX
             CargaFormaPago();
             NextCommand = new Command(async () =>
             {
-                if (!Validar())
-                    await diag.AlertAsync(Resources.FaltanOb, "Error", "Ok");
+                string err = "";
+                if (!Validar(ref err))
+                {
+                    if (!String.IsNullOrEmpty(err))
+                        await diag.AlertAsync(err, "Error", "Ok");
+                    else
+                        await diag.AlertAsync(Resources.FaltanOb, "Error", "Ok");
+                }
                 else
                 {
                     fs = FormatText();
@@ -215,7 +221,7 @@ namespace GMX
             }
         }
 
-        private bool Validar()
+        private bool Validar(ref string err)
         {
             if (String.IsNullOrEmpty(Nombre) || TipoTarj == CardIssuer.Unknown || String.IsNullOrEmpty(FormaPago)
                 || String.IsNullOrEmpty(NumTarjeta) || String.IsNullOrEmpty(Mes) || String.IsNullOrEmpty(Anio)
@@ -223,32 +229,68 @@ namespace GMX
                 return false;
             else
             {
-                GMX.Models.DatosBancarios db = new Models.DatosBancarios()
+                DateTime dt = new DateTime(int.Parse(Anio), int.Parse(Mes), 1);
+                if (dt.CompareTo(DateTime.Now.Date) < 0)
+                    err = "La fecha de vencimiento no puede ser menor a hoy";
+                if (CodigoSeg == "000")
+                    err = "El código de seguridad (CVV) de su tarjeta es incorrecto";
+                //const string secuencRegex = @"^(?!0+$)\d{3}$";
+                //if (!System.Text.RegularExpressions.Regex.IsMatch(CodigoSeg, secuencRegex, System.Text.RegularExpressions.RegexOptions.IgnoreCase, TimeSpan.FromMilliseconds(250)))
+                //    err = "El código de seguridad (CVV) de su tarjeta es incorrecto";
+                List<string> lstinvalidos = new List<string>() { "012", "123", "234", "345", "456", "567", "678", "789", "890", "098", "987", "876", "765", "654", "543", "432", "321", "210" };
+                if (lstinvalidos.Contains(CodigoSeg))
+					err = "El código de seguridad (CVV) de su tarjeta es incorrecto";
+                const string caracRegex = @"^[a-zA-Z0-9. ]*$";
+                if (!System.Text.RegularExpressions.Regex.IsMatch(Nombre, caracRegex, System.Text.RegularExpressions.RegexOptions.IgnoreCase, TimeSpan.FromMilliseconds(250)))
+					err = "El nombre no puede llevar caracteres especiales";
+
+				if (!String.IsNullOrEmpty(err))
+                    return false;
+                else
                 {
-                    Nombre = Nombre,
-                    TipoTarj = TipoTarj,
-                    FormaPago = FormaPago,
-                    NumTarjeta = NumTarjeta,
-                    Mes = Mes,
-                    Anio = Anio,
-                    CodigoSeg = CodigoSeg,
-                    Merchant = Merchant
-                };
-                vmcotizar.DatosBank = db;
-                return true;
+                    GMX.Models.DatosBancarios db = new Models.DatosBancarios()
+                    {
+                        Nombre = Nombre,
+                        TipoTarj = TipoTarj,
+                        FormaPago = FormaPago,
+                        NumTarjeta = NumTarjeta,
+                        Mes = Mes,
+                        Anio = Anio,
+                        CodigoSeg = CodigoSeg,
+                        Merchant = Merchant
+                    };
+                    vmcotizar.DatosBank = db;
+                    return true;
+                }
             }
         }
 
-        private void CargaFormaPago(){
+		/*private static bool NoConsecutiveIncreasingOrDecreasingNumbers(string str)
+		{
+			char prev = str[0];
+			for (int i = 1; i < str.Length; i++)
+			{
+				char current = str[i];
+				if ('0' < current && current < '9' &&
+					'0' < prev && prev < '9' &&
+					(prev + 1 == current || current + 1 == prev))
+					return false;
+				prev = current;
+			}
+			return true;
+		}*/
+
+        private void CargaFormaPago()
+        {
             List<string> tmp = new List<string>();
             Ocupado = true;
-			GMX.wspago.PaymentCenter ws = new GMX.wspago.PaymentCenter();
+            GMX.wspago.PaymentCenter ws = new GMX.wspago.PaymentCenter();
             lstformaspago = ws.GetMerchantIds();
             foreach (GMX.wspago.KeyValue k in lstformaspago)
                 tmp.Add(k.Key.Replace("MERCHANT_", ""));
             FormasPago = tmp;
             Ocupado = false;
-		}
+        }
 
 
 		private FormattedString FormatText()
