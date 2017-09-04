@@ -16,7 +16,7 @@
                 <Label Text="{Binding Derechos}"  Style="{StaticResource labels}" FontSize="Medium"/>
 
                 <Label Text="IVA:"  Style="{StaticResource labels}" FontSize="Medium" FontAttributes="Bold" TextColor="#04b5b5"/>
-                <Label Text="{Binding IVA}"  Style="{StaticResource labels}" FontSize="Medium"/>
+                <Label Text="{Binding Iva}"  Style="{StaticResource labels}" FontSize="Medium"/>
 
                 <Label Text="Prima Total:"  Style="{StaticResource labels}" FontSize="Medium" FontAttributes="Bold" TextColor="#04b5b5"/>
                 <Label Text="{Binding PrimaTotal}"  Style="{StaticResource labels}" FontSize="Medium"/>
@@ -37,17 +37,17 @@
 
                 <Button Text="Carátula"  Style="{StaticResource botonBlanco}" HorizontalOptions="Start" Command="{Binding CaratulaCommand}"/>
 
-                <Button Text="Condiciones Particulares"  Style="{StaticResource botonBlanco}" HorizontalOptions="Start" Command="{Binding GeneralesCommand}"/>
+                <Button Text="Condiciones Particulares"  Style="{StaticResource botonBlanco}" HorizontalOptions="Start" Command="{Binding ParticularesCommand}"/>
 
                 <Button Text="Control de Pago"  Style="{StaticResource botonBlanco}" HorizontalOptions="Start" Command="{Binding ControlCommand}"/>
 
-                <Button Text="Condiciones Generales"  Style="{StaticResource botonBlanco}" HorizontalOptions="Start" Command="{Binding ParticularesCommand}"/>
+                <Button Text="Condiciones Generales"  Style="{StaticResource botonBlanco}" HorizontalOptions="Start" Command="{Binding GeneralesCommand}"/>
 
                 <Button Text="Detalle de Coberturas"  Style="{StaticResource botonBlanco}" HorizontalOptions="Start" Command="{Binding DetalleCommand}"/>
 
                 <BoxView BackgroundColor="Gray" HeightRequest="5"/>
 
-                <Button Text="Reenviar documentos"  Style="{StaticResource botonBlancoVerde}" Command="{Binding ReenviarCommand}"/>
+                <!--<Button Text="Reenviar documentos"  Style="{StaticResource botonBlancoVerde}" Command="{Binding ReenviarCommand}"/>-->
                 
             </StackLayout>
         </ScrollView>

@@ -60,7 +60,7 @@ namespace GMX.Services.DTOs
         public string NoCedulaEsp2 { get; set; }
         public string PolizasAnt { get; set; }
         public string PolAnt1 { get; set; }
-        public object PolAnt2 { get; set; }
+        public string PolAnt2 { get; set; }
         public string NoSocioEspanol { get; set; }
         public string NoCedulaEspecialidad2_ABC { get; set; }
         public string Especialidad2_ABC { get; set; }

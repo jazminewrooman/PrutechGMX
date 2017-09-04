@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using Acr.UserDialogs;
-
+using GMX.Services.DTOs;
 using Xamarin.Forms;
 
 namespace GMX.Views
 {
     public partial class DetallePolizas : ContentPage
     {
-        public DetallePolizas(resultado res, int id) 
+        public DetallePolizas(polizaemitida res) 
         {
             InitializeComponent();
 

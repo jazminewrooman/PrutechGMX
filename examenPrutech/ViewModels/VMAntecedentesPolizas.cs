@@ -50,7 +50,7 @@ namespace GMX
             {
 				poliza1 = new NumPoliza()
 				{
-					oficina = App.agent.cod_suc,
+                    oficina = App.agent.cod_suc.PadRight(2, '0'),
 					producto = "66",
 					endoso = "0000"
 				};

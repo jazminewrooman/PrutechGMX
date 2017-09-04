@@ -78,13 +78,14 @@ namespace GMX
                     try
                     {
                         Ocupado = true;
-
 						bindings b = new bindings();
                         b.IniciaWS(apidoc: config.Config["APIDocs"]);
                         var waterm = await b.ReturnDocument("Watermark.jpg", false);
-
-						GMX.ViewModels.Emails.GetSlipCotizacion(this);
-                        GMX.ViewModels.Emails.docPDF.Watermark = waterm.Result;
+                        if (IdPlan == "1") //tradicional
+                            GMX.ViewModels.Emails.GetSlipCotizacionTrad(this);
+						if (IdPlan == "2") //angeles
+                            GMX.ViewModels.Emails.GetSlipCotizacionAng(this);
+						GMX.ViewModels.Emails.docPDF.Watermark = waterm.Result;
                         b.IniciaWS(api: config.Config["APIGMXIT"]);
                         var doc = await b.GenerateDocument(GMX.ViewModels.Emails.Sections.ToArray(), GMX.ViewModels.Emails.docPDF);
                         var slip_cotizacion = new FilePropertiesManager { stream = doc.Result, fileName = "Cotizacion.pdf", length = doc.Result.Length };
@@ -160,44 +161,44 @@ namespace GMX
                 }
                 string strcobertura = JsonConvert.SerializeObject(lscob);
 
-				// poliza
-				IntegrationServiceEntity.Poliza p = new IntegrationServiceEntity.Poliza()
-				{
-					codGrupo = agrupador,
-					codPtoVenta = 2,
-					ramoComercial = 66,
-					fecVigDesde = IniVig,
-					fecVigHasta = FinVig,
-					codGrupoEndo = 1,
-					codTipoEndo = 1,
-					codTipoPoliza = 1,
-					impSumaAsegurada = sumaasegurada,
-					impPrimaMe = PrimaNeta,
-					impDesctoMe = 0,
-					impDecretoMe = 0,
-					impDeremiMe = Derechos,
-					impDerPolizaTur = 0,
-					impIvaMe = Iva,
-					impRecFinMe = 0,
-					impPremioMe = PrimaTotal,
-					codMoneda = 0,
-					pjeIva = 16M,
-					pjeRecargo = 0,
-					pjeDecreto = 0,
-					pjeDescuento = 0,
-					pjeGastosEmision = ((Derechos / PrimaNeta) * 100),
-					pjeDerPolizaTur = 0,
-					polEstado = 0,
-					codPeriodoPago = 5,
-					codUsuario = App.suscriptor.clave.ToString(), //App.suscriptor.Pv.ToString(),
-					fecTarifa = DateTime.Now,
-					codNivFact = 1,
-					codNivImpFact = 2,
-					codOperacion = 1
-				};
-				if (Antecedentes != null && Antecedentes.anno > 0)
-					p.fecRetroactiva = new DateTime(Antecedentes.anno, Antecedentes.mes, Antecedentes.dia);
-                
+                // poliza
+                IntegrationServiceEntity.Poliza p = new IntegrationServiceEntity.Poliza()
+                {
+                    codGrupo = agrupador,
+                    codPtoVenta = 2,
+                    ramoComercial = 66,
+                    fecVigDesde = IniVig,
+                    fecVigHasta = FinVig,
+                    codGrupoEndo = 1,
+                    codTipoEndo = 1,
+                    codTipoPoliza = 1,
+                    impSumaAsegurada = sumaasegurada,
+                    impPrimaMe = PrimaNeta,
+                    impDesctoMe = 0,
+                    impDecretoMe = 0,
+                    impDeremiMe = Derechos,
+                    impDerPolizaTur = 0,
+                    impIvaMe = Iva,
+                    impRecFinMe = 0,
+                    impPremioMe = PrimaTotal,
+                    codMoneda = 0,
+                    pjeIva = 16M,
+                    pjeRecargo = 0,
+                    pjeDecreto = 0,
+                    pjeDescuento = 0,
+                    pjeGastosEmision = ((Derechos / PrimaNeta) * 100),
+                    pjeDerPolizaTur = 0,
+                    polEstado = 0,
+                    codPeriodoPago = 5,
+                    codUsuario = App.suscriptor.clave.ToString(), //App.suscriptor.Pv.ToString(),
+                    fecTarifa = DateTime.Now,
+                    codNivFact = 1,
+                    codNivImpFact = 2,
+                    codOperacion = 1
+                };
+                if (Antecedentes != null && Antecedentes.anno > 0)
+                    p.fecRetroactiva = new DateTime(Antecedentes.anno, Antecedentes.mes, Antecedentes.dia);
+
                 // inciso
                 bindings b = new bindings();
                 b.IniciaWS();
@@ -367,7 +368,21 @@ namespace GMX
 
                 var resp = await b.createPolicy(emision);
                 var jsonpoliza = await b.decrypt(resp.Result);
-                MandarPagar("01171000066513992265");
+
+                var resultados = JsonConvert.DeserializeObject(jsonpoliza.Result);
+                IDictionary<string, Newtonsoft.Json.Linq.JToken> dctRes = (Newtonsoft.Json.Linq.JObject)resultados;
+                resultadopolizaerror rperr; resultadopoliza polizanueva;
+                if (dctRes.ContainsKey("Error"))
+                {
+                    rperr = JsonConvert.DeserializeObject<resultadopolizaerror>(jsonpoliza.Result);
+                    Ocupado = false;
+                    await diag.AlertAsync($"Ocurrieron errores:{Environment.NewLine}{Environment.NewLine}{rperr.Error}", "Error");
+                }
+                else
+                {
+                    intentosdepago = 0;
+                    PolizaGenerada = JsonConvert.DeserializeObject<resultadopoliza>(jsonpoliza.Result);
+                }
                 Ocupado = false;
             }
             catch (Exception ex)
@@ -377,22 +392,21 @@ namespace GMX
             }
         }
 
-        private void MandarPagar(string numeropoliza)
+        public void MandarPagar()
         {
-            if (DatosBank != null && DatosBank.TipoTarj != CreditCardValidator.CardIssuer.Unknown)
-            {
-                intentosdepago++;
-                DateTime dtExp = new DateTime(int.Parse(DatosBank.Anio), int.Parse(DatosBank.Mes), 1);
-                wspago.PaymentCenter wsp = new wspago.PaymentCenter();
-                wsp.Timeout = 5000;
-                wspago.MITResponse resp = wsp.ExecuteDirectPayment(DatosBank.Merchant, String.Format("{0}{1:00}", numeropoliza,
-                intentosdepago), (double)PrimaTotal, config.Config["MIT_Currency"], (DatosBank.TipoTarj == CreditCardValidator.CardIssuer.Visa ? "V" : "MC"),
-                DatosBank.Nombre, DatosBank.NumTarjeta.Replace("-", "").Replace(" ", ""), dtExp, DatosBank.CodigoSeg);
-            }
-            else //mandar email de donde pagar (referencia bancaria etc)
-            {
-
-            }
+            Ocupado = true;
+            intentosdepago++;
+            DateTime dtExp = new DateTime(int.Parse(DatosBank.Anio), int.Parse(DatosBank.Mes), 1);
+            wspago.PaymentCenter wsp = new wspago.PaymentCenter();
+            wsp.Timeout = 5000;
+            wspago.MITResponse resp = wsp.ExecuteDirectPayment(DatosBank.Merchant, String.Format("{0}{1:00}", PolizaGenerada.Referencia,
+            intentosdepago), (double)PrimaTotal, config.Config["MIT_Currency"], (DatosBank.TipoTarj == CreditCardValidator.CardIssuer.Visa ? "V" : "MC"),
+            DatosBank.Nombre, DatosBank.NumTarjeta.Replace("-", "").Replace(" ", ""), dtExp, DatosBank.CodigoSeg);
+            // simulamos happy path
+            TransBanco = new resultadobanco() { Operacion = "76767677", Autorizacion = "8787", ReferenciaPago = "78783927130§193" };
+            // simulamos error
+            //TransBanco = new resultadobanco() { Error = "Tarjeta no valida" };
+            Ocupado = false;
         }
 
         private bool Validar()
@@ -401,6 +415,33 @@ namespace GMX
                 return false;
             else
                 return true;
+        }
+
+		private resultadobanco transbanco;
+		public resultadobanco TransBanco
+		{
+			get => transbanco;
+			set
+			{
+				if (transbanco != value)
+				{
+					transbanco = value;
+					OnPropertyChanged("TransBanco");
+				}
+			}
+		}
+        private resultadopoliza polizagenerada;
+        public resultadopoliza PolizaGenerada
+        {
+            get => polizagenerada;
+            set
+            {
+                if (polizagenerada != value)
+                {
+                    polizagenerada = value;
+                    OnPropertyChanged("PolizaGenerada");
+                }
+            }
         }
 
         GMX.Models.DatosBancarios datosbank;

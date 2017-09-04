@@ -2,6 +2,14 @@
 
 namespace GMX.Services.DTOs
 {
+    public class resultadobanco
+    {
+        public string Error { get; set; }
+        public string Operacion { get; set; }
+        public string Autorizacion { get; set; }
+        public string ReferenciaPago { get; set; }
+    }
+
 	public class resultadopoliza
 	{
 		public string Movimiento { get; set; }

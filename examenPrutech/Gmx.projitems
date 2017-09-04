@@ -124,7 +124,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Emails.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\suscriptor.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\wsgmxit.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Services\cobertura.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)BD.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\DTOs\zonashuracan.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\Confirmacion.xaml.cs">
@@ -134,15 +133,14 @@
       <DependentUpon>ResultadoBusqueda.xaml</DependentUpon>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Services\DTOs\datospolizaemitida.cs" />
-<<<<<<< Updated upstream
-    <Compile Include="$(MSBuildThisFileDirectory)Views\DetallePolizas.xaml.cs">
+	<Compile Include="$(MSBuildThisFileDirectory)Views\DetallePolizas.xaml.cs">
       <DependentUpon>DetallePolizas.xaml</DependentUpon>
     </Compile>
-=======
-    <Compile Include="$(MSBuildThisFileDirectory)Services\DTOs\resultadopoliza.cs" />
+	<Compile Include="$(MSBuildThisFileDirectory)Services\DTOs\resultadopoliza.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\wsdocs.cs" />
->>>>>>> Stashed changes
-  </ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)Services\cobertura.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Interfaces\ISaveAndOpen.cs" />
+	</ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\WelcomePage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>

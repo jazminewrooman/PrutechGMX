@@ -74,7 +74,7 @@ namespace GMX.Services
 				MaxBufferSize = 2147483647,
 				MaxReceivedMessageSize = 2147483647,
 			};
-			TimeSpan timeout = new TimeSpan(0, 0, 60);
+			TimeSpan timeout = new TimeSpan(0, 0, 180);
 			binding.SendTimeout = timeout;
 			binding.OpenTimeout = timeout;
 			binding.ReceiveTimeout = timeout;
@@ -93,7 +93,18 @@ namespace GMX.Services
 		#endregion
 
 		#region Integracion
-		public Task<createPolicyCompletedEventArgs> createPolicy(IntegrationServiceEntity.Emission emision)
+		public Task<getPolicyCompletedEventArgs> getPolicy(string poliza, string doc)
+		{
+			//var p = poliza.Replace("_01_0", "");
+            //string file = $"{poliza}-{doc}";
+
+            var tcs = CreateSource<getPolicyCompletedEventArgs>(null);
+            ws.getPolicyCompleted += (sender, e) => TransferCompletion(tcs, e, () => e, null);
+            ws.getPolicyAsync(config.Config["clave"], "pdf", doc, config.Config["llave"], poliza, config.Config["producto"]);
+			return tcs.Task;
+		}
+		
+        public Task<createPolicyCompletedEventArgs> createPolicy(IntegrationServiceEntity.Emission emision)
 		{
             var tcs = CreateSource<createPolicyCompletedEventArgs>(null);
             ws.createPolicyCompleted += (sender, e) => TransferCompletion(tcs, e, () => e, null);
@@ -131,7 +142,15 @@ namespace GMX.Services
 		#endregion
 
 		#region GMX IT
-        public Task<GenerateDocumentCompletedEventArgs> GenerateDocument(Section[] sections, DocumentPDF pdf)
+        public Task<GenerateReciboCompletedEventArgs> GenerateRecibo(EmisionPago pago)
+		{
+			var tcs = CreateSource<GenerateReciboCompletedEventArgs>(null);
+            wsit.GenerateReciboCompleted += (sender, e) => TransferCompletion(tcs, e, () => e, null);
+            wsit.GenerateReciboAsync(pago);
+			return tcs.Task;
+		}
+
+		public Task<GenerateDocumentCompletedEventArgs> GenerateDocument(Section[] sections, DocumentPDF pdf)
 		{
             var tcs = CreateSource<GenerateDocumentCompletedEventArgs>(null);
 			wsit.GenerateDocumentCompleted += (sender, e) => TransferCompletion(tcs, e, () => e, null);
@@ -149,6 +168,32 @@ namespace GMX.Services
 			var tcs = CreateSource<DistribuirDocumentacionPolizaCompletedEventArgs>(null);
             wsit.DistribuirDocumentacionPolizaCompleted += (sender, e) => TransferCompletion(tcs, e, () => e, null);
             wsit.DistribuirDocumentacionPolizaAsync("cotizacion", false, "PVLMED", "", asegurado, agente, suscrip, nicho, null, slip, null, null, null, null, null, null);
+			return tcs.Task;
+		}
+
+        public Task<DistribuirDocumentacionPolizaCompletedEventArgs> DistribuirDocumentacionConfirmacion(DatosGralesModel grales ,string numpoliza, FilePropertiesManager caratula, FilePropertiesManager slip, FilePropertiesManager recibo, FilePropertiesManager condgrales, FilePropertiesManager[] folleto)
+		{
+            Destinatario[] asegurado = new Destinatario[] { new Destinatario() { Nombre = $"{grales.Nombre} {grales.APaterno} {grales.AMaterno}", Mail = grales.Correo } };
+			Destinatario[] agente = new Destinatario[] { new Destinatario() { Nombre = "Agente", Mail = App.usr.Email } };
+			Destinatario[] suscrip = new Destinatario[] { new Destinatario() { Nombre = "Suscriptor", Mail = App.suscriptor.email } };
+			Destinatario[] nicho = new Destinatario[] { new Destinatario() { Nombre = "Dynamic_CCO", Mail = config.Config["EmailNicho"] } };
+
+			var tcs = CreateSource<DistribuirDocumentacionPolizaCompletedEventArgs>(null);
+			wsit.DistribuirDocumentacionPolizaCompleted += (sender, e) => TransferCompletion(tcs, e, () => e, null);
+            wsit.DistribuirDocumentacionPolizaAsync("confirmacioncompra", false, "PVLMED", numpoliza, asegurado, agente, suscrip, nicho, null, null, null, caratula, slip, recibo, condgrales, folleto);
+			return tcs.Task;
+		}
+
+		public Task<DistribuirDocumentacionPolizaCompletedEventArgs> DistribuirDocumentacionAviso(DatosGralesModel grales, string numpoliza, FilePropertiesManager caratula, FilePropertiesManager slip, FilePropertiesManager[] fileattach)
+		{
+			Destinatario[] asegurado = new Destinatario[] { new Destinatario() { Nombre = $"{grales.Nombre} {grales.APaterno} {grales.AMaterno}", Mail = grales.Correo } };
+			Destinatario[] suscrip = new Destinatario[] { new Destinatario() { Nombre = "Suscriptor", Mail = App.suscriptor.email } };
+			Destinatario[] nicho = new Destinatario[] { new Destinatario() { Nombre = "", Mail = config.Config["EmailNicho"] } };
+            Destinatario[] agente = new List<Destinatario>().ToArray();
+
+			var tcs = CreateSource<DistribuirDocumentacionPolizaCompletedEventArgs>(null);
+			wsit.DistribuirDocumentacionPolizaCompleted += (sender, e) => TransferCompletion(tcs, e, () => e, null);
+            wsit.DistribuirDocumentacionPolizaAsync("avisoventa", false, "PVLMED", numpoliza, asegurado, agente, suscrip, nicho, null, null, null, caratula, slip, null, null, fileattach);
 			return tcs.Task;
 		}
 		#endregion

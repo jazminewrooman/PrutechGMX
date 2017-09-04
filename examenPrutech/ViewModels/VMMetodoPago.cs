@@ -49,7 +49,6 @@ namespace GMX
                             //nav.InsertPageBefore(new ResumenDatos(vmcotizar), cotizar);
                             //await nav.PopToRootAsync(true);
 
-                            await nav.PopToRootAsync(true);
                             var resumen = new ResumenDatos(vmcotizar);
 							var MainP = new NavigationPage(resumen)
 							{
@@ -60,7 +59,9 @@ namespace GMX
 							md.Master = new menu();
 							md.Detail = MainP;
 							App.Current.MainPage = md;
-                        }
+							await nav.PopToRootAsync(true);
+
+						}
                     }
                 }
 			});

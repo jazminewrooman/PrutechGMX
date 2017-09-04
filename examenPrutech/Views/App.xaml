@@ -18,6 +18,7 @@
                 <Setter Property="SelectedTextColor" Value="White"/>
             </Style>
 			<Style x:Key="labels" TargetType="Label">
+                <Setter Property="VerticalTextAlignment" Value="Center"/>
 				<Setter Property="TextColor" 		Value="Black" />
 				<Setter Property="FontAttributes" 	Value="Bold" />
 				<Setter Property="FontSize" 		Value="14"/>

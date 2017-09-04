@@ -112,8 +112,8 @@ namespace GMX
                     if (s.Table.FirstOrDefault() != null)
                         App.suscriptor = s.Table.FirstOrDefault();
 
-                    //var Welcome = new Cotizar();
-                    var Welcome = new MetodoPago(new VMCotizar(UserDialogs.Instance, App.navigation));
+                    var Welcome = new Cotizar();
+                    //var Welcome = new MetodoPago(new VMCotizar(UserDialogs.Instance, App.navigation));
                     await App.navigation.PopToRootAsync();
                     var MainP = new NavigationPage(Welcome)
                     {

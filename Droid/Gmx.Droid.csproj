@@ -193,6 +193,7 @@
     </Compile>
     <Compile Include="loadingAct.cs" />
     <Compile Include="Renderers\MyMasterDetailRenderer.cs" />
+    <Compile Include="Dependencies\SaveAndOpen.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />

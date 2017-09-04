@@ -11,6 +11,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using CreditCardValidator;
 using Rg.Plugins.Popup.Extensions;
+using GMX.Services;
 
 namespace GMX
 {
@@ -26,50 +27,86 @@ namespace GMX
         public ICommand DetalleCommand { get; set; }
         public ICommand ReenviarCommand { get; set; }
 
-        public VMDetallePoliza(resultado res, IUserDialogs diag, INavigation n) : base(diag)
+        public VMDetallePoliza(polizaemitida res, IUserDialogs diag, INavigation n) : base(diag)
         {
-			//public VMDetallePoliza(IUserDialogs diag, INavigation n, resultado res) : base(diag)
-			nav = n;
+            //public VMDetallePoliza(IUserDialogs diag, INavigation n, resultado res) : base(diag)
+            nav = n;
             Title = "Pólizas Emitidas";
 
             cargaDatos(res);
-
-			NextCommand = new Command(async () =>
-			{
-                //await nav.PushAsync(new Documentos(vmcotizar));
-					
-			});
-
-            CaratulaCommand = new Command(async () => 
+            bindings b = new bindings();
+            try
             {
-                
-            });
-			GeneralesCommand = new Command(async () =>
-			{
+                CaratulaCommand = new Command(async () =>
+                {
+                    Ocupado = true;
+                    b.IniciaWS();
+                    var caratula = await b.getPolicy(res.Poliza, "caratula");
+                    await DependencyService.Get<ISaveAndOpen>().OpenFile("caratula.pdf", caratula.Result);
+                    Ocupado = false;
+                });
+                GeneralesCommand = new Command(async () =>
+                {
+                    Ocupado = true;
+                    b.IniciaWS(apidoc: config.Config["APIDocs"]);
+                    var condgen = await b.ReturnDocument("W_RCMedML_Ind_20.07.2016.2.pdf", false);
+                    await DependencyService.Get<ISaveAndOpen>().OpenFile("W_RCMedML_Ind_20.07.2016.2.pdf", condgen.Result);
+                    Ocupado = false;
+                });
+                ControlCommand = new Command(async () =>
+                {
+                    Ocupado = true;
+                    b.IniciaWS();
+                    var recibo = await b.getPolicy(res.Poliza, "recibo");
+                    await DependencyService.Get<ISaveAndOpen>().OpenFile("recibo.pdf", recibo.Result);
+                    Ocupado = false;
+                });
+                ParticularesCommand = new Command(async () =>
+                {
+                    Ocupado = true;
+                    try
+                    {
+                        b.IniciaWS(apidoc: config.Config["APIDocs"]);
+                        var waterm = await b.ReturnDocument("Watermark.jpg", false);
 
-			});
-			ControlCommand = new Command(async () =>
-			{
+                        if (!String.IsNullOrEmpty(res.PolizasAnt) && res.PolizasAnt == "NO")//nueva
+                            GMX.ViewModels.Emails.SlipTradicional(res.Poliza, res.Arrendatario, res.Nombre_Cliente, res.Especialidad, res.Especialidad2, res.NoCedulaPro, res.NoCedulaEsp, res.Otros, res.Suma_Asegurada.ToString("c"));
+                        if (!String.IsNullOrEmpty(res.PolizasAnt) && res.PolizasAnt == "SI")//renovacion
+                            GMX.ViewModels.Emails.SlipTradicionalRenov(res.Poliza, res.Arrendatario, res.Nombre_Cliente, res.Especialidad, res.Especialidad2, res.NoCedulaPro, res.NoCedulaEsp, res.Otros, res.Suma_Asegurada.ToString("c"), res.fecRetroactiva.ToString("dd/MM/yyyy"), res.PolAnt1, res.PolAnt2, "");
 
-			});
-			ParticularesCommand = new Command(async () =>
-			{
+                        GMX.ViewModels.Emails.docPDF.Watermark = waterm.Result;
+                        b.IniciaWS(api: config.Config["APIGMXIT"]);
+                        var condpart = await b.GenerateDocument(GMX.ViewModels.Emails.Sections.ToArray(), GMX.ViewModels.Emails.docPDF);
+                        await DependencyService.Get<ISaveAndOpen>().OpenFile("Particulares.pdf", condpart.Result);
+                    }
+                    catch (Exception ex)
+                    {
+                        await diag.AlertAsync(ex.InnerException.ToString(), "Error", "Ok");
+                        Ocupado = false;
+                    }
+                    Ocupado = false;
+                });
+                DetalleCommand = new Command(async () =>
+                {
+                    Ocupado = true;
+                    b.IniciaWS(apidoc: config.Config["APIDocs"]);
+                    var folleto = await b.ReturnDocument("PLAN_LEGAL_MEDICOS.pdf", false);
+                    await DependencyService.Get<ISaveAndOpen>().OpenFile("PLAN_LEGAL_MEDICOS.pdf", folleto.Result);
+                    Ocupado = false;
+                });
+                ReenviarCommand = new Command(async () =>
+                {
 
-			});
-			DetalleCommand = new Command(async () =>
-			{
+                });
 
-			});
-			ReenviarCommand = new Command(async () =>
-			{
+            }
+            catch (Exception ex)
+            {
 
-			});
-
-
-
+            }
         }
 
-        public void cargaDatos(resultado res)
+        public void cargaDatos(polizaemitida res)
         {
             Emision = res.Emision;
             PrimaNeta = res.PrimaNeta;

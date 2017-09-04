@@ -17,7 +17,7 @@ x:Class="GMX.Views.ResultadoBusqueda">
                                         <RowDefinition Height="Auto"/>
                                         <RowDefinition Height="Auto"/>
                                     </Grid.RowDefinitions>
-                                    <Label Grid.Column="0" Grid.Row="0" FontSize="Medium" FontAttributes="Bold" Text="{Binding Nombre}"/>
+                                    <Label Grid.Column="0" Grid.Row="0" FontSize="Medium" FontAttributes="Bold" Text="{Binding Nombre_Cliente}"/>
                                     <Label Grid.Column="0" Grid.Row="1" FontSize="Medium" Text="{Binding Poliza}"/>
                                     <Image Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" Source="next"/>
                                 </Grid>

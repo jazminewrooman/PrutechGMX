@@ -67,5 +67,11 @@
     <data name="Imprima" xml:space="preserve">
         <value>Por favor imprima el recibo y pague directamente en el banco</value>
     </data>
-    
+    <data name="AceptamosTodas" xml:space="preserve">
+        <value>Pagos de contado aceptamos todas las tarjetas Visa y Mastercard.</value>
+    </data>
+    <data name="BbvBmxNo" xml:space="preserve">
+        <value>En pagos a meses sin intereses aceptamos todas las tarjetas Visa y Mastercard excepto Bancomer y Banamex</value>
+    </data>
+
 </root>

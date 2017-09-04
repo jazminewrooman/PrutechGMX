@@ -23,13 +23,13 @@ namespace GMX
         public ICommand VerCotizaCommand { get; set; }
         FormattedString fs;
 
-
         public VMDatosBancarios(IUserDialogs diag, INavigation n, VMCotizar vmc, Modo modo) : base(diag)
         {
             nav = n;
             vmcotizar = vmc;
             TipoTarj = CardIssuer.Unknown;
-            Meses = new List<string>();
+            Aceptamos = $"{Resources.AceptamosTodas}{Environment.NewLine}{Resources.BbvBmxNo}";
+			Meses = new List<string>();
             for (int i = 1; i <= 12; i++)
                 Meses.Add(i.ToString().PadLeft(2, '0'));
             OnPropertyChanged("Meses");
@@ -54,7 +54,6 @@ namespace GMX
                     vmcotizar.DatosBancarios = fs;
                     if (modo == Modo.Captura)
                     {
-                        await nav.PopToRootAsync(true);
                         var resumen = new ResumenDatos(vmcotizar);
                         var MainP = new NavigationPage(resumen)
                         {
@@ -65,7 +64,9 @@ namespace GMX
                         md.Master = new menu();
                         md.Detail = MainP;
                         App.Current.MainPage = md;
-                    }
+						await nav.PopToRootAsync(true);
+
+					}
                     if (modo == Modo.Edicion)
                         await nav.PopAsync(true);
                 }
@@ -77,13 +78,24 @@ namespace GMX
             if (vmcotizar.DatosBank != null)
                 CargaBancarios(vmcotizar.DatosBank);
         }
-
-        public List<string> Meses { get; set; }
+		
+		public List<string> Meses { get; set; }
         public List<string> Anios { get; set; }
 		public string Mes { get; set; }
 		public string Anio { get; set; }
 
-        private string codigoseg;
+        private string aceptamos;
+        public string Aceptamos{
+            get => aceptamos;
+            set{
+                if (aceptamos != value){
+                    aceptamos = value;
+					OnPropertyChanged("Aceptamos");
+				}                
+            }
+        }
+
+		private string codigoseg;
         public string CodigoSeg
         {
             get => codigoseg;
@@ -302,11 +314,11 @@ namespace GMX
 			fs.Spans.Add(new Span { Text = "Forma de Pago: ", ForegroundColor = Color.Black, FontAttributes = FontAttributes.Bold });
             fs.Spans.Add(new Span { Text = FormaPago + Environment.NewLine, ForegroundColor = Color.Black });
 			fs.Spans.Add(new Span { Text = "Número de Tarjeta: ", ForegroundColor = Color.Black, FontAttributes = FontAttributes.Bold });
-            fs.Spans.Add(new Span { Text = NumTarjeta + Environment.NewLine, ForegroundColor = Color.Black });
+            fs.Spans.Add(new Span { Text = "XXXX-XXXX-XXXX-" + NumTarjeta.Substring(21,4) + Environment.NewLine, ForegroundColor = Color.Black });
 			fs.Spans.Add(new Span { Text = "Fecha Vencimiento: ", ForegroundColor = Color.Black, FontAttributes = FontAttributes.Bold });
             fs.Spans.Add(new Span { Text = Mes + "/" + Anio + Environment.NewLine, ForegroundColor = Color.Black });
-			fs.Spans.Add(new Span { Text = "Código Seguridad: ", ForegroundColor = Color.Black, FontAttributes = FontAttributes.Bold });
-            fs.Spans.Add(new Span { Text = CodigoSeg + Environment.NewLine, ForegroundColor = Color.Black });
+			//fs.Spans.Add(new Span { Text = "Código Seguridad: ", ForegroundColor = Color.Black, FontAttributes = FontAttributes.Bold });
+            //fs.Spans.Add(new Span { Text = CodigoSeg + Environment.NewLine, ForegroundColor = Color.Black });
 			
 			return fs;
 		}

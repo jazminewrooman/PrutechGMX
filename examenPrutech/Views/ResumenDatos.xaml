@@ -6,25 +6,26 @@
         <ToolbarItem Name="Menu1" Command="{Binding EmisionCommand}" Icon="shopping.png" Order="Primary" Priority="0"/> 
     </ContentPage.ToolbarItems>
 	<ContentPage.Content>
-        <ScrollView>
-            <StackLayout Padding="10,20">
-                <ListView RowHeight="60" x:Name="LstResumenDatos" ItemsSource="{Binding ListaDatos}" SelectedItem="{Binding objItemSelected, Mode=TwoWay}">
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <ViewCell>
-                                <Grid Padding="10,20,10,20">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*"/>
-                                        <ColumnDefinition Width="32"/>
-                                    </Grid.ColumnDefinitions>
-                                    <Label Grid.Column="0" FontSize="Medium" Text="{Binding opc}"/>
-                                    <Image Grid.Column="1" Source="next"/>
-                                </Grid>
-                            </ViewCell>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
+        <StackLayout>
+            <StackLayout>
+                <Button Text="Ver Cotización" Command="{Binding VerCotizaCommand}" Style="{StaticResource botonVerde}"/>
             </StackLayout>
-        </ScrollView>
+            <ListView RowHeight="60" x:Name="LstResumenDatos" ItemsSource="{Binding ListaDatos}" SelectedItem="{Binding objItemSelected, Mode=TwoWay}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Grid Padding="10,20,10,20">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="32"/>
+                                </Grid.ColumnDefinitions>
+                                <Label Grid.Column="0" FontSize="Medium" Text="{Binding opc}"/>
+                                <Image Grid.Column="1" Source="next"/>
+                            </Grid>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackLayout>
     </ContentPage.Content>
 </ContentPage>

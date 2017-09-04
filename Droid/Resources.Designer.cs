@@ -154,5 +154,17 @@ namespace GMX {
                 return ResourceManager.GetString("Imprima", resourceCulture);
             }
         }
+        
+        internal static string AceptamosTodas {
+            get {
+                return ResourceManager.GetString("AceptamosTodas", resourceCulture);
+            }
+        }
+        
+        internal static string BbvBmxNo {
+            get {
+                return ResourceManager.GetString("BbvBmxNo", resourceCulture);
+            }
+        }
     }
 }

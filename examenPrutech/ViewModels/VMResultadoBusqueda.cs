@@ -40,15 +40,15 @@ namespace GMX
                 handler(this, e);
         }
 
-        private resultado _ItemSelected;
-        public resultado objItemSelected
+        private polizaemitida _ItemSelected;
+        public polizaemitida objItemSelected
         {
             get { return _ItemSelected; }
             set
             {
                 if (_ItemSelected != value)
                 {
-                    DetalleBusqueda(value, value.id);
+                    DetalleBusqueda(value);
                     _ItemSelected = null;
                     OnPropertyChanged("objItemSelected");
 
@@ -67,14 +67,14 @@ namespace GMX
                 ws.Timeout = 2000;
                 string jsonpolizas = ws.get_catalogos("GetEmisionMedicoByIdAgenteAndEmisionALL", $"@Emision_Low='{fini}',@Emision_Hgh='{ffin}'");
                 datospolizaemitida lst = JsonConvert.DeserializeObject<datospolizaemitida>(jsonpolizas);
-                ListaDatos = lst.Table.Select(x => new resultado { Nombre = x.Nombre_Cliente, Poliza = x.Poliza, Emision = x.Emision, PrimaNeta = x.PrimaNeta, Derechos = x.Derechos, Iva = x.Iva, PrimaTotal = x.PrimaTotal}).ToList();
+                ListaDatos = lst.Table.ToList(); //.Select(x => new resultado { Nombre = x.Nombre_Cliente, Poliza = x.Poliza, Emision = x.Emision, PrimaNeta = x.PrimaNeta, Derechos = x.Derechos, Iva = x.Iva, PrimaTotal = x.PrimaTotal, polizasante = (!String.IsNullOrEmpty(x.PolizasAnt) ? true : false) }).ToList();
             }
             catch { }
             Ocupado = false;
         }
 
-        List<resultado> listadatos;
-        public List<resultado> ListaDatos
+        List<polizaemitida> listadatos;
+        public List<polizaemitida> ListaDatos
         {
             get { return listadatos; }
             set
@@ -88,9 +88,9 @@ namespace GMX
             }
         }
 
-        public async void DetalleBusqueda(resultado lst, int id)
+        public async void DetalleBusqueda(polizaemitida lst)
         {
-            await nav.PushAsync(new DetallePolizas(lst, id));
+            await nav.PushAsync(new DetallePolizas(lst));
         }
 
     }
@@ -104,6 +104,7 @@ namespace GMX
         public double Derechos { get; set; }
 		public double Iva { get; set; }
 		public double PrimaTotal { get; set; }
+        public bool polizasante { get; set; }
         public int id { get; set; }
         public bool sel { set; get; }
     }
