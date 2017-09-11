@@ -33,6 +33,10 @@ namespace GMX
         TipoDatos tipo;
         FormattedString fs;
 
+        public string ColoniaStr;
+        public string MunicipioStr;
+        public string EstadoStr;
+
         public VMDatosGenerales(IUserDialogs diag, INavigation n, VMCotizar vmcot, TipoDatos td, Modo modo) : base(diag)
         {
             nav = n;
@@ -99,6 +103,9 @@ namespace GMX
                     Municipio = int.Parse(lstmun.ElementAt(Municipio).Value.cod_municipio),
                     Ciudad = int.Parse(lstciud.ElementAt(Ciudad).Value.cod_ciudad),
                     Colonia = int.Parse(lstcols.ElementAt(Colonia).Value.cod_colonia),
+                    EstadoStr = lstedos.ElementAt(Estado).Value.txt_desc,
+                    MunicipioStr = lstmun.ElementAt(Municipio).Value.txt_desc,
+                    ColoniaStr = lstcols.ElementAt(Colonia).Value.txt_desc,
                     Correo = Correo,
                     Persona = Persona,
                 };

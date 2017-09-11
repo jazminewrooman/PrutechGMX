@@ -402,10 +402,534 @@ namespace GMX.ViewModels
 				CSSFont = "p { font-family: Arial; font-size: 10px; text-align: justify; }"
 			});
 		}
-        #endregion Tradicional
+		#endregion Tradicional
 
 
-        #region Angeles
+		#region Angeles
+		public static void SlipAngeles(string numpoliza, string nombrecliente, string desc, string esp, string cedprof, string cedesp, string diplo, decimal sumaa)
+		{
+            string amount = String.Format("{0:C} M.N.", sumaa);
+
+			docPDF = new DocumentPDF();
+			Sections = new List<Section>();
+
+            string Header = "<center><table><tr><td><br/><h2>ESPECIFICACIÓN QUE SE ADHIERE Y FORMA PARTE INTEGRANTE DE LA PÓLIZA</h2><h2>" + numpoliza + "</h2><br/><br/></td></tr></table></center><br/><br/>";
+			docPDF.PVLID4CondGrales = "PVLM3D";
+			docPDF.StaticText = Header;
+			docPDF.StaticCSS = "h2{ font-family: 'Segoe UI'; font-size: small; text-align: center; color: #9c9c9c; } h3{ font-family: 'Segoe UI'; font-size: xx-small; text-align: center; color: #9c9c9c; } table{border: 0px solid #d0d0d0;  margin: auto; width:100 %; }";
+
+			docPDF.StaticXPosition = 110; // Izq/Der
+			docPDF.StaticYPosition = 700; // Arriba/abajo
+
+			//Pie de Pagina
+			docPDF.PageFoot = "PVL – GMX SEGUROS";
+			docPDF.PageFootx = 150;
+
+			//Pie de Pagina Numeros
+			docPDF.PageNum = true;
+			docPDF.mTop = 140;
+			docPDF.mBottom = 70;
+			docPDF.mRight = 58;
+			docPDF.mLeft = 58;
+
+			Sections.Add(new Section
+			{
+				Text = "<table cellpadding='5' class='ctable'>" +
+					   "<tr class='ctr'> " +
+						   "<td class='ctd' style='width: 20%;'><p><b>Asegurado:</b></p></td> " +
+                    "<td class='ctd' style='width: 60%;'><p>" + nombrecliente + "</p></td>" +
+					   "</tr>" +
+					   "<tr class='ctr'> " +
+						   "<td class='ctd' style='width: 20%;'><p><b>Especificación:</b></p></td> " +
+                    "<td class='ctd' style='width: 60%;'><p>" + desc + "</p></td>" +
+					   "</tr>" +
+					   "<tr class='ctr'> " +
+						   "<td class='ctd' style='width: 20%;'><p><b>Especialidad y/o Subespecialidad:</b></p></td> " +
+                    "<td class='ctd' style='width: 60%;'><p>" + esp + "</p></td>" +
+					   "</tr>" +
+					   "<tr class='ctr'> " +
+						   "<td class='ctd' style='width: 20%;'><p><b>Cédula profesional:</b></p></td> " +
+                    "<td class='ctd' style='width: 60%;'><p>" + cedprof + "</p></td>" +
+					   "</tr>" +
+					   "<tr class='ctr'> " +
+						   "<td class='ctd' style='width: 20%;'><p><b>Cédula de especialidad:</b></p></td> " +
+                    "<td class='ctd' style='width: 60%;'><p>" + cedesp + "</p></td>" +
+					   "</tr>" +
+					   "<tr class='ctr'> " +
+						   "<td class='ctd' style='width: 20%;'><p><b>Diplomados u otros estudios:</b></p></td> " +
+                    "<td class='ctd' style='width: 60%;'><p>" + diplo + "</p></td>" +
+					   "</tr>" +
+			  "</table>"
+	,
+				CSSFont = "table { font-family: Arial; font-size: 10px; }" +
+				".ctable{  border-style: solid; border-width: 1px; border-color: #C0C0C0;  width: 100%; border-collapse: collapse; }" +
+				".ctr{ border-style: solid;     border-width: 1px; border-color: #C0C0C0;  width: 100%; border-collapse: collapse; }" +
+			  ".ctd{ border-style: solid;       border-width: 1px; border-color: #C0C0C0;  width: 100%; border-collapse: collapse; }"
+
+			});
+
+			Sections.Add(new Section
+			{
+				Text = "<br/><table cellpadding='5' class='ctable'>" +
+								   "<tr class='ctr'>" +
+								   "<td class='ctd' style='width: 20%;'><p><b>Coberturas:</b></p></td> " +
+								   "<td class='ctd' style='width: 60%;'>" +
+								   "<p>" +
+										 "<ul style='list-style-type:Disc'> " +
+										 "<li><b>Responsabilidad Civil Profesional.</b></li>" +
+										 "<li><b>Responsabilidad Civil por el uso de objetos peligrosos (objetiva)</b></li>" +
+										 "<li><b>Suministros de medicamentos y materiales de curación</b></li>" +
+										 "<li><b>Responsabilidad Civil por sus inmuebles y Responsabilidad Civil por sus Actividades del consultorio(os) que ocupe para ejercer su profesión.</ b></li>" +
+										 "<li><b>Cobertura automáticamente extendida para la responsabilidad civil y para la responsabilidad civil y profesional de su personal médico como empleados, de acuerdo a las condiciones generales.</ b></li>" +
+										 "</ul>" +
+								   "</p>" +
+								   "</td>" +
+								   "</tr>" +
+								   "<tr class='ctr'>" +
+								   "<td class='ctd' style='width: 20%;'><p><b>Coberturas Especiales sin costo:</b></p></td> " +
+								   "<td class='ctd' style='width: 60%;'>" +
+								   "<p>" +
+								   "Para las siguientes coberturas, están aseguradas, dentro del marco de las condiciones de la póliza, la responsabilidad civil legal en que incurriere el Asegurado por daños a terceros, derivada de las siguientes actividades que enseguida se indican:" +
+								   "</p> <br/>" +
+								   "<p>" +
+								   "-Responsabilidad civil del arrendatario de consultorio." +
+								   "</p>" +
+								   "<p>" +
+								   "Está asegurada la responsabilidad civil legal por daños que, por incendio y rayo o explosión, se causen al inmueble o inmuebles que el Asegurado haya tomado, totalmente o en parte, en arrendamiento, para ser usado por consultorio, siempre que dichos daños le sean imputables." +
+								   "</p> <br/>" +
+								   "<p>" +
+								   "- Responsabilidad civil como condómino de consultorio." +
+								   "</p>" +
+								   "<p>Está asegurada además la responsabilidad civil legal del Asegurado por daños ocasionados a las áreas comunes del condómino en el cual tenga su consultorio; además por daños ocasionados a los condóminos (no incluye las áreas del Asegurado) a consecuencia de un derrame de agua accidental e imprevisto.</p><br/>" +
+								   "<p>Sin embargo, para la indemnización a pagar por GMX Seguros se descontará un porcentaje, equivalente a la cuota del Asegurado como propietario de dichas áreas comunes.</p><br/>" +
+								   "<p>" +
+								   "- Responsabilidad civil privada y familiar." +
+								   "</p>" +
+								   "<p>La Responsabilidad Civil Legal en que incurra el Asegurado por daños a terceros, derivada de las actividades privadas y familiares, en cualquiera de los siguientes supuestos:</p><br/>" +
+								   "<p>" +
+										"<ol style='list-style-type: lower-alpha; line-height: 130%;'>" +
+										"<li>Como jefe de familia.</li>" +
+										"<li>Como propietario de una o varias casas habitación, (incluye las habitadas en fines de semana y en vacaciones).</li>" +
+										"<li>Por daños ocasionados a consecuencia de incendio, o explosión del inmueble, edificio u hogar.</li>" +
+										"<li>Por daños a consecuencia de un derrame de agua accidental e imprevisto.</li>" +
+										"<li>Por práctica de deportes como aficionado.</li>" +
+										"<li>Por el uso de bicicletas, patines, embarcaciones de pedal o de remo y vehículos no motorizados.</li>" +
+										"<li>Como propietario de animales domésticos, de caza y Guardianes.</li>" +
+										"<li>Durante viajes de estudios, de vacaciones o de placer del Asegurado o algún dependiente económico dentro de la República Mexicana.</li>" +
+										"<li>Durante viajes de estudios, de vacaciones o de placer del Asegurado o algún dependiente económico, en el extranjero. </li>" +
+										"<li>Se cubre la responsabilidad que resulte ante los trabajadores domésticos por riesgo de trabajo, otorgándose las prestaciones marcadas en el Título IX de la Ley Federal del Trabajo, hasta por un límite de mil DSMGVDF por cada trabajador, máximo dos trabajadores. </li>" +
+										"<li>Responsabilidad civil como condómino, está asegurada además la responsabilidad civil legal del Asegurado por daños ocasionados a las áreas comunes del condómino en el cual tenga su consultorio; sin embargo, la indemnización a pagar por GMX Seguros se descontará un porcentaje, equivalente a la cuota del Asegurado como propietario de dichas áreas comunes." +
+										"</li>" +
+										"</ol></p> <br/><p>" +
+											"<ul style='list-style-type: disc; line-height: 130%;'>" +
+												"<li>El límite máximo de responsabilidad opera como límite único y combinado, en el agregado anual., incluso sí posee más de un domicilio.</li>" +
+												"<li>Límite de Responsabilidad Único y Máximo en el agregado anual incluyendo Gastos de Defensa Jurídica</li>" +
+											"</ul>" +
+									"</p>" +
+								   "</td>" +
+								   "</tr>" +
+
+								   "<tr class='ctr'>" +
+								   "<td class='ctd' style='width: 20%;'><p><b>Límite Máximo de Responsabilidad:</b></p></td> " +
+								   "<td class='ctd' style='width: 60%;'>" +
+								   "<p>" +
+								   "<ul style='list-style: disc; line-height: 130%;'>" +
+										"<li>   Límite de Responsabilidad Único y Máximo en el agregado anual incluyendo Gastos de Defensa Jurídica: " + amount + "</li>" +
+								   "</ul>" +
+								   "</p>" +
+								   "</td>" +
+								   "</tr>" +
+
+								   "<tr class='ctr'>" +
+								   "<td class='ctd' style='width: 20%;'><p><b>Sublímites:</b></p></td> " +
+								   "<td class='ctd' style='width: 60%;'>" +
+								   "<p><b>Responsabilidad Civil privada y familiar $ 100,000.00 M.N.</b></p><br/>" +
+								   "</td>" +
+
+								   "</tr>" +
+
+								   "<tr class='ctr'>" +
+								   "<td class='ctd' style='width: 20%;'><p><b>Deducibles:</b></p></td> " +
+								   "<td class='ctd' style='width: 60%;'>" +
+								   "<p><b>Responsabilidad Civil profesional</b></p><br/>" +
+								   "<p>-    Para daños a terceros en sus personas: Sin deducible.</p>" +
+								   "<p>-    Para daños a terceros en sus propiedades: Sin deducible</p>" +
+
+								   "<br/><p><b>Responsabilidad Civil privada y familiar</b></p><br/>" +
+								   "<p>-    Responsabilidad Civil en el extranjero: 10% del monto de cada reclamación, con mínimo " + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + " de $3,000.00 M.N.</p>" +
+								   "<p>-    Responsabilidad Civil en la República Mexicana: 10% del monto de cada reclamación, con mínimo de $2,000.00 M.N.</p>" +
+
+
+								   "<br/><p><b>Demás riesgos</b></p><br/>" +
+								   "<p>5% del monto de cada reclamación.</p>" +
+								   "</td>" +
+
+								   "</tr>" +
+
+								   "<tr class='ctr'>" +
+								   "<td class='ctd' style='width: 20%;'><p><b>Riesgo Asegurado:</b></p></td> " +
+								   "<td class='ctd' style='width: 60%;'>" +
+								   "<p style='text-align: justify;'>Seguro de responsabilidad civil y de responsabilidad civil profesional para profesiones médicas y sus profesiones auxiliares y técnicas: GMX Seguros se obliga a pagar la indemnización que el Asegurado deba a sus pacientes o a terceros dañados a consecuencia de uno o más hechos realizados sin dolo, ya sea por culpa negligente o imperita (acciones u omisiones), que ocasione en el ejercicio de las profesiones médicas o de las profesiones técnicas o auxiliares de la medicina o por el uso de cosas peligrosas.</p>" +
+								   "<br/><p style='text-align: justify;'>Actividad y seguro dentro de la República mexicana y conforme al Derecho mexicano.</p>" +
+								   "<br/><p style='text-align: justify;'>También queda incluida dentro de esta última la responsabilidad por el uso de mecanismos, instrumentos, aparatos o substancias peligrosas por sí mismos y que dan lugar a responsabilidad civil, derivados de su actividad e inmueble.</p>" +
+								   "<br/><p style='text-align: justify;'>Estos aparatos pueden ser todos los usados para fines del diagnóstico y de la terapéutica, en cuanto estén reconocidos por la ciencia médica, y causen un daño previsto en esta póliza a terceras personas con motivo de la prestación de servicios para la salud.</p>" +
+								   "<br/><p style='text-align: justify;'>No serán materia de cobertura las indemnizaciones adicionales a las que sea condenado el Asegurado por las agravantes con las cuales haya actuado para la realización del daño, incluso cuando dichas agravantes sean considerados como parte de una indemnización identificada bajo el rubro o el concepto de daño moral.</p>" +
+								   "<br/><p style='text-align: justify;'>Para la cobertura de Responsabilidad Civil los daños comprenden: lesiones corporales, enfermedades, muerte; así como el deterioro o destrucción de bienes de terceras personas. Los perjuicios que resulten y el daño moral sólo se cubren cuando sean consecuencia directa e inmediata de los citados daños, causados a sus pacientes o a terceros dañados.</p>" +
+								   "</td>" +
+								   "</tr>" +
+
+								   "<tr class='ctr'> " +
+										"<td class='ctd' style='width: 20%;'><p><b>Base de Indemnización:</b></p></td> " +
+										"<td class='ctd' style='width: 60%;'>" +
+											"<p>Conforme a lo dispuesto en el Art. 145 bis de la ley sobre el Contrato de Seguro, el presente seguro cubre la indemnización que el Asegurado deba a un tercero, conforme a las condiciones pactadas en el presente contrato, por hechos ocurridos durante la vigencia de la póliza, siempre que la reclamación se formule por primera vez y por escrito al Asegurado o a GMX Seguros, en el curso de la vigencia de esta póliza o dentro del siguiente año a su terminación.</p>" +
+										"</td>" +
+								   "</tr>" +
+
+								   "<tr class='ctr'>" +
+								   "<td class='ctd' style='width: 20%;'><p><b>Funciones del seguro:</b></p></td> " +
+								   "<td class='ctd' style='width: 60%;'>" +
+									"<ul style='list-style-type: square;  line-height: 130%;'>" +
+										"<li>Función indemnizatoria, que deba el asegurado a un paciente derivado de una negligencia, impericia o el uso de sustancias, aparatos u objetos que por su propia naturaleza causen un daño al paciente, así como el daño moral, siempre y cuando sea a consecuencia directa e inmediata del daño causado.</li>" +
+										"<li>Función de análisis y defensa legal, reclamaciones judiciales y extrajudiciales, hechas al asegurado directamente o por medio de autoridades Administrativas (CONAMED, OIC, Derechos Humanos, Etc.), Juzgados Civiles (Materia Civil), Ministerios Públicos y Juzgados de lo Penal, local o federal (Materia Penal).</li>" +
+									"</ul>" +
+								   //"</p>" +
+								   "</td>" +
+								   "</tr>" +
+
+								   "<tr class='ctr'>" +
+								   "<td class='ctd' style='width: 20%;'><p><b>Exclusiones:</b></p></td> " +
+								   "<td class='ctd' style='width: 60%;'>" +
+								   "<br/><p>" +
+									"<ul style='list-style-type: square;  line-height: 130%;'>" +
+										"<li>Acciones dolosas de parte del asegurado</li>" +
+										"<li>Garantía de calidad del servicio en cuanto a su cumplimiento en tiempo y forma</li>" +
+										"<li>Incumplimiento de contratos</li>" +
+										"<li>Multas, daños punitivos o ejemplares y/o venganza</li>" +
+										"<li>Responsabilidad por la fabricación de productos farmacéuticos y transgénicos además la participación en estudios farmacológicos o de nuevos recursos.</li>" +
+										"<li>R.C. Patronal</li>" +
+										"<li>R.C. Estacionamiento</li>" +
+									"</ul>" +
+								   "</p>" +
+								   "</td>" +
+								   "</tr>" +
+
+								   "<tr class='ctr'>" +
+								   "<td class='ctd' style='width: 20%;'><p><b>Jurisdicción:</b></p></td> " +
+								   "<td class='ctd' style='width: 60%;'>" +
+									"<p>" +
+										"La responsabilidad civil materia del seguro se determina conforme a la legislación vigente en los Estados Unidos Mexicanos." +
+								   "</p>" +
+								   "</td>" +
+								   "</tr>" +
+
+
+							  "</table>",
+				CSSFont = "table { font-family: Arial; font-size: 10px; }" +
+							".ctable{  border-style: solid; border-width: 1px; border-color: #C0C0C0;  width: 100%; border-collapse: collapse; }" +
+							".ctr{ border-style: solid;     border-width: 1px; border-color: #C0C0C0;  width: 100%; border-collapse: collapse; }" +
+						  ".ctd{ border-style: solid;       border-width: 1px; border-color: #C0C0C0;  width: 100%; border-collapse: collapse; }"
+			});
+			Sections.Add(new Section
+			{
+				Text = "<br/><p><b>“Condiciones Especiales:</b></p><br/>" +
+			"<p>-Médico Sustituto</p><br/>" +
+			"<p>Se especifica que en referencia a la cobertura de sustitución provisional mencionado  en el Condicionado General de la presente póliza en el Capítulo III, clausula única de Responsabilidad Civil Profesional, punto 4, inciso b,  se especifica lo siguiente:</p><br/>" +
+			"<p>b) El presente seguro se amplía a cubrir la responsabilidad cuando al Asegurado, por ausencias temporales encargue a un médico sustituto, de su misma especialidad, la atención de sus pacientes.</p><br/>" +
+			"<p>Dicha condición aplicará siempre y cuando la ausencia de dicho asegurado se origine por su participación en congresos, vacaciones o motivos de fuerza mayor y el paciente tenga el pleno conocimiento y de su consentimiento de ser atendido por el médico sustituto; no será materia de cobertura , en caso de que por cualquier circunstancia, se tome la determinación de realizar algún procedimiento quirúrgico  que no cuente con los puntos mencionados anteriormente, en estos casos la compañía aseguradora  no tendrá ninguna responsabilidad, ni hará frente a la  reclamación derivada de dicha circunstancia.”</p><br/>",
+				CSSFont = "p { font-family: Arial; font-size: 10px; text-align: justify; }"
+			});
+		}
+
+		public static void SlipAngelesReov(string numpoliza, string nombrecliente, string desc, string esp, string cedprof, string cedesp, string diplo, decimal sumaa, string fecretro, string pol1, string pol2, string pol3)
+		{
+			string amount = String.Format("{0:C} M.N.", sumaa);
+			docPDF = new DocumentPDF();
+			Sections = new List<Section>();
+
+            string Header = "<center><table><tr><td><br/><h2>ESPECIFICACIÓN QUE SE ADHIERE Y FORMA PARTE INTEGRANTE DE LA PÓLIZA</h2><h2>" + numpoliza + "</h2><br/><br/></td></tr></table></center><br/><br/>";
+            docPDF.PVLID4CondGrales = "PVLM3D";
+			docPDF.StaticText = Header;
+			docPDF.StaticCSS = "h2{ font-family: 'Segoe UI'; font-size: small; text-align: center; color: #9c9c9c; } h3{ font-family: 'Segoe UI'; font-size: xx-small; text-align: center; color: #9c9c9c; } table{border: 0px solid #d0d0d0;  margin: auto; width:100 %; }";
+
+			docPDF.StaticXPosition = 110; // Izq/Der
+			docPDF.StaticYPosition = 700; // Arriba/abajo
+
+			//Pie de Pagina
+			docPDF.PageFoot = "PVL – GMX SEGUROS";
+			docPDF.PageFootx = 150;
+
+			//Pie de Pagina Numeros
+			docPDF.PageNum = true;
+			docPDF.mTop = 140;
+			docPDF.mBottom = 70;
+			docPDF.mRight = 58;
+			docPDF.mLeft = 58;
+
+			List<string> tblPolAnteriores = new List<string>();
+
+			if (!String.IsNullOrEmpty(pol1))
+				tblPolAnteriores.Add("<tr class='ctr'><td class='ctd' style='width: 20%;'><p><b>No.de póliza 1: </b></p></td><td class='ctd' style='width: 60%;'><p>" + pol1 + "</p></td></tr>");
+			if (!String.IsNullOrEmpty(pol2))
+				tblPolAnteriores.Add("<tr class='ctr'><td class='ctd' style='width: 20%;'><p><b>No.de póliza 2: </b></p></td><td class='ctd' style='width: 60%;'><p>" + pol2 + "</p></td></tr>");
+			if (!String.IsNullOrEmpty(pol3))
+				tblPolAnteriores.Add("<tr class='ctr'><td class='ctd' style='width: 20%;'><p><b>No.de póliza 3: </b></p></td><td class='ctd' style='width: 60%;'><p>" + pol3 + "</p></td></tr>");
+
+			Sections.Add(new Section
+			{
+				Text = "<table cellpadding='5' class='ctable'>" +
+					   "<tr class='ctr'> " +
+						   "<td class='ctd' style='width: 20%;'><p><b>Asegurado:</b></p></td> " +
+                    "<td class='ctd' style='width: 60%;'><p>" + nombrecliente + "</p></td>" +
+					   "</tr>" +
+					   "<tr class='ctr'> " +
+						   "<td class='ctd' style='width: 20%;'><p><b>Especificación:</b></p></td> " +
+                    "<td class='ctd' style='width: 60%;'><p>" + desc + "</p></td>" +
+					   "</tr>" +
+					   "<tr class='ctr'> " +
+						   "<td class='ctd' style='width: 20%;'><p><b>Especialidad y/o Subespecialidad:</b></p></td> " +
+                    "<td class='ctd' style='width: 60%;'><p>" + esp + "</p></td>" +
+					   "</tr>" +
+					   "<tr class='ctr'> " +
+						   "<td class='ctd' style='width: 20%;'><p><b>Cédula profesional:</b></p></td> " +
+                    "<td class='ctd' style='width: 60%;'><p>" + cedprof + "</p></td>" +
+					   "</tr>" +
+					   "<tr class='ctr'> " +
+						   "<td class='ctd' style='width: 20%;'><p><b>Cédula de especialidad:</b></p></td> " +
+                    "<td class='ctd' style='width: 60%;'><p>" + cedesp + "</p></td>" +
+					   "</tr>" +
+					   "<tr class='ctr'> " +
+						   "<td class='ctd' style='width: 20%;'><p><b>Diplomados u otros estudios:</b></p></td> " +
+                    "<td class='ctd' style='width: 60%;'><p>" + diplo + "</p></td>" +
+					   "</tr>" +
+					   "<tr class='ctr'> " +
+						   "<td class='ctd' style='width: 20%;'><p><b>Fecha Convencional</b></p></td> " +
+                    "<td class='ctd' style='width: 60%;'><p>" + fecretro + "</p></td>" +
+					   "</tr>"
+					   +
+			  "</table>"
+			,
+				CSSFont = "table { font-family: Arial; font-size: 10px; }" +
+				".ctable{  border-style: solid; border-width: 1px; border-color: #C0C0C0;  width: 100%; border-collapse: collapse; }" +
+				".ctr{ border-style: solid;     border-width: 1px; border-color: #C0C0C0;  width: 100%; border-collapse: collapse; }" +
+			  ".ctd{ border-style: solid;       border-width: 1px; border-color: #C0C0C0;  width: 100%; border-collapse: collapse; }"
+
+			});
+			Sections.Add(new Section
+			{
+				Text = "<br/><p><b>Pólizas anteriores:</b></p>" +
+				"<table cellpadding='5' class='ctable'>" +
+					   string.Join("", tblPolAnteriores.ToArray())
+					   +
+			  "</table>"
+			,
+				CSSFont = "table { font-family: Arial; font-size: 10px; }" +
+				".ctable{  border-style: solid; border-width: 1px; border-color: #C0C0C0;  width: 100%; border-collapse: collapse; }" +
+				".ctr{ border-style: solid;     border-width: 1px; border-color: #C0C0C0;  width: 100%; border-collapse: collapse; }" +
+			  ".ctd{ border-style: solid;       border-width: 1px; border-color: #C0C0C0;  width: 100%; border-collapse: collapse; }" +
+			  "p { font-family: Arial; font-size: 10px; text-align: justify; }"
+
+			});
+			Sections.Add(new Section
+			{
+				Text = "<br/><table cellpadding='5' class='ctable'>" +
+								   "<tr class='ctr'>" +
+								   "<td class='ctd' style='width: 20%;'><p><b>Coberturas:</b></p></td> " +
+								   "<td class='ctd' style='width: 60%;'>" +
+								   "<p>" +
+										 "<ul style='list-style-type:Disc'> " +
+										 "<li><b>Responsabilidad Civil Profesional.</b></li>" +
+										 "<li><b>Responsabilidad Civil por el uso de objetos peligrosos (objetiva)</b></li>" +
+										 "<li><b>Suministros de medicamentos y materiales de curación</b></li>" +
+										 "<li><b>Responsabilidad Civil por sus inmuebles y Responsabilidad Civil por sus Actividades del consultorio(os) que ocupe para ejercer su profesión.</ b></li>" +
+										 "<li><b>Cobertura automáticamente extendida para la responsabilidad civil y para la responsabilidad civil y profesional de su personal médico como empleados, de acuerdo a las condiciones generales.</ b></li>" +
+										 "</ul>" +
+								   "</p>" +
+								   "</td>" +
+								   "</tr>" +
+								   "<tr class='ctr'>" +
+								   "<td class='ctd' style='width: 20%;'><p><b>Coberturas Especiales sin costo:</b></p></td> " +
+								   "<td class='ctd' style='width: 60%;'>" +
+								   "<p>" +
+								   "Para las siguientes coberturas, están aseguradas, dentro del marco de las condiciones de la póliza, la responsabilidad civil legal en que incurriere el Asegurado por daños a terceros, derivada de las siguientes actividades que enseguida se indican:" +
+								   "</p> <br/>" +
+								   "<p>" +
+								   "-Responsabilidad civil del arrendatario de consultorio." +
+								   "</p>" +
+								   "<p>" +
+								   "Está asegurada la responsabilidad civil legal por daños que, por incendio y rayo o explosión, se causen al inmueble o inmuebles que el Asegurado haya tomado, totalmente o en parte, en arrendamiento, para ser usado por consultorio, siempre que dichos daños le sean imputables." +
+								   "</p> <br/>" +
+								   "<p>" +
+								   "- Responsabilidad civil como condómino de consultorio." +
+								   "</p>" +
+								   "<p>Está asegurada además la responsabilidad civil legal del Asegurado por daños ocasionados a las áreas comunes del condómino en el cual tenga su consultorio; además por daños ocasionados a los condóminos (no incluye las áreas del Asegurado) a consecuencia de un derrame de agua accidental e imprevisto.</p><br/>" +
+								   "<p>Sin embargo, para la indemnización a pagar por GMX Seguros se descontará un porcentaje, equivalente a la cuota del Asegurado como propietario de dichas áreas comunes.</p><br/>" +
+								   "<p>" +
+								   "- Responsabilidad civil privada y familiar." +
+								   "</p>" +
+								   "<p>La Responsabilidad Civil Legal en que incurra el Asegurado por daños a terceros, derivada de las actividades privadas y familiares, en cualquiera de los siguientes supuestos:</p><br/>" +
+								   "<p>" +
+										"<ol style='list-style-type: lower-alpha; line-height: 130%;'>" +
+										"<li>Como jefe de familia.</li>" +
+										"<li>Como propietario de una o varias casas habitación, (incluye las habitadas en fines de semana y en vacaciones).</li>" +
+										"<li>Por daños ocasionados a consecuencia de incendio, o explosión del inmueble, edificio u hogar.</li>" +
+										"<li>Por daños a consecuencia de un derrame de agua accidental e imprevisto.</li>" +
+										"<li>Por práctica de deportes como aficionado.</li>" +
+										"<li>Por el uso de bicicletas, patines, embarcaciones de pedal o de remo y vehículos no motorizados.</li>" +
+										"<li>Como propietario de animales domésticos, de caza y Guardianes.</li>" +
+										"<li>Durante viajes de estudios, de vacaciones o de placer del Asegurado o algún dependiente económico dentro de la República Mexicana.</li>" +
+										"<li>Durante viajes de estudios, de vacaciones o de placer del Asegurado o algún dependiente económico, en el extranjero. </li>" +
+										"<li>Se cubre la responsabilidad que resulte ante los trabajadores domésticos por riesgo de trabajo, otorgándose las prestaciones marcadas en el Título IX de la Ley Federal del Trabajo, hasta por un límite de mil DSMGVDF por cada trabajador, máximo dos trabajadores. </li>" +
+										"<li>Responsabilidad civil como condómino, está asegurada además la responsabilidad civil legal del Asegurado por daños ocasionados a las áreas comunes del condómino en el cual tenga su consultorio; sin embargo, la indemnización a pagar por GMX Seguros se descontará un porcentaje, equivalente a la cuota del Asegurado como propietario de dichas áreas comunes." +
+										"</li>" +
+										"</ol></p> <br/><p>" +
+											"<ul style='list-style-type: disc; line-height: 130%;'>" +
+												"<li>El límite máximo de responsabilidad opera como límite único y combinado, en el agregado anual., incluso sí posee más de un domicilio.</li>" +
+												"<li>Límite de Responsabilidad Único y Máximo en el agregado anual incluyendo Gastos de Defensa Jurídica</li>" +
+											"</ul>" +
+									"</p>" +
+								   "</td>" +
+								   "</tr>" +
+
+								   "<tr class='ctr'>" +
+								   "<td class='ctd' style='width: 20%;'><p><b>Límite Máximo de Responsabilidad:</b></p></td> " +
+								   "<td class='ctd' style='width: 60%;'>" +
+								   "<p>" +
+								   "<ul style='list-style: disc; line-height: 130%;'>" +
+										"<li>   Límite de Responsabilidad Único y Máximo en el agregado anual incluyendo Gastos de Defensa Jurídica: " + amount + "</li>" +
+								   "</ul>" +
+								   "</p>" +
+								   "</td>" +
+								   "</tr>" +
+
+								   "<tr class='ctr'>" +
+								   "<td class='ctd' style='width: 20%;'><p><b>Sublímites:</b></p></td> " +
+								   "<td class='ctd' style='width: 60%;'>" +
+								   "<p><b>Responsabilidad Civil privada y familiar $ 100,000.00 M.N.</b></p><br/>" +
+								   "</td>" +
+
+								   "</tr>" +
+
+								   "<tr class='ctr'>" +
+								   "<td class='ctd' style='width: 20%;'><p><b>Deducibles:</b></p></td> " +
+								   "<td class='ctd' style='width: 60%;'>" +
+								   "<p><b>Responsabilidad Civil profesional</b></p><br/>" +
+								   "<p>-    Para daños a terceros en sus personas: Sin deducible.</p>" +
+								   "<p>-    Para daños a terceros en sus propiedades: Sin deducible</p>" +
+
+								   "<br/><p><b>Responsabilidad Civil privada y familiar</b></p><br/>" +
+								   "<p>-    Responsabilidad Civil en el extranjero: 10% del monto de cada reclamación, con mínimo " + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + " de $3,000.00 M.N.</p>" +
+								   "<p>-    Responsabilidad Civil en la República Mexicana: 10% del monto de cada reclamación, con mínimo de $2,000.00 M.N.</p>" +
+
+
+								   "<br/><p><b>Demás riesgos</b></p><br/>" +
+								   "<p>5% del monto de cada reclamación.</p>" +
+								   "</td>" +
+
+								   "</tr>" +
+
+								   "<tr class='ctr'>" +
+								   "<td class='ctd' style='width: 20%;'><p><b>Riesgo Asegurado:</b></p></td> " +
+								   "<td class='ctd' style='width: 60%;'>" +
+								   "<p style='text-align: justify;'>Seguro de responsabilidad civil y de responsabilidad civil profesional para profesiones médicas y sus profesiones auxiliares y técnicas: GMX Seguros se obliga a pagar la indemnización que el Asegurado deba a sus pacientes o a terceros dañados a consecuencia de uno o más hechos realizados sin dolo, ya sea por culpa negligente o imperita (acciones u omisiones), que ocasione en el ejercicio de las profesiones médicas o de las profesiones técnicas o auxiliares de la medicina o por el uso de cosas peligrosas.</p>" +
+								   "<br/><p style='text-align: justify;'>Actividad y seguro dentro de la República mexicana y conforme al Derecho mexicano.</p>" +
+								   "<br/><p style='text-align: justify;'>También queda incluida dentro de esta última la responsabilidad por el uso de mecanismos, instrumentos, aparatos o substancias peligrosas por sí mismos y que dan lugar a responsabilidad civil, derivados de su actividad e inmueble.</p>" +
+								   "<br/><p style='text-align: justify;'>Estos aparatos pueden ser todos los usados para fines del diagnóstico y de la terapéutica, en cuanto estén reconocidos por la ciencia médica, y causen un daño previsto en esta póliza a terceras personas con motivo de la prestación de servicios para la salud.</p>" +
+								   "<br/><p style='text-align: justify;'>No serán materia de cobertura las indemnizaciones adicionales a las que sea condenado el Asegurado por las agravantes con las cuales haya actuado para la realización del daño, incluso cuando dichas agravantes sean considerados como parte de una indemnización identificada bajo el rubro o el concepto de daño moral.</p>" +
+								   "<br/><p style='text-align: justify;'>Para la cobertura de Responsabilidad Civil los daños comprenden: lesiones corporales, enfermedades, muerte; así como el deterioro o destrucción de bienes de terceras personas. Los perjuicios que resulten y el daño moral sólo se cubren cuando sean consecuencia directa e inmediata de los citados daños, causados a sus pacientes o a terceros dañados.</p>" +
+								   "</td>" +
+								   "</tr>" +
+
+								   "<tr class='ctr'>" +
+								   "<td class='ctd' style='width: 20%;'><p><b>Base de Indemnización:</b></p></td> " +
+								   "<td class='ctd' style='width: 60%;'>" +
+								   "<p style='text-align: justify;'>Se aclara además que en este caso las disposiciones del Preámbulo y de la letra b) de la Cláusula 1ª del Capítulo I de la póliza (condiciones generales) se modifican para quedar como sigue:</p>" +
+								   "<br/><p style='text-align: justify;'>“Preámbulo:</p>" +
+								   "<br/><p style='text-align: justify;'>El presente contrato de seguro se celebra conforme a lo dispuesto en el inciso a) del Art. 145 bis de la Ley sobre el Contrato de Seguros, para cubrir la indemnización que el Asegurado deba a un tercero por hechos realizados desde la fecha convencional, siempre que la reclamación se formule por primera vez y por escrito al Asegurado o a GMX Seguros, en el curso de la vigencia de la presente póliza”</p>" +
+
+								   "<br/><p style='text-align: justify;'>Capítulo I, Cláusula 1ª:</p>" +
+								   "<br/><p style='text-align: justify;'>“b) Base de indemnización.</p>" +
+
+								   "<br/><p style='text-align: justify;'>El presente seguro cubre la indemnización que el Asegurado deba a un tercero, conforme a las condiciones pactadas en el presente contrato, por hechos realizados desde la fecha convencional, siempre que la reclamación se formule por primera vez y por escrito al Asegurado o a GMX Seguros, en el curso de la vigencia de la  presente póliza”</p>" +
+
+								   "<br/><p style='text-align: justify;'>Fecha convencional </p>" +
+
+								   "<br/><p style='text-align: justify;'>De acuerdo con lo previsto en el art. 145 bis de la Ley sobre el Contrato de Seguro, se otorga fecha convencional desde el inicio de vigencia de la primera póliza contratada con GMX Seguros, siempre que las renovaciones hayan sido una cadena ininterrumpida de seguros con GMX Seguros, ello sobre hechos no conocidos ni reclamados previamente al Asegurado o a GMX Seguros y siempre que la reclamación se formule por primera vez y por escrito al Asegurado o a GMX Seguros, durante la vigencia actual de la presente póliza.</p>" +
+								   "<br/><p style='text-align: justify;'>Se aclara que en caso de reclamación, aplicarán los límites y las condiciones que prevalecen en la póliza que corresponde al año del hecho generador que propicia la reclamación, por lo anterior, las obligaciones a cargo de GMX Seguros, se sujetarán al límite máximo  de responsabilidad y condiciones contratadas para la vigencia en que haya realizado el hecho generador del daño.</p>" +
+								   "</td>" +
+								   "</tr>" +
+
+
+								   "<tr class='ctr'>" +
+								   "<td class='ctd' style='width: 20%;'><p><b>Funciones del seguro:</b></p></td> " +
+								   "<td class='ctd' style='width: 60%;'>" +
+									"<ul style='list-style-type: square;  line-height: 130%;'>" +
+										"<li>Función indemnizatoria, que deba el asegurado a un paciente derivado de una negligencia, impericia o el uso de sustancias, aparatos u objetos que por su propia naturaleza causen un daño al paciente, así como el daño moral, siempre y cuando sea a consecuencia directa e inmediata del daño causado.</li>" +
+										"<li>Función de análisis y defensa legal, reclamaciones judiciales y extrajudiciales, hechas al asegurado directamente o por medio de autoridades Administrativas (CONAMED, OIC, Derechos Humanos, Etc.), Juzgados Civiles (Materia Civil), Ministerios Públicos y Juzgados de lo Penal, local o federal (Materia Penal).</li>" +
+									"</ul>" +
+								   //"</p>" +
+								   "</td>" +
+								   "</tr>" +
+
+								   "<tr class='ctr'>" +
+								   "<td class='ctd' style='width: 20%;'><p><b>Exclusiones:</b></p></td> " +
+								   "<td class='ctd' style='width: 60%;'>" +
+								   "<br/><p>" +
+									"<ul style='list-style-type: square;  line-height: 130%;'>" +
+										"<li>Acciones dolosas de parte del asegurado</li>" +
+										"<li>Garantía de calidad del servicio en cuanto a su cumplimiento en tiempo y forma</li>" +
+										"<li>Incumplimiento de contratos</li>" +
+										"<li>Multas, daños punitivos o ejemplares y/o venganza</li>" +
+										"<li>Responsabilidad por la fabricación de productos farmacéuticos y transgénicos además la participación en estudios farmacológicos o de nuevos recursos.</li>" +
+										"<li>R.C. Patronal</li>" +
+										"<li>R.C. Estacionamiento</li>" +
+									"</ul>" +
+								   "</p>" +
+								   "</td>" +
+								   "</tr>" +
+
+								   //"<tr class='ctr'>" +
+								   //"<td class='ctd' style='width: 20%;'><p><b>Condiciones especiales:</b></p></td> " +
+								   //"<td class='ctd' style='width: 60%;'>" +
+								   //"<p style='text-align: justify;'>Para las siguientes coberturas, están aseguradas, dentro del marco de las condiciones de la póliza, la responsabilidad civil legal en que incurriere el Asegurado por daños a terceros, derivada de las siguientes actividades que enseguida se indican:</p>" +
+								   //"<br/><p style='text-align: justify;'><b>Responsabilidad civil del arrendatario de consultorio.</b></p>" +
+								   //"<p style='text-align: justify;'>Está asegurada la responsabilidad civil legal por daños que, por incendio y rayo o explosión, se causen al inmueble o inmuebles que el Asegurado haya tomado, totalmente o en parte, en arrendamiento, para ser usado por consultorio, siempre que dichos daños le sean imputables.</p>" +
+								   //"<br/><p style='text-align: justify;'><b>Responsabilidad civil como condómino de consultorio.</b></p>" +
+								   //"<p style='text-align: justify;'>Está asegurada además la responsabilidad civil legal del Asegurado por daños ocasionados a las áreas comunes del condómino en el cual tenga su consultorio; además por daños ocasionados a los condóminos (no incluye las áreas del Asegurado) a consecuencia de un derrame de agua accidental e imprevisto.</p>" +
+
+								   //"<br/><p style='text-align: justify;'>Sin embargo, para la indemnización a pagar por GMX Seguros se descontará un porcentaje, equivalente a la cuota del Asegurado como propietario de dichas áreas comunes. </p>" +
+
+								   //"<br/><p style='text-align: justify;'><b>Responsabilidad civil privada y familiar.</b></p>" +
+								   //"<p style='text-align: justify;'>La Responsabilidad Civil Legal en que incurra el Asegurado por daños a terceros, derivada de las actividades privadas y familiares, en cualquiera de los siguientes supuestos:</p>" +
+
+								   //"</td>" +
+								   //"</tr>" +
+
+								   "<tr class='ctr'>" +
+								   "<td class='ctd' style='width: 20%;'><p><b>Territorialidad y Jurisdicción:</b></p></td> " +
+								   "<td class='ctd' style='width: 60%;'>" +
+									"<p>" +
+										"La responsabilidad civil materia del seguro se determina conforme a la legislación vigente en los Estados Unidos Mexicanos." +
+								   "</p>" +
+								   "</td>" +
+								   "</tr>" +
+
+
+							  "</table>",
+				CSSFont = "table { font-family: Arial; font-size: 10px; }" +
+							".ctable{  border-style: solid; border-width: 1px; border-color: #C0C0C0;  width: 100%; border-collapse: collapse; }" +
+							".ctr{ border-style: solid;     border-width: 1px; border-color: #C0C0C0;  width: 100%; border-collapse: collapse; }" +
+						  ".ctd{ border-style: solid;       border-width: 1px; border-color: #C0C0C0;  width: 100%; border-collapse: collapse; }"
+			});
+			Sections.Add(new Section
+			{
+				Text = "<br/><p><b>“Condiciones Especiales:</b></p><br/>" +
+			"<p>-Médico Sustituto</p><br/>" +
+			"<p>Se especifica que en referencia a la cobertura de sustitución provisional mencionado  en el Condicionado General de la presente póliza en el Capítulo III, clausula única de Responsabilidad Civil Profesional, punto 4, inciso b,  se especifica lo siguiente:</p><br/>" +
+			"<p>b) El presente seguro se amplía a cubrir la responsabilidad cuando al Asegurado, por ausencias temporales encargue a un médico sustituto, de su misma especialidad, la atención de sus pacientes.</p><br/>" +
+			"<p>Dicha condición aplicará siempre y cuando la ausencia de dicho asegurado se origine por su participación en congresos, vacaciones o motivos de fuerza mayor y el paciente tenga el pleno conocimiento y de su consentimiento de ser atendido por el médico sustituto; no será materia de cobertura , en caso de que por cualquier circunstancia, se tome la determinación de realizar algún procedimiento quirúrgico  que no cuente con los puntos mencionados anteriormente, en estos casos la compañía aseguradora  no tendrá ninguna responsabilidad, ni hará frente a la  reclamación derivada de dicha circunstancia.”</p><br/>",
+				CSSFont = "p { font-family: Arial; font-size: 10px; text-align: justify; }"
+			});
+		}
         #endregion Angeles
 
 

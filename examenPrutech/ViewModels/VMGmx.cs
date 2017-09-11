@@ -10,6 +10,19 @@ namespace GMX
     {
 
         public IUserDialogs Diag;
+        private string mmsgocupado;
+        public string MsgOcupado
+        {
+            get => (!String.IsNullOrEmpty(mmsgocupado) ? $"{mmsgocupado}..." : "");
+            set
+            {
+                if (mmsgocupado != value)
+                {
+                    mmsgocupado = value;
+                    OnPropertyChanged("MsgOcupado");
+                }
+            }
+        }
 
         private bool mocupado;
         public bool Ocupado
@@ -23,7 +36,7 @@ namespace GMX
                     {
                         Device.BeginInvokeOnMainThread( () =>
                         {
-                            Diag.ShowLoading("Estamos trabajando.\nPermítenos procesar tu información.", MaskType.Black);
+                            Diag.ShowLoading($"Estamos trabajando.{Environment.NewLine}Permítenos procesar tu información.{Environment.NewLine}{MsgOcupado}", MaskType.Black);
                             //Task.Delay(TimeSpan.FromMilliseconds(10000));
                         });
                     }

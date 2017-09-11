@@ -12,6 +12,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Rg.Plugins.Popup.Extensions;
 using GMXHelper;
+using System.Globalization;
 
 namespace GMX
 {
@@ -52,11 +53,10 @@ namespace GMX
                     {
                         if (vmcotizar.DatosBank != null && vmcotizar.DatosBank.TipoTarj != CreditCardValidator.CardIssuer.Unknown)
                             vmcotizar.MandarPagar();
-                        wsbd.Service wsbd = new GMX.wsbd.Service(config.Config["APIBD"]);
-                        //wsbd.insert_Emision();
 
-                        await EnviaConfirmacion();
-                        await EnviaAvisoVenta();
+                        var docs = await EnviaConfirmacion();
+                        await EnviaAvisoVenta(docs);
+                        vmcotizar.GuardarBD();
 
 						var conf = new Confirmacion(vmcotizar);
 						var MainP = new NavigationPage(conf)
@@ -82,22 +82,23 @@ namespace GMX
             });
 		}
 
-		private async Task EnviaAvisoVenta()
+        private async Task EnviaAvisoVenta(documentosgenerados docs)
 		{
 			try
 			{
+                MsgOcupado = "Enviando correo electronico";
 				Ocupado = true;
 				bindings b = new bindings();
-				b.IniciaWS(apidoc: config.Config["APIDocs"]);
-				var waterm = await b.ReturnDocument("Watermark.jpg", false);
+				//b.IniciaWS(apidoc: config.Config["APIDocs"]);
+				//var waterm = await b.ReturnDocument("Watermark.jpg", false);
 				
                 b.IniciaWS();
-                var caratula = await b.getPolicy(vmcotizar.PolizaGenerada.PolizaGenerada, "caratula");
+                //var caratula = await b.getPolicy(vmcotizar.PolizaGenerada.PolizaGenerada, "caratula");
 				var file_caratula = new FilePropertiesManager
 				{
-					stream = caratula.Result,
+                    stream = docs.caratula, //caratula.Result,
 					fileName = "Poliza.pdf",
-					length = caratula.Result.Length
+                    length = docs.caratula.Length //caratula.Result.Length
 				};
 				var incendio = await b.getPolicy(vmcotizar.PolizaGenerada.PolizaGenerada, "master_incendio");
 				var file_inc = new FilePropertiesManager
@@ -107,22 +108,28 @@ namespace GMX
 					length = incendio.Result.Length
 				};
 
-				if (vmcotizar.IdTipo == "1")//nueva
-					GMX.ViewModels.Emails.SlipTradicional(vmcotizar.PolizaGenerada.NumPoliza, vmcotizar.Adicional, $"{vmcotizar.DatosGrales.Nombre} {vmcotizar.DatosGrales.APaterno} {vmcotizar.DatosGrales.AMaterno}", vmcotizar.DatosProf.Descripcion, vmcotizar.DatosProf.Especialidad.ToString(), vmcotizar.DatosProf.CedulaProf, vmcotizar.DatosProf.CedulaEsp, vmcotizar.DatosProf.Diplomados, vmcotizar.SumaAseg);
-				if (vmcotizar.IdTipo == "2")//renovacion
-					GMX.ViewModels.Emails.SlipTradicionalRenov(vmcotizar.PolizaGenerada.NumPoliza, vmcotizar.Adicional, $"{vmcotizar.DatosGrales.Nombre} {vmcotizar.DatosGrales.APaterno} {vmcotizar.DatosGrales.AMaterno}", vmcotizar.DatosProf.Descripcion, vmcotizar.DatosProf.Especialidad.ToString(), vmcotizar.DatosProf.CedulaProf, vmcotizar.DatosProf.CedulaEsp, vmcotizar.DatosProf.Diplomados, vmcotizar.SumaAseg, $"{vmcotizar.Antecedentes.dia}/{vmcotizar.Antecedentes.mes}/{vmcotizar.Antecedentes.anno}", (vmcotizar.Antecedentes.poliza1 != null ? vmcotizar.Antecedentes.poliza1.poliza : String.Empty), (vmcotizar.Antecedentes.poliza2 != null ? vmcotizar.Antecedentes.poliza2.poliza : String.Empty), (vmcotizar.Antecedentes.poliza3 != null ? vmcotizar.Antecedentes.poliza3.poliza : String.Empty));
-				GMX.ViewModels.Emails.docPDF.Watermark = waterm.Result;
-				b.IniciaWS(api: config.Config["APIGMXIT"]);
-				var condpart = await b.GenerateDocument(GMX.ViewModels.Emails.Sections.ToArray(), GMX.ViewModels.Emails.docPDF);
-				var slip_condpart = new FilePropertiesManager { stream = condpart.Result, fileName = "CondicionesParticulares.pdf", length = condpart.Result.Length };
+                //if (vmcotizar.IdTipo == "1")//nueva
+                //	GMX.ViewModels.Emails.SlipTradicional(vmcotizar.PolizaGenerada.NumPoliza, vmcotizar.Adicional, $"{vmcotizar.DatosGrales.Nombre} {vmcotizar.DatosGrales.APaterno} {vmcotizar.DatosGrales.AMaterno}", vmcotizar.DatosProf.Descripcion, vmcotizar.DatosProf.Especialidad.ToString(), vmcotizar.DatosProf.CedulaProf, vmcotizar.DatosProf.CedulaEsp, vmcotizar.DatosProf.Diplomados, vmcotizar.SumaAseg);
+                //if (vmcotizar.IdTipo == "2")//renovacion
+                //	GMX.ViewModels.Emails.SlipTradicionalRenov(vmcotizar.PolizaGenerada.NumPoliza, vmcotizar.Adicional, $"{vmcotizar.DatosGrales.Nombre} {vmcotizar.DatosGrales.APaterno} {vmcotizar.DatosGrales.AMaterno}", vmcotizar.DatosProf.Descripcion, vmcotizar.DatosProf.Especialidad.ToString(), vmcotizar.DatosProf.CedulaProf, vmcotizar.DatosProf.CedulaEsp, vmcotizar.DatosProf.Diplomados, vmcotizar.SumaAseg, $"{vmcotizar.Antecedentes.dia}/{vmcotizar.Antecedentes.mes}/{vmcotizar.Antecedentes.anno}", (vmcotizar.Antecedentes.poliza1 != null ? vmcotizar.Antecedentes.poliza1.poliza : String.Empty), (vmcotizar.Antecedentes.poliza2 != null ? vmcotizar.Antecedentes.poliza2.poliza : String.Empty), (vmcotizar.Antecedentes.poliza3 != null ? vmcotizar.Antecedentes.poliza3.poliza : String.Empty));
+                //GMX.ViewModels.Emails.docPDF.Watermark = waterm.Result;
+                //b.IniciaWS(api: config.Config["APIGMXIT"]);
+                //var condpart = await b.GenerateDocument(GMX.ViewModels.Emails.Sections.ToArray(), GMX.ViewModels.Emails.docPDF);
+                var slip_condpart = new FilePropertiesManager
+                {
+                    stream = docs.condpart, //condpart.Result,
+                    fileName = "CondicionesParticulares.pdf",
+                    length = docs.condpart.Length //condpart.Result.Length
+                };
 
                 var res = await b.DistribuirDocumentacionAviso(vmcotizar.DatosGrales, vmcotizar.PolizaGenerada.NumPoliza, file_caratula, slip_condpart, new FilePropertiesManager[] { file_inc });
 
 				Ocupado = false;
-				if (res.Result)
+                MsgOcupado = "";
+				/*if (res.Result)
 					await diag.AlertAsync("Correo enviado con exito", "Aviso", "OK");
 				else
-					await diag.AlertAsync("El correo no pudo ser enviado", "Error", "OK");
+					await diag.AlertAsync("El correo no pudo ser enviado", "Error", "OK");*/
 			}
 			catch (Exception ex)
 			{
@@ -131,32 +138,34 @@ namespace GMX
 			}
 		}
 
-        private async Task EnviaConfirmacion()
+        private async Task<documentosgenerados> EnviaConfirmacion()
         {
+            documentosgenerados docs = new documentosgenerados();
             try
             {
+                MsgOcupado = "Generando documentación";
                 Ocupado = true;
                 bindings b = new bindings();
-				b.IniciaWS(apidoc: config.Config["APIDocs"]);
-				var waterm = await b.ReturnDocument("Watermark.jpg", false);
+                b.IniciaWS(apidoc: config.Config["APIDocs"]);
+                var waterm = await b.ReturnDocument("Watermark.jpg", false);
                 var condgen = await b.ReturnDocument("W_RCMedML_Ind_20.07.2016.2.pdf", false);
-				var file_condi_gral = new FilePropertiesManager
-				{
+                var file_condi_gral = new FilePropertiesManager
+                {
                     stream = condgen.Result,
-					fileName = "W_RCMedML_Ind_20.07.2016.2.pdf",
+                    fileName = "W_RCMedML_Ind_20.07.2016.2.pdf",
                     length = condgen.Result.Length
-				};
-				var folleto = await b.ReturnDocument("PLAN_LEGAL_MEDICOS.pdf", false);
-				var filefolleto = new FilePropertiesManager
-				{
+                };
+                var folleto = await b.ReturnDocument("PLAN_LEGAL_MEDICOS.pdf", false);
+                var filefolleto = new FilePropertiesManager
+                {
                     stream = folleto.Result,
-					fileName = "Legal Medico.pdf",
+                    fileName = "Legal Medico.pdf",
                     length = folleto.Result.Length
-				};
+                };
 
                 FilePropertiesManager file_caratula = null;
-				b.IniciaWS();
-                for (int i = 0; i < 5; i++)
+                b.IniciaWS();
+                for (int i = 0; i < 10; i++)
                 {
                     try
                     {
@@ -180,49 +189,86 @@ namespace GMX
                     }
                 }
 
-
-                FilePropertiesManager file_recibo = null;
+				FilePropertiesManager file_recibo = null;
                 //revisar el resultado de pago en banco y si fue aprovada ...
                 if (vmcotizar.DatosBank == null || vmcotizar.DatosBank.TipoTarj == CreditCardValidator.CardIssuer.Unknown)
                 {
-                    var recibo = await b.getPolicy(vmcotizar.PolizaGenerada.PolizaGenerada, "recibo");
-                    file_recibo = new FilePropertiesManager
+                    for (int i = 0; i < 10; i++)
                     {
-                        stream = recibo.Result,
-                        fileName = "Recibo.pdf",
-                        length = recibo.Result.Length
-                    };
+                        try
+                        {
+                            var recibo = await b.getPolicy(vmcotizar.PolizaGenerada.PolizaGenerada, "recibo");
+                            if (recibo == null)
+                                await Task.Delay(TimeSpan.FromSeconds(5));
+                            else
+                            {
+                                file_recibo = new FilePropertiesManager
+                                {
+                                    stream = recibo.Result,
+                                    fileName = "Recibo.pdf",
+                                    length = recibo.Result.Length
+                                };
+                                break;
+                            }
+                        }
+                        catch
+                        {
+                            await Task.Delay(TimeSpan.FromSeconds(5));
+                        }
+                    }
                 }
-                else
-                {
-                    //EmisionPago pago = new EmisionPago() { }
-                    //b.GenerateRecibo()
-                }
+				else
+				{
+					//EmisionPago pago = new EmisionPago() { }
+					//b.GenerateRecibo()
+				}
 
-                if (vmcotizar.IdTipo == "1")//nueva
-                    GMX.ViewModels.Emails.SlipTradicional(vmcotizar.PolizaGenerada.NumPoliza, vmcotizar.Adicional, $"{vmcotizar.DatosGrales.Nombre} {vmcotizar.DatosGrales.APaterno} {vmcotizar.DatosGrales.AMaterno}", vmcotizar.DatosProf.Descripcion, vmcotizar.DatosProf.Especialidad.ToString(), vmcotizar.DatosProf.CedulaProf, vmcotizar.DatosProf.CedulaEsp, vmcotizar.DatosProf.Diplomados, vmcotizar.SumaAseg);
-				if (vmcotizar.IdTipo == "2")//renovacion
-                    GMX.ViewModels.Emails.SlipTradicionalRenov(vmcotizar.PolizaGenerada.NumPoliza, vmcotizar.Adicional, $"{vmcotizar.DatosGrales.Nombre} {vmcotizar.DatosGrales.APaterno} {vmcotizar.DatosGrales.AMaterno}", vmcotizar.DatosProf.Descripcion, vmcotizar.DatosProf.Especialidad.ToString(), vmcotizar.DatosProf.CedulaProf, vmcotizar.DatosProf.CedulaEsp, vmcotizar.DatosProf.Diplomados, vmcotizar.SumaAseg, $"{vmcotizar.Antecedentes.dia}/{vmcotizar.Antecedentes.mes}/{vmcotizar.Antecedentes.anno}", (vmcotizar.Antecedentes.poliza1 != null ? vmcotizar.Antecedentes.poliza1.poliza : String.Empty), (vmcotizar.Antecedentes.poliza2 != null ? vmcotizar.Antecedentes.poliza2.poliza : String.Empty), (vmcotizar.Antecedentes.poliza3 != null ? vmcotizar.Antecedentes.poliza3.poliza : String.Empty));
+                decimal sumaasegdec = decimal.Parse(vmcotizar.SumaAseg, NumberStyles.AllowCurrencySymbol | NumberStyles.Number);
+                if (vmcotizar.IdPlan == "1") //tradicional
+                {
+                    if (vmcotizar.IdTipo == "1")//nueva
+                        GMX.ViewModels.Emails.SlipTradicional(vmcotizar.PolizaGenerada.NumPoliza, vmcotizar.Adicional, $"{vmcotizar.DatosGrales.Nombre} {vmcotizar.DatosGrales.APaterno} {vmcotizar.DatosGrales.AMaterno}", vmcotizar.DatosProf.Descripcion, vmcotizar.DatosProf.Especialidad.ToString(), vmcotizar.DatosProf.CedulaProf, vmcotizar.DatosProf.CedulaEsp, vmcotizar.DatosProf.Diplomados, vmcotizar.SumaAseg);
+                    if (vmcotizar.IdTipo == "2")//renovacion
+                        GMX.ViewModels.Emails.SlipTradicionalRenov(vmcotizar.PolizaGenerada.NumPoliza, vmcotizar.Adicional, $"{vmcotizar.DatosGrales.Nombre} {vmcotizar.DatosGrales.APaterno} {vmcotizar.DatosGrales.AMaterno}", vmcotizar.DatosProf.Descripcion, vmcotizar.DatosProf.Especialidad.ToString(), vmcotizar.DatosProf.CedulaProf, vmcotizar.DatosProf.CedulaEsp, vmcotizar.DatosProf.Diplomados, vmcotizar.SumaAseg, $"{vmcotizar.Antecedentes.dia}/{vmcotizar.Antecedentes.mes}/{vmcotizar.Antecedentes.anno}", (vmcotizar.Antecedentes.poliza1 != null ? vmcotizar.Antecedentes.poliza1.poliza : String.Empty), (vmcotizar.Antecedentes.poliza2 != null ? vmcotizar.Antecedentes.poliza2.poliza : String.Empty), (vmcotizar.Antecedentes.poliza3 != null ? vmcotizar.Antecedentes.poliza3.poliza : String.Empty));
+                }
+				if (vmcotizar.IdPlan == "2") //angeles
+				{
+					if (vmcotizar.IdTipo == "1")//nueva
+                        GMX.ViewModels.Emails.SlipAngeles(vmcotizar.PolizaGenerada.NumPoliza, $"{vmcotizar.DatosGrales.Nombre} {vmcotizar.DatosGrales.APaterno} {vmcotizar.DatosGrales.AMaterno}", vmcotizar.DatosProf.Descripcion, vmcotizar.DatosProf.Especialidad.ToString(), vmcotizar.DatosProf.CedulaProf, vmcotizar.DatosProf.CedulaEsp, vmcotizar.DatosProf.Diplomados, sumaasegdec);
+					if (vmcotizar.IdTipo == "2")//renovacion
+                        GMX.ViewModels.Emails.SlipAngelesReov(vmcotizar.PolizaGenerada.NumPoliza, $"{vmcotizar.DatosGrales.Nombre} {vmcotizar.DatosGrales.APaterno} {vmcotizar.DatosGrales.AMaterno}", vmcotizar.DatosProf.Descripcion, vmcotizar.DatosProf.Especialidad.ToString(), vmcotizar.DatosProf.CedulaProf, vmcotizar.DatosProf.CedulaEsp, vmcotizar.DatosProf.Diplomados, sumaasegdec, $"{vmcotizar.Antecedentes.dia}/{vmcotizar.Antecedentes.mes}/{vmcotizar.Antecedentes.anno}", (vmcotizar.Antecedentes.poliza1 != null ? vmcotizar.Antecedentes.poliza1.poliza : String.Empty), (vmcotizar.Antecedentes.poliza2 != null ? vmcotizar.Antecedentes.poliza2.poliza : String.Empty), (vmcotizar.Antecedentes.poliza3 != null ? vmcotizar.Antecedentes.poliza3.poliza : String.Empty));
+				}
 
 				GMX.ViewModels.Emails.docPDF.Watermark = waterm.Result;
-				b.IniciaWS(api: config.Config["APIGMXIT"]);
-				var condpart = await b.GenerateDocument(GMX.ViewModels.Emails.Sections.ToArray(), GMX.ViewModels.Emails.docPDF);
+                b.IniciaWS(api: config.Config["APIGMXIT"]);
+                var condpart = await b.GenerateDocument(GMX.ViewModels.Emails.Sections.ToArray(), GMX.ViewModels.Emails.docPDF);
                 var slip_condpart = new FilePropertiesManager { stream = condpart.Result, fileName = "CondicionesParticulares.pdf", length = condpart.Result.Length };
 
-                //var res = await b.DistribuirDocumentacionConfirmacion(vmcotizar.DatosGrales, vmcotizar.PolizaGenerada.PolizaGenerada, file_caratula, slip_condpart, file_recibo, file_condi_gral, new FilePropertiesManager[]{ filefolleto });
                 var res = await b.DistribuirDocumentacionConfirmacion(vmcotizar.DatosGrales, vmcotizar.PolizaGenerada.NumPoliza, file_caratula, slip_condpart, file_recibo, file_condi_gral, new FilePropertiesManager[] { filefolleto });
 
                 Ocupado = false;
-				if (res.Result)
+                MsgOcupado = "";
+                /*if (res.Result)
 					await diag.AlertAsync("Correo enviado con exito", "Aviso", "OK");
 				else
-					await diag.AlertAsync("El correo no pudo ser enviado", "Error", "OK"); 
+					await diag.AlertAsync("El correo no pudo ser enviado", "Error", "OK"); */
+                docs.caratula = file_caratula.stream;
+                docs.condpart = condpart.Result;
+                docs.watermark = waterm.Result;
             }
             catch(Exception ex)
             {
                 Ocupado = false;
                 await diag.AlertAsync("El correo no pudo ser enviado", "Error", "OK");
             }
+            return docs;
+        }
+
+        public class documentosgenerados
+        {
+            public byte[] caratula { get; set; }
+            public byte[] condpart { get; set; }
+            public byte[] watermark { get; set; }
         }
 
         public class SelectedOptionEventArgs : EventArgs

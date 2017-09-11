@@ -74,7 +74,7 @@ namespace GMX.Services
 				MaxBufferSize = 2147483647,
 				MaxReceivedMessageSize = 2147483647,
 			};
-			TimeSpan timeout = new TimeSpan(0, 0, 300);
+			TimeSpan timeout = new TimeSpan(0, 0, 600);
 			binding.SendTimeout = timeout;
 			binding.OpenTimeout = timeout;
 			binding.ReceiveTimeout = timeout;
@@ -189,7 +189,7 @@ namespace GMX.Services
 			Destinatario[] asegurado = new Destinatario[] { new Destinatario() { Nombre = $"{grales.Nombre} {grales.APaterno} {grales.AMaterno}", Mail = grales.Correo } };
             Destinatario[] suscrip = new Destinatario[] { new Destinatario() { Nombre = "Suscriptor", Mail = grales.Correo } }; //App.suscriptor.email } };
 			Destinatario[] nicho = new Destinatario[] { new Destinatario() { Nombre = "", Mail = config.Config["EmailNicho"] } };
-            Destinatario[] agente = new List<Destinatario>().ToArray();
+            Destinatario[] agente = new Destinatario[] { new Destinatario() { Nombre = "Agente", Mail = App.usr.Email } };
 
 			var tcs = CreateSource<DistribuirDocumentacionPolizaCompletedEventArgs>(null);
 			wsit.DistribuirDocumentacionPolizaCompleted += (sender, e) => TransferCompletion(tcs, e, () => e, null);

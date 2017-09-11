@@ -20,6 +20,9 @@ namespace GMX
 		public int Colonia { get; set; }
 		public string Correo { get; set; }
         public TipoPersona Persona { get; set; }
+        public string EstadoStr { get; set; }
+        public string MunicipioStr { get; set; }
+        public string ColoniaStr { get; set; }
 	}
 
 }

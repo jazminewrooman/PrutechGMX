@@ -11,21 +11,21 @@
             <StackLayout x:Name="slTarjeta">
                 <Grid RowSpacing="0" ColumnSpacing="0">
                     <Grid.RowDefinitions>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                        <RowDefinition/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="50*"/>
                         <ColumnDefinition Width="50*"/>
                     </Grid.ColumnDefinitions>
                     <Label BackgroundColor="#04b5b5" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource labels}" Text="La compra se ha completado exitosamente."/>
-                    <Label BackgroundColor="#04b5b5" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource labels}" Text="Datos de la tarjeta."/>
+                    <Label BackgroundColor="#c8dade" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource labels}" Text="Datos de la tarjeta."/>
                     <Label Grid.Row="2" Grid.Column="0" Style="{StaticResource labels}" Text="Nombre del tarjetahabiente"/>
                     <Label Grid.Row="3" Grid.Column="0" Style="{StaticResource labels}" Text="Número de tarjeta"/>
                     <Label Grid.Row="4" Grid.Column="0" Style="{StaticResource labels}" Text="Tipo de tarjeta"/>
@@ -41,22 +41,27 @@
                     <Label Grid.Row="7" Grid.Column="1" Style="{StaticResource labels}" x:Name="lblRefPago" />
                 </Grid>
             </StackLayout>
+                <BoxView HeightRequest="20"/>
             <Grid ColumnSpacing="0" RowSpacing="0">
                 <Grid.RowDefinitions>
                     <RowDefinition/>
-                    <RowDefinition/>
-                    <RowDefinition/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="40*"/>
                     <ColumnDefinition Width="60*"/>
                 </Grid.ColumnDefinitions>
-                <Label BackgroundColor="#04b5b5" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource labels}" x:Name="lblSehaenviado"/>
+                <Label BackgroundColor="#c8dade" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource labels}" x:Name="lblSehaenviado"/>
                 <Label Grid.Row="1" Grid.Column="0" Style="{StaticResource labels}" Text="Prima Total:"/>
                 <Label Grid.Row="2" Grid.Column="0" Style="{StaticResource labels}" Text="Número de póliza:"/>
                 <Label Grid.Row="1" Grid.Column="1" Style="{StaticResource labels}" x:Name="lblprima" />
                 <Label Grid.Row="2" Grid.Column="1" Style="{StaticResource labels}" x:Name="lblpoliza" />
             </Grid>
+            <StackLayout x:Name="slVolver">
+                <BoxView HeightRequest="20"/>
+                <Button x:Name="btnVolver" Style="{StaticResource botonVerde}" Text="¿Desea volver a intentar pagar con otra tarjeta?"/>
+            </StackLayout>
         </StackLayout>
         </ScrollView>
 	</ContentPage.Content>
