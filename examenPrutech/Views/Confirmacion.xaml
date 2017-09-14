@@ -59,7 +59,8 @@
                 <Label Grid.Row="2" Grid.Column="1" Style="{StaticResource labels}" x:Name="lblpoliza" />
             </Grid>
             <StackLayout x:Name="slVolver">
-                <BoxView HeightRequest="20"/>
+                <BoxView HeightRequest="20"/>                    
+                <!--<Button x:Name="btnEnBanco" Style="{StaticResource botonBlancoVerde}" Text="¿Desea pagar directo en banco?"/>-->
                 <Button x:Name="btnVolver" Style="{StaticResource botonVerde}" Text="¿Desea volver a intentar pagar con otra tarjeta?"/>
             </StackLayout>
         </StackLayout>

@@ -7,15 +7,16 @@ namespace GMX.Views
 {
     public partial class Confirmacion : ContentPage
     {
+        VMCotizar vm;
+
         public Confirmacion()
         {
             InitializeComponent();
         }
 
-        public Confirmacion(VMCotizar vm)
+        protected override void OnAppearing()
         {
-            InitializeComponent();
-
+            base.OnAppearing();
             lblSehaenviado.Text = $"{GMX.Resources.SeEnvio} {vm.DatosGrales.Correo}, {GMX.Resources.NoLocaliza}";
             lblprima.Text = vm.PrimaTotal.ToString("c");
             lblpoliza.Text = vm.PolizaGenerada.NumPoliza;
@@ -52,10 +53,21 @@ namespace GMX.Views
                 slEnBanco.IsVisible = true;
             }
 
+            /*btnEnBanco.Clicked += (s, e) =>
+            {
+                Navigation.PushAsync(new Cotizar);
+            };*/
             btnVolver.Clicked += (s, e) =>
             {
+                vm.DatosBank = null;
                 Navigation.PushAsync(new DatosBancarios(vm, Modo.Compra));
             };
+        }
+
+        public Confirmacion(VMCotizar vtmp)
+        {
+            InitializeComponent();
+            vm = vtmp;
         }
     }
 }

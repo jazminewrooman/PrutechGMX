@@ -191,8 +191,8 @@ namespace GMX
 
 				FilePropertiesManager file_recibo = null;
                 //revisar el resultado de pago en banco y si fue aprovada ...
-                if (vmcotizar.DatosBank == null || vmcotizar.DatosBank.TipoTarj == CreditCardValidator.CardIssuer.Unknown)
-                {
+                //if (vmcotizar.DatosBank == null || vmcotizar.DatosBank.TipoTarj == CreditCardValidator.CardIssuer.Unknown)
+                //{
                     for (int i = 0; i < 10; i++)
                     {
                         try
@@ -216,12 +216,12 @@ namespace GMX
                             await Task.Delay(TimeSpan.FromSeconds(5));
                         }
                     }
-                }
-				else
-				{
+                //}
+				//else
+				//{
 					//EmisionPago pago = new EmisionPago() { }
 					//b.GenerateRecibo()
-				}
+				//}
 
                 decimal sumaasegdec = decimal.Parse(vmcotizar.SumaAseg, NumberStyles.AllowCurrencySymbol | NumberStyles.Number);
                 if (vmcotizar.IdPlan == "1") //tradicional

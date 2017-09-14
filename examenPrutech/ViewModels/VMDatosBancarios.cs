@@ -69,6 +69,11 @@ namespace GMX
 					}
                     if (modo == Modo.Edicion)
                         await nav.PopAsync(true);
+                    if (modo == Modo.Compra)
+                    {
+                        vmc.MandarPagar();
+                        await nav.PopAsync();
+                    }
                 }
             });
 			VerCotizaCommand = new Command(async () =>
