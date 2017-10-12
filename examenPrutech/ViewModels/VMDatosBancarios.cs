@@ -71,6 +71,16 @@ namespace GMX
                         await nav.PopAsync(true);
                     if (modo == Modo.Compra)
                     {
+                        // default siempre va la referencia, los demas en blanco
+                        vmc.StrTransBanco = String.Empty;
+						vmc.TransBanco = new wspago.MITResponse
+						{
+							reference = vmc.PolizaGenerada.Referencia,
+							response = String.Empty,
+							foliocpagos = String.Empty,
+							auth = String.Empty,
+							cc_number = String.Empty
+						};
                         vmc.MandarPagar();
                         await nav.PopAsync();
                     }

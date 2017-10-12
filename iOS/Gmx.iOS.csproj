@@ -199,6 +199,12 @@
     <None Include="Info.plist" />
     <None Include="Entitlements.plist" />
     <None Include="packages.config" />
+    <None Include="Web References\desa.gmx.com.mx\Service.wsdl" />
+    <None Include="Web References\desa.gmx.com.mx\Service.disco" />
+    <None Include="Web References\desa.gmx.com.mx\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Main.cs" />
@@ -208,6 +214,9 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="Dependencies\SaveAndOpen.cs" />
+    <Compile Include="Web References\desa.gmx.com.mx\Reference.cs">
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\logo.png" />
@@ -248,6 +257,16 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <WebReferences Include="Web References" />
+  </ItemGroup>
+  <ItemGroup>
+    <WebReferenceUrl Include="http://desa.gmx.com.mx/WS_Database_Access_PVLs/Service.asmx">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\desa.gmx.com.mx</RelPath>
+      <UpdateFromURL>http://desa.gmx.com.mx/WS_Database_Access_PVLs/Service.asmx</UpdateFromURL>
+    </WebReferenceUrl>
   </ItemGroup>
   <Import Project="..\examenPrutech\Gmx.projitems" Label="Shared" Condition="Exists('..\examenPrutech\Gmx.projitems')" />
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />

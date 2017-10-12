@@ -159,8 +159,8 @@ namespace GMX
                     IdDescripcion = IdDescripcion,
                     Especialidad = int.Parse(lstesp.ElementAt(Especialidad).Value.cod_sst_riesgo),
                     CedulaProf = CedulaProf,
-                    CedulaEsp = CedulaEsp,
-                    Diplomados = Diplomados,
+                    CedulaEsp = String.IsNullOrEmpty(CedulaEsp) ? "" : CedulaEsp,
+                    Diplomados = String.IsNullOrEmpty(Diplomados) ? "" : Diplomados,
                 };
                 vmcotizar.DatosProf = dp;
                 return true;
