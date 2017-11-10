@@ -23,6 +23,10 @@ namespace GMX
         {
             nav = n;
             //vmcotizar = vmc;
+
+            FechaDesde = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
+            FechaHasta = DateTime.Now;
+
             BuscarCommand = new Command(async () =>
             {
                 if (!Validar())

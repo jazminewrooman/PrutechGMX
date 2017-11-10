@@ -3,9 +3,10 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
     x:Class="GMX.Views.DetallePolizas">
 	<ContentPage.Content>
-        <ScrollView Padding = "20">
-            <StackLayout Spacing="10">
-                
+    <StackLayout>
+        
+            <ScrollView VerticalOptions="FillAndExpand" Padding="20">
+        <StackLayout Spacing="10">        
                 <Label Text="Emisión:"  Style="{StaticResource labels}" FontSize="Medium" FontAttributes="Bold" TextColor="#04b5b5"/>
                 <Label Text="{Binding Emision}"  Style="{StaticResource labels}" FontSize="Medium"/>
                  
@@ -46,10 +47,14 @@
                 <Button Text="Detalle de Coberturas"  Style="{StaticResource botonBlanco}" HorizontalOptions="Start" Command="{Binding DetalleCommand}"/>
 
                 <BoxView BackgroundColor="Gray" HeightRequest="5"/>
-
-                <!--<Button Text="Reenviar documentos"  Style="{StaticResource botonBlancoVerde}" Command="{Binding ReenviarCommand}"/>-->
-                
-            </StackLayout>
-        </ScrollView>
+                    </StackLayout>
+            </ScrollView>
+        
+        
+        <StackLayout>
+            <Entry Text="{Binding Email, Mode=TwoWay}"/>
+            <Button Text="Reenviar documentos"  Style="{StaticResource botonVerde}" Command="{Binding ReenviarCommand}"/>
+        </StackLayout>
+    </StackLayout>
 	</ContentPage.Content>
 </ContentPage>

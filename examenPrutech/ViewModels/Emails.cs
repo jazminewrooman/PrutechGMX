@@ -9,6 +9,13 @@ namespace GMX.ViewModels
         public static DocumentPDF docPDF { get; set; }
         public static List<Section> Sections { get; set; }
 
+
+        public static string Reenvio()
+        {
+            string res = "<!DOCTYPE html><html><head><title></title><meta charset='utf-8' /></head><body></body></html><body><div style='font-family: Tw Cen MT;'><table cellspacing='0' cellpadding='40' align='center' style='font-family: Tw Cen MT; width: 80%; border-style: solid; border-width: 2px;  border-color: #1ba2a4; font-size: 11pt; color: #1ba2a4; margin-top: 2px; text-align:justify;'><tr><td style='width:40%; height:100%;' rowspan='3' align='center' valign='top'><p style='font-size: large; text-align: left; color: #1ba2a4; font-family: Tw Cen MT;'><br /><span style='font-size: xx-large; font-weight: bold; text-align: left; font-family: Tw Cen MT; color: #1ba2a4;'>GMX Seguros</span><br />Juntos el riesgo es menor<sup style='font-size:x-small;'>MR</sup></p><br><p style='font-size: medium; color: #1ba2a4; font-family: Tw Cen MT;'>A su solicitud reenviamos los documentos</p></td><td style='width:5%; height:100%;' align='center' valign='top' rowspan='3' bgcolor='#1ba2a4'><img src='http://desa.gmx.com.mx/wsMAIL/MailsComponents/PVLMED/BotonMail.png' width='132' /></td></tr></table></div></body>";
+            return res;
+        }
+
 		#region Tradicional
         public static void SlipTradicional(string numpoliza, bool rc, string nombrecliente, string desc, string esp, string cedprof, string cedesp, string diplo, string sumaaseg)
 		{

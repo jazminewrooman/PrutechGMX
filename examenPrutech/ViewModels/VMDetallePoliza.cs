@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using CreditCardValidator;
 using Rg.Plugins.Popup.Extensions;
 using GMX.Services;
+using GMXHelper;
 
 namespace GMX
 {
@@ -32,6 +33,7 @@ namespace GMX
             //public VMDetallePoliza(IUserDialogs diag, INavigation n, resultado res) : base(diag)
             nav = n;
             Title = "Pólizas Emitidas";
+            Email = res.Email_Cliente;
 
             cargaDatos(res);
             bindings b = new bindings();
@@ -74,6 +76,23 @@ namespace GMX
                         if (!String.IsNullOrEmpty(res.PolizasAnt) && res.PolizasAnt == "SI")//renovacion
                             GMX.ViewModels.Emails.SlipTradicionalRenov(res.Poliza, res.Arrendatario, res.Nombre_Cliente, res.Especialidad, res.Especialidad2, res.NoCedulaPro, res.NoCedulaEsp, res.Otros, res.Suma_Asegurada.ToString("c"), res.fecRetroactiva.ToString("dd/MM/yyyy"), res.PolAnt1, res.PolAnt2, "");
 
+                        /*if (vmcotizar.IdPlan == "1") //tradicional
+                {
+                    if (vmcotizar.IdTipo == "1")//nueva
+                        GMX.ViewModels.Emails.SlipTradicional(vmcotizar.PolizaGenerada.NumPoliza, vmcotizar.Adicional, $"{vmcotizar.DatosGrales.Nombre} {vmcotizar.DatosGrales.APaterno} {vmcotizar.DatosGrales.AMaterno}", vmcotizar.DatosProf.Descripcion, vmcotizar.DatosProf.Especialidad.ToString(), vmcotizar.DatosProf.CedulaProf, vmcotizar.DatosProf.CedulaEsp, vmcotizar.DatosProf.Diplomados, vmcotizar.SumaAseg);
+                    if (vmcotizar.IdTipo == "2")//renovacion
+                        GMX.ViewModels.Emails.SlipTradicionalRenov(vmcotizar.PolizaGenerada.NumPoliza, vmcotizar.Adicional, $"{vmcotizar.DatosGrales.Nombre} {vmcotizar.DatosGrales.APaterno} {vmcotizar.DatosGrales.AMaterno}", vmcotizar.DatosProf.Descripcion, vmcotizar.DatosProf.Especialidad.ToString(), vmcotizar.DatosProf.CedulaProf, vmcotizar.DatosProf.CedulaEsp, vmcotizar.DatosProf.Diplomados, vmcotizar.SumaAseg, $"{vmcotizar.Antecedentes.dia}/{vmcotizar.Antecedentes.mes}/{vmcotizar.Antecedentes.anno}", (vmcotizar.Antecedentes.poliza1 != null ? vmcotizar.Antecedentes.poliza1.poliza : String.Empty), (vmcotizar.Antecedentes.poliza2 != null ? vmcotizar.Antecedentes.poliza2.poliza : String.Empty), (vmcotizar.Antecedentes.poliza3 != null ? vmcotizar.Antecedentes.poliza3.poliza : String.Empty));
+                }
+                if (vmcotizar.IdPlan == "2") //angeles
+                {
+                    if (vmcotizar.IdTipo == "1")//nueva
+                        GMX.ViewModels.Emails.SlipAngeles(vmcotizar.PolizaGenerada.NumPoliza, $"{vmcotizar.DatosGrales.Nombre} {vmcotizar.DatosGrales.APaterno} {vmcotizar.DatosGrales.AMaterno}", vmcotizar.DatosProf.Descripcion, vmcotizar.DatosProf.Especialidad.ToString(), vmcotizar.DatosProf.CedulaProf, vmcotizar.DatosProf.CedulaEsp, vmcotizar.DatosProf.Diplomados, sumaasegdec);
+                    if (vmcotizar.IdTipo == "2")//renovacion
+                        GMX.ViewModels.Emails.SlipAngelesReov(vmcotizar.PolizaGenerada.NumPoliza, $"{vmcotizar.DatosGrales.Nombre} {vmcotizar.DatosGrales.APaterno} {vmcotizar.DatosGrales.AMaterno}", vmcotizar.DatosProf.Descripcion, vmcotizar.DatosProf.Especialidad.ToString(), vmcotizar.DatosProf.CedulaProf, vmcotizar.DatosProf.CedulaEsp, vmcotizar.DatosProf.Diplomados, sumaasegdec, $"{vmcotizar.Antecedentes.dia}/{vmcotizar.Antecedentes.mes}/{vmcotizar.Antecedentes.anno}", (vmcotizar.Antecedentes.poliza1 != null ? vmcotizar.Antecedentes.poliza1.poliza : String.Empty), (vmcotizar.Antecedentes.poliza2 != null ? vmcotizar.Antecedentes.poliza2.poliza : String.Empty), (vmcotizar.Antecedentes.poliza3 != null ? vmcotizar.Antecedentes.poliza3.poliza : String.Empty));
+                }*/
+
+
+
                         GMX.ViewModels.Emails.docPDF.Watermark = waterm.Result;
                         b.IniciaWS(api: config.Config["APIGMXIT"]);
                         var condpart = await b.GenerateDocument(GMX.ViewModels.Emails.Sections.ToArray(), GMX.ViewModels.Emails.docPDF);
@@ -96,7 +115,62 @@ namespace GMX
                 });
                 ReenviarCommand = new Command(async () =>
                 {
+                    List<FilePropertiesManager> fileAttach = new List<FilePropertiesManager>();
+                    Ocupado = true;
+                    string polizagenerada = "";
+                    string[] numpol = res.Poliza.Split('_');
+                    if (numpol.Length > 0 && numpol.Length >= 3)
+                        polizagenerada = numpol[2];
+                    string numpoliza = $"01-66-{polizagenerada.PadLeft(8, '0')}-0000-01";
 
+                    b.IniciaWS(apidoc: config.Config["APIDocs"]);
+                    var waterm = await b.ReturnDocument("Watermark.jpg", false);
+
+                    var condgen = await b.ReturnDocument("W_RCMedML_Ind_20.07.2016.2.pdf", false);
+                    var file_condi_gral = new FilePropertiesManager
+                    {
+                        stream = condgen.Result,
+                        fileName = "W_RCMedML_Ind_20.07.2016.2.pdf",
+                        length = condgen.Result.Length
+                    };
+
+                    var folleto = await b.ReturnDocument("PLAN_LEGAL_MEDICOS.pdf", false);
+                    var filefolleto = new FilePropertiesManager
+                    {
+                        stream = folleto.Result,
+                        fileName = "Legal Medico.pdf",
+                        length = folleto.Result.Length
+                    };
+
+                    var caratula = await b.getPolicy(res.Poliza, "caratula");
+                    var file_caratula = new FilePropertiesManager
+                    {
+                        stream = caratula.Result,
+                        fileName = "Poliza.pdf",
+                        length = caratula.Result.Length
+                    };
+
+                    var recibo = await b.getPolicy(res.Poliza, "recibo");
+                    var file_recibo = new FilePropertiesManager
+                    {
+                        stream = recibo.Result,
+                        fileName = "Recibo.pdf",
+                        length = recibo.Result.Length
+                    };
+
+                    if (!String.IsNullOrEmpty(res.PolizasAnt) && res.PolizasAnt == "NO")//nueva
+                        GMX.ViewModels.Emails.SlipTradicional(numpoliza, res.Arrendatario, res.Nombre_Cliente, res.Especialidad, res.Especialidad2, res.NoCedulaPro, res.NoCedulaEsp, res.Otros, res.Suma_Asegurada.ToString("c"));
+                    if (!String.IsNullOrEmpty(res.PolizasAnt) && res.PolizasAnt == "SI")//renovacion
+                        GMX.ViewModels.Emails.SlipTradicionalRenov(numpoliza, res.Arrendatario, res.Nombre_Cliente, res.Especialidad, res.Especialidad2, res.NoCedulaPro, res.NoCedulaEsp, res.Otros, res.Suma_Asegurada.ToString("c"), res.fecRetroactiva.ToString("dd/MM/yyyy"), res.PolAnt1, res.PolAnt2, "");
+                    GMX.ViewModels.Emails.docPDF.Watermark = waterm.Result;
+                    b.IniciaWS(api: config.Config["APIGMXIT"]);
+                    var condpart = await b.GenerateDocument(GMX.ViewModels.Emails.Sections.ToArray(), GMX.ViewModels.Emails.docPDF);
+                    var slip_condpart = new FilePropertiesManager { stream = condpart.Result, fileName = "CondicionesParticulares.pdf", length = condpart.Result.Length };
+
+                    var r = await b.DistribuirDocumentacionReenvio(GMX.ViewModels.Emails.Reenvio(), res.Nombre_Cliente, Email, res.Poliza, file_caratula, slip_condpart, file_recibo, file_condi_gral, new FilePropertiesManager[] { filefolleto });
+
+
+                    Ocupado = false;
                 });
 
             }
@@ -113,7 +187,19 @@ namespace GMX
             Derechos = res.Derechos;
             IVA = res.Iva;
             PrimaTotal = res.PrimaTotal;
+            Email = res.Email_Cliente;
+        }
 
+
+        string email;
+        public string Email{
+            get => email;
+            set {
+                if (email != value){
+                    email = value;
+                    OnPropertyChanged("Email");
+                }
+            }
         }
 
         DateTime emision;

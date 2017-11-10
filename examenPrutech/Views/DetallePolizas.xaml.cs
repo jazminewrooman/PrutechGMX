@@ -8,13 +8,15 @@ namespace GMX.Views
 {
     public partial class DetallePolizas : ContentPage
     {
+        public DetallePolizas() {}
+
         public DetallePolizas(polizaemitida res) 
         {
             InitializeComponent();
 
+            Title = "Pólizas Emitidas";
             var vm = new VMDetallePoliza(res, UserDialogs.Instance, Navigation);
             BindingContext = vm;
-            Title = "PolizasEmitidas";
         }
     }
 }

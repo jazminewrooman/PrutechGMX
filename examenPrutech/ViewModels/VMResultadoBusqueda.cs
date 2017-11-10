@@ -65,7 +65,7 @@ namespace GMX
                 await System.Threading.Tasks.Task.Delay(TimeSpan.FromMilliseconds(100));
                 wsbd.Service ws = new wsbd.Service(config.Config["APIBD"]);
                 ws.Timeout = 2000;
-                string jsonpolizas = ws.get_catalogos("GetEmisionMedicoByIdAgenteAndEmisionALL", $"@Emision_Low='{fini}',@Emision_Hgh='{ffin}'");
+                string jsonpolizas = ws.get_catalogos("GetEmisionMedicoByIdAgenteAndEmision", $"@UserId={App.usr.UserId},@Emision_Low='{fini}',@Emision_Hgh='{ffin}'");
                 datospolizaemitida lst = JsonConvert.DeserializeObject<datospolizaemitida>(jsonpolizas);
                 ListaDatos = lst.Table.ToList(); //.Select(x => new resultado { Nombre = x.Nombre_Cliente, Poliza = x.Poliza, Emision = x.Emision, PrimaNeta = x.PrimaNeta, Derechos = x.Derechos, Iva = x.Iva, PrimaTotal = x.PrimaTotal, polizasante = (!String.IsNullOrEmpty(x.PolizasAnt) ? true : false) }).ToList();
             }

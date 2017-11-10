@@ -158,6 +158,21 @@ namespace GMX.Services
 			return tcs.Task;
 		}
 
+        public Task<SendMailCompletedEventArgs> DistribuirDocumentacionReenvio(string html, string nomcliente, string emailcliente, string numpoliza, FilePropertiesManager caratula, FilePropertiesManager slip, FilePropertiesManager recibo, FilePropertiesManager condgrales, FilePropertiesManager[] folleto)
+        {
+            FilePropertiesManager[] fileAttach = new FilePropertiesManager[] { caratula, slip, recibo, condgrales, folleto[0] };
+            string[] To = new string[1]; To[0] = emailcliente;
+            string[] From = new string[1]; From[0] = "PvlMedicos@gmx.com.mx";
+            string[] CC = new string[1]; CC[0] = App.usr.Email; //App.agent.email;
+            string[] CCO = new string[1]; CCO[0] = "uriel.perez@GMX.COM.MX";
+            MailParameters param = new MailParameters() { To = To, BCC = CCO, CC = CC, Files = fileAttach, From = From, Subject = "ReenvÌo de Documentos", Body = html };
+
+            var tcs = CreateSource<SendMailCompletedEventArgs>(null);
+            wsit.SendMailCompleted += (sender, e) => TransferCompletion(tcs, e, () => e, null);
+            wsit.SendMailAsync(param);
+            return tcs.Task;
+        }
+
         public Task<DistribuirDocumentacionPolizaCompletedEventArgs> DistribuirDocumentacionPoliza(string mailaseg, FilePropertiesManager slip)
 		{
             Destinatario[] asegurado = new Destinatario[] { new Destinatario() { Nombre = "Asegurado", Mail = mailaseg } };
