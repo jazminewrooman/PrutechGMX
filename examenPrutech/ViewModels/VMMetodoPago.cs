@@ -13,24 +13,44 @@ using Rg.Plugins.Popup.Extensions;
 
 namespace GMX
 {
-	public class VMMetodoPago : VMGmx
-	{
-		INavigation nav;
+    public class VMMetodoPago : VMGmx
+    {
+        INavigation nav;
 
-		public ICommand NextCommand { get; private set; }
+        public ICommand NextCommand { get; private set; }
+        public ICommand VerTerminos { get; private set; }
         public ICommand VerCotizaCommand { get; private set; }
         VMCotizar vmcotizar;
         public TipoPago tipopago { get; set; }
 
-		public VMMetodoPago(IUserDialogs diag, INavigation n, VMCotizar vmc) : base(diag)
-		{
+        public VMMetodoPago(IUserDialogs diag, INavigation n, VMCotizar vmc) : base(diag)
+        {
             nav = n;
             vmcotizar = vmc;
-			TxtTerminos = Resources.Terminos;
-			TxtManifiesto = Resources.Manifiesto;
+            TxtTerminos = Resources.Terminos;
+            TxtManifiesto = Resources.Manifiesto;
             VerCotizaCommand = new Command(async () =>
             {
                 await nav.PushPopupAsync(new VerCotiza(vmcotizar), true);
+            });
+            VerTerminos = new Command(async () =>
+            {
+                Ocupado = true;
+                byte[] bytes;
+#if __ANDROID__
+                Android.Content.Res.AssetManager assets = Android.App.Application.Context.Assets;
+                System.IO.Stream sr = assets.Open("docs/ReciboPagoJetta2017.pdf");
+                using (var memoryStream = new System.IO.MemoryStream())
+                {
+                    sr.CopyTo(memoryStream);
+                    bytes = memoryStream.ToArray();
+                }
+#endif
+#if __IOS__
+                bytes = System.IO.File.ReadAllBytes("docs/ReciboPagoJetta2017.pdf");
+#endif
+                await DependencyService.Get<ISaveAndOpen>().OpenFile("Terminos_Y_Condiciones.pdf", bytes);
+                Ocupado = false;
             });
 			NextCommand = new Command(async () =>
 			{

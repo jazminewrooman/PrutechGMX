@@ -44,9 +44,12 @@ namespace GMX
 			});
 			EmisionCommand = new Command(async () =>
 			{
-                string msg = $"Se mandara la emision de la siguiente poliza:{Environment.NewLine}Prima Neta: {vmcotizar.PrimaNeta.ToString("c")}{Environment.NewLine}Derechos: {vmcotizar.Derechos.ToString("c")}{Environment.NewLine}Subtotal:{vmcotizar.SubTotal.ToString("c")}{Environment.NewLine}IVA:{vmcotizar.Iva.ToString("c")}{Environment.NewLine}Total:{vmcotizar.PrimaTotal.ToString("c")}{Environment.NewLine}{Environment.NewLine}¿Desea continuar?";
-                var result = await diag.ConfirmAsync(msg, "Aviso", "Ok", "Cancelar");
-                if (result)
+                //string msg = $"Se mandara la emision de la siguiente poliza:{Environment.NewLine}Prima Neta: {vmcotizar.PrimaNeta.ToString("c")}{Environment.NewLine}Derechos: {vmcotizar.Derechos.ToString("c")}{Environment.NewLine}Subtotal:{vmcotizar.SubTotal.ToString("c")}{Environment.NewLine}IVA:{vmcotizar.Iva.ToString("c")}{Environment.NewLine}Total:{vmcotizar.PrimaTotal.ToString("c")}{Environment.NewLine}{Environment.NewLine}¿Desea continuar?";
+                //var result = await diag.ConfirmAsync(msg, "Aviso", "Ok", "Cancelar");
+                var confirma = new VerConfirma(vmcotizar);
+                await nav.PushPopupAsync(confirma, true);
+                var seleccion = await confirma.Regresa();
+                if (seleccion)
                 {
                     await vmcotizar.MandarEmision();
                     if (vmcotizar.PolizaGenerada != null && !String.IsNullOrEmpty(vmcotizar.PolizaGenerada.NumPoliza))

@@ -24,6 +24,9 @@
                     </StackLayout>
                     <StackLayout VerticalOptions="Center">
         				<local:VwSwitch Title="{Binding TxtTerminos}" On="{Binding Terminos, Mode=TwoWay}"/>
+                        <StackLayout>
+                            <Button Text="Ver Terminos y Condiciones" Command="{Binding VerTerminos}" Style="{StaticResource botonBlancoVerde}"/>
+                        </StackLayout>
         				<local:VwSwitch Title="{Binding TxtManifiesto}" On="{Binding Manifiesto, Mode=TwoWay}"/>
                         <Image Source="medicosneg" Opacity="0.3" Aspect="AspectFit"/>
         			</StackLayout>

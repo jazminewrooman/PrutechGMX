@@ -419,7 +419,7 @@ namespace GMX
                 {
                     intentosdepago = 0;
                     PolizaGenerada = JsonConvert.DeserializeObject<resultadopoliza>(jsonpoliza.Result);
-                    PolizaGenerada.NumPoliza = $"01-{PolizaGenerada.Ramo.PadLeft(2, '0')}-{PolizaGenerada.NumPoliza.PadLeft(8, '0')}-{PolizaGenerada.Endoso.PadLeft(4, '0')}-{PolizaGenerada.Renovacion.PadLeft(2, '0')}";
+                    PolizaGenerada.NumPoliza = $"001-{PolizaGenerada.Ramo.PadLeft(2, '0')}-{PolizaGenerada.NumPoliza.PadLeft(8, '0')}-{PolizaGenerada.Endoso.PadLeft(4, '0')}-{PolizaGenerada.Renovacion.PadLeft(2, '0')}";
                 }
                 Ocupado = false;
                 MsgOcupado = "";

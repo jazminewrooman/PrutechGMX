@@ -140,6 +140,9 @@
     <Compile Include="$(MSBuildThisFileDirectory)Services\wsdocs.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\cobertura.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Interfaces\ISaveAndOpen.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\VerConfirma.xaml.cs">
+      <DependentUpon>VerConfirma.xaml</DependentUpon>
+    </Compile>
 	</ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\WelcomePage.xaml">
@@ -214,6 +217,9 @@
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\DetallePolizas.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\VerConfirma.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
   </ItemGroup>

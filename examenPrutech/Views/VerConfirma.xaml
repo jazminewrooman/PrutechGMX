@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pages:PopupPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
+    x:Class="GMX.Views.VerConfirma">
+    <ScrollView HorizontalOptions="Center" VerticalOptions="Center">
+	<Frame Margin="30" Padding="10">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="40*"/>
+                <ColumnDefinition Width="60*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="15"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="15"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <Label Grid.Row="0" Grid.ColumnSpan="2" FontSize="Small" Text="Se enviará la emisión de la póliza, con la siguiente información:" />
+                
+            <Label Grid.Column="0" Grid.Row="2" FontSize="Small" Text="Prima neta:"/>
+            <Label Grid.Column="1" Grid.Row="2" FontSize="Small" Text="{Binding PrimaNeta, StringFormat='{}{0:c}'}"/>
+            <Label Grid.Column="0" Grid.Row="3" FontSize="Small" Text="Derechos:"/>
+            <Label Grid.Column="1" Grid.Row="3" FontSize="Small" Text="{Binding Derechos, StringFormat='{}{0:c}'}"/>
+            <Label Grid.Column="0" Grid.Row="4" FontSize="Small" Text="Subtotal:"/>
+            <Label Grid.Column="1" Grid.Row="4" FontSize="Small" Text="{Binding SubTotal, StringFormat='{}{0:c}'}"/>
+            <Label Grid.Column="0" Grid.Row="5" FontSize="Small" Text="I.V.A:"/>
+            <Label Grid.Column="1" Grid.Row="5" FontSize="Small" Text="{Binding Iva, StringFormat='{}{0:c}'}"/>
+            <Label Grid.Column="0" Grid.Row="6" FontSize="Small" Text="Prima Total:"/>
+            <Label Grid.Column="1" Grid.Row="6" FontSize="Small" Text="{Binding PrimaTotal, StringFormat='{}{0:c}'}"/>
+
+            <Label Grid.Row="8" Grid.ColumnSpan="2" FontSize="Small" Text="¿Desea continuar?" />
+            <Button x:Name="btnCerrar" Grid.Column="0" Grid.Row="10" Text="Cancelar" Style="{StaticResource botonBlancoVerde}"/>
+            <Button x:Name="btnOk" Grid.Column="1" Grid.Row="10" Text="Ok" Style="{StaticResource botonVerde}"/>
+        </Grid>
+	</Frame>
+    </ScrollView>
+</pages:PopupPage>

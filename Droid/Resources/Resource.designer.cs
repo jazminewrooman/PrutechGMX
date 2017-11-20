@@ -4051,6 +4051,9 @@ namespace GMX
 			// aapt resource value: 0x7f07018c
 			public const int AppCompatDialogStyle = 2131165580;
 			
+			// aapt resource value: 0x7f07018e
+			public const int AppToolbarTheme = 2131165582;
+			
 			// aapt resource value: 0x7f0700cd
 			public const int Base_AlertDialog_AppCompat = 2131165389;
 			
