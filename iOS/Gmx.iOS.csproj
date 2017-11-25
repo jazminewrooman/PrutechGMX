@@ -251,7 +251,7 @@
     <BundleResource Include="Resources\genericcard.png" />
     <BundleResource Include="Resources\visa.png" />
     <BundleResource Include="Resources\master.png" />
-    <BundleResource Include="docs\ReciboPagoJetta2017.pdf" />
+    <BundleResource Include="docs\TERMINOS_Y_CONDICIONES.pdf" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="settings.json" />

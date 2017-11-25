@@ -33,7 +33,7 @@ namespace GMX
                     await diag.AlertAsync("Seleccione las fechas de busqueda", "Error", "Ok");
                 else
                 {
-					await nav.PushAsync(new ResultadoBusqueda(FechaDesde, FechaHasta));
+                    await nav.PushAsync(new ResultadoBusqueda(FechaDesde, FechaHasta.AddDays(1)));
 				}
                     
             });

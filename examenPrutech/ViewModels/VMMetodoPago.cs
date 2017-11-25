@@ -39,7 +39,7 @@ namespace GMX
                 byte[] bytes;
 #if __ANDROID__
                 Android.Content.Res.AssetManager assets = Android.App.Application.Context.Assets;
-                System.IO.Stream sr = assets.Open("docs/ReciboPagoJetta2017.pdf");
+                System.IO.Stream sr = assets.Open("docs/TERMINOS_Y_CONDICIONES.pdf");
                 using (var memoryStream = new System.IO.MemoryStream())
                 {
                     sr.CopyTo(memoryStream);
@@ -47,7 +47,7 @@ namespace GMX
                 }
 #endif
 #if __IOS__
-                bytes = System.IO.File.ReadAllBytes("docs/ReciboPagoJetta2017.pdf");
+                bytes = System.IO.File.ReadAllBytes("docs/TERMINOS_Y_CONDICIONES.pdf");
 #endif
                 await DependencyService.Get<ISaveAndOpen>().OpenFile("Terminos_Y_Condiciones.pdf", bytes);
                 Ocupado = false;

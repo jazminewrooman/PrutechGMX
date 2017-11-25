@@ -81,41 +81,55 @@ namespace GMX
 
 		}
 
-		private bool Validar()
-		{
-            if (String.IsNullOrEmpty(RFC) || String.IsNullOrEmpty(Nombre) || String.IsNullOrEmpty(APaterno)
-                || String.IsNullOrEmpty(AMaterno) || String.IsNullOrEmpty(Direccion) || String.IsNullOrEmpty(CP) 
+        private bool Validar()
+        {
+            if (String.IsNullOrEmpty(RFC) || String.IsNullOrEmpty(APaterno)
+                || String.IsNullOrEmpty(Direccion) || String.IsNullOrEmpty(CP)
                 || Estado < 0 || Municipio < 0 || Ciudad < 0 || Colonia < 0
                 || String.IsNullOrEmpty(Correo) || !RFCValido || !CorreoValido)
                 return false;
             else
             {
-                DatosGralesModel dg = new DatosGralesModel()
+                if ((tipo == TipoDatos.Generales) || (tipo == TipoDatos.Fiscales && Persona == TipoPersona.Fisica))
                 {
-                    RFC = RFC,
-                    Nombre = Nombre,
-                    APaterno = APaterno,
-                    AMaterno = AMaterno,
-                    Direccion = Direccion,
-                    Telefono = Telefono,
-                    CP = CP,
-                    Estado = int.Parse(lstedos.ElementAt(Estado).Value.cod_dpto),
-                    Municipio = int.Parse(lstmun.ElementAt(Municipio).Value.cod_municipio),
-                    Ciudad = int.Parse(lstciud.ElementAt(Ciudad).Value.cod_ciudad),
-                    Colonia = int.Parse(lstcols.ElementAt(Colonia).Value.cod_colonia),
-                    EstadoStr = lstedos.ElementAt(Estado).Value.txt_desc,
-                    MunicipioStr = lstmun.ElementAt(Municipio).Value.txt_desc,
-                    ColoniaStr = lstcols.ElementAt(Colonia).Value.txt_desc,
-                    Correo = Correo,
-                    Persona = Persona,
-                };
-                if (tipo == TipoDatos.Generales)
-                    vmcotizar.DatosGrales = dg;
-                if (tipo == TipoDatos.Fiscales)
-                    vmcotizar.DatosFiscales = dg;
-				return true;
+                    if (String.IsNullOrEmpty(Nombre) || String.IsNullOrEmpty(AMaterno))
+                        return false;
+                    else
+                    {
+                        llenaModelo();
+                        return true;
+                    }
+                }
+                return true;
             }
-		}
+        }
+
+        private void llenaModelo()
+        {
+            DatosGralesModel dg = new DatosGralesModel()
+            {
+                RFC = RFC,
+                Nombre = Nombre,
+                APaterno = APaterno,
+                AMaterno = AMaterno,
+                Direccion = Direccion,
+                Telefono = Telefono,
+                CP = CP,
+                Estado = int.Parse(lstedos.ElementAt(Estado).Value.cod_dpto),
+                Municipio = int.Parse(lstmun.ElementAt(Municipio).Value.cod_municipio),
+                Ciudad = int.Parse(lstciud.ElementAt(Ciudad).Value.cod_ciudad),
+                Colonia = int.Parse(lstcols.ElementAt(Colonia).Value.cod_colonia),
+                EstadoStr = lstedos.ElementAt(Estado).Value.txt_desc,
+                MunicipioStr = lstmun.ElementAt(Municipio).Value.txt_desc,
+                ColoniaStr = lstcols.ElementAt(Colonia).Value.txt_desc,
+                Correo = Correo,
+                Persona = Persona,
+            };
+            if (tipo == TipoDatos.Generales)
+                vmcotizar.DatosGrales = dg;
+            if (tipo == TipoDatos.Fiscales)
+                vmcotizar.DatosFiscales = dg;
+        }
 
         private FormattedString FormatText(TipoDatos td)
         {

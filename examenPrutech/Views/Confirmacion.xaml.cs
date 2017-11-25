@@ -62,6 +62,20 @@ namespace GMX.Views
                 vm.DatosBank = null;
                 Navigation.PushAsync(new DatosBancarios(vm, Modo.Compra));
             };
+            btnVerPol.Clicked += async (s, e) =>
+            {
+                var polizas = new Resumen();
+                var MainP = new NavigationPage(polizas)
+                {
+                    BarTextColor = Color.FromHex("#04b5b5"),
+                    BarBackgroundColor = Color.White,
+                };
+                var md = new MasterDetailPage();
+                md.Master = new menu();
+                md.Detail = MainP;
+                App.Current.MainPage = md;
+                await Navigation.PopToRootAsync(true);
+            };
         }
 
         public Confirmacion(VMCotizar vtmp)

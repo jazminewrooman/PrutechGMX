@@ -41,7 +41,7 @@
                     <Label Grid.Row="7" Grid.Column="1" Style="{StaticResource labels}" x:Name="lblRefPago" />
                 </Grid>
             </StackLayout>
-                <BoxView HeightRequest="20"/>
+            <BoxView HeightRequest="20"/>
             <Grid ColumnSpacing="0" RowSpacing="0">
                 <Grid.RowDefinitions>
                     <RowDefinition/>
@@ -63,6 +63,9 @@
                 <!--<Button x:Name="btnEnBanco" Style="{StaticResource botonBlancoVerde}" Text="¿Desea pagar directo en banco?"/>-->
                 <Button x:Name="btnVolver" Style="{StaticResource botonVerde}" Text="¿Desea volver a intentar pagar con otra tarjeta?"/>
             </StackLayout>
+            <BoxView HeightRequest="20"/>                    
+            <Button x:Name="btnVerPol" Style="{StaticResource botonBlancoVerde}" Text="Ver pólizas emitidas"/>
+            <Image Source="medicosneg" IsVisible="{Binding VerImg}" Opacity="0.3" Aspect="AspectFit"/>
         </StackLayout>
         </ScrollView>
 	</ContentPage.Content>

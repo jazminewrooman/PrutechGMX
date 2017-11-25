@@ -254,7 +254,8 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <AndroidAsset Include="Assets\docs\ReciboPagoJetta2017.pdf" />
+    <AndroidAsset Include="Assets\docs\" />
+    <AndroidAsset Include="Assets\docs\TERMINOS_Y_CONDICIONES.pdf" />
   </ItemGroup>
   <Import Project="..\examenPrutech\Gmx.projitems" Label="Shared" Condition="Exists('..\examenPrutech\Gmx.projitems')" />
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />

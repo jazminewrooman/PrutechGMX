@@ -145,11 +145,15 @@
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
                         <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Text="Fecha de inicio de vigencia de la primera póliza contratada con GMX"  Style="{StaticResource labels}"/>
-                        <Entry Grid.Row="1" Grid.Column="0" IsEnabled="false" Text="{Binding polizas.dia}"/>
-                        <Entry Grid.Row="1" Grid.Column="1" IsEnabled="false" Text="{Binding polizas.mes}"/>
-                        <Picker Grid.Row="1" Grid.Column="2" ItemsSource="{Binding LstAnos}" SelectedItem="{Binding Anno, Mode=TwoWay}" />
+                        <Label Grid.Row="1" Grid.Column="0" Text="Día" FontSize="Small"/>
+                        <Entry Grid.Row="2" Grid.Column="0" IsEnabled="false" Text="{Binding polizas.dia}"/>
+                        <Label Grid.Row="1" Grid.Column="1" Text="Mes" FontSize="Small"/>
+                        <Entry Grid.Row="2" Grid.Column="1" IsEnabled="false" Text="{Binding polizas.mes}"/>
+                        <Label Grid.Row="1" Grid.Column="2" Text="Año" FontSize="Small"/>
+                        <Picker Grid.Row="2" Grid.Column="2" ItemsSource="{Binding LstAnos}" SelectedItem="{Binding Anno, Mode=TwoWay}" />
                     </Grid>
 				
 			</StackLayout>
