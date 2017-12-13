@@ -116,13 +116,13 @@ namespace GMX
                     length = caratula.Result.Length
                 };
 
-                var incendio = await b.getPolicy(vmcotizar.PolizaGenerada.PolizaGenerada, "master_incendio");
+                /*var incendio = await b.getPolicy(vmcotizar.PolizaGenerada.PolizaGenerada, "master_incendio");
                 var file_inc = new FilePropertiesManager
                 {
                     stream = incendio.Result,
                     fileName = "DetalleCobertura.pdf",
                     length = incendio.Result.Length
-                };
+                };*/
 
                 decimal sumaasegdec = decimal.Parse(vmcotizar.SumaAseg, NumberStyles.AllowCurrencySymbol | NumberStyles.Number);
 				if (vmcotizar.IdPlan == "1") //tradicional
@@ -150,7 +150,8 @@ namespace GMX
                     length = condpart.Result.Length
                 };
 
-                var res = await b.DistribuirDocumentacionAviso(vmcotizar.DatosGrales, vmcotizar.PolizaGenerada.NumPoliza, file_caratula, slip_condpart, new FilePropertiesManager[] { file_inc });
+                var res = await b.DistribuirDocumentacionAviso(vmcotizar.DatosGrales, vmcotizar.PolizaGenerada.NumPoliza, file_caratula, slip_condpart, null);
+                //var res = await b.DistribuirDocumentacionAviso(vmcotizar.DatosGrales, vmcotizar.PolizaGenerada.NumPoliza, file_caratula, slip_condpart, new FilePropertiesManager[] { file_inc });
                 //var res = await b.DistribuirDocumentacionAviso(vmcotizar.DatosGrales, vmcotizar.PolizaGenerada.NumPoliza, file_caratula, null, null);
 
                 Ocupado = false;
@@ -216,28 +217,72 @@ namespace GMX
                     }
                 }
 
-				FilePropertiesManager file_recibo = null;
-                for (int i = 0; i < 10; i++)
+                FilePropertiesManager file_recibo = null;
+                if (vmcotizar.TransBanco.response != "approved")
                 {
-                    try
+                    for (int i = 0; i < 10; i++)
                     {
-                        var recibo = await b.getPolicy(vmcotizar.PolizaGenerada.PolizaGenerada, "recibo");
-                        if (recibo == null)
-                            await Task.Delay(TimeSpan.FromSeconds(5));
-                        else
+                        try
                         {
-                            file_recibo = new FilePropertiesManager
+                            var recibo = await b.getPolicy(vmcotizar.PolizaGenerada.PolizaGenerada, "recibo");
+                            if (recibo == null)
+                                await Task.Delay(TimeSpan.FromSeconds(5));
+                            else
                             {
-                                stream = recibo.Result,
-                                fileName = "Recibo.pdf",
-                                length = recibo.Result.Length
-                            };
-                            break;
+                                file_recibo = new FilePropertiesManager
+                                {
+                                    stream = recibo.Result,
+                                    fileName = "Recibo.pdf",
+                                    length = recibo.Result.Length
+                                };
+                                break;
+                            }
+                        }
+                        catch
+                        {
+                            await Task.Delay(TimeSpan.FromSeconds(5));
                         }
                     }
-                    catch
+                }
+                else
+                {
+                    for (int i = 0; i < 10; i++)
                     {
-                        await Task.Delay(TimeSpan.FromSeconds(5));
+                        try
+                        {
+                            b.IniciaWS(api: config.Config["APIGMXIT"]);
+                            GMXHelper.EmisionPago datosMit = new EmisionPago();
+
+                            datosMit.NombreTH = vmcotizar.TransBanco.cc_name;
+                            datosMit.Referencia = vmcotizar.TransBanco.reference;
+                            datosMit.Autorizacion = vmcotizar.TransBanco.auth;
+                            datosMit.Tarjeta = vmcotizar.TransBanco.cc_number;
+                            datosMit.ImportePago = Convert.ToDouble(vmcotizar.TransBanco.amount);
+                            datosMit.FechaEmision = vmcotizar.IniVig;
+                            datosMit.FolioCPagos = vmcotizar.TransBanco.foliocpagos;
+                            datosMit.FriendlyResponse = vmcotizar.TransBanco.friendly_response;
+                            datosMit.CCType = vmcotizar.TransBanco.cc_type;
+                            datosMit.URL = "https://pvl.gmx.com.mx/Medicos/login.aspx";
+                            datosMit.Poliza = vmcotizar.PolizaGenerada.PolizaGenerada;
+
+                            var recibo = await b.GenerateRecibo(datosMit);
+                            if (recibo == null)
+                                await Task.Delay(TimeSpan.FromSeconds(5));
+                            else
+                            {
+                                file_recibo = new FilePropertiesManager
+                                {
+                                    stream = recibo.Result,
+                                    fileName = "ComprobandeDePago.pdf",
+                                    length = recibo.Result.Length
+                                };
+                                break;
+                            }
+                        }
+                        catch
+                        {
+                            await Task.Delay(TimeSpan.FromSeconds(5));
+                        }
                     }
                 }
 

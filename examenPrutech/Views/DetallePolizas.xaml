@@ -44,8 +44,10 @@
 
                 <Button Text="Condiciones Generales"  Style="{StaticResource botonBlanco}" HorizontalOptions="Start" Command="{Binding GeneralesCommand}"/>
 
+                <!--
                 <Button Text="Detalle de Coberturas"  Style="{StaticResource botonBlanco}" HorizontalOptions="Start" Command="{Binding DetalleCommand}"/>
-
+                -->
+                    
                 <BoxView BackgroundColor="Gray" HeightRequest="5"/>
                     </StackLayout>
             </ScrollView>

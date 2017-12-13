@@ -1,22 +1,34 @@
-﻿<Properties StartupConfiguration="{CE10328E-D6E5-4C2A-B0BD-121B16DB5327}|Default">
-  <MonoDevelop.Ide.Workbench ActiveDocument="examenPrutech/ViewModels/VMCotizar.cs">
+﻿<Properties StartupConfiguration="{BA6AB127-05DF-447D-AE76-1287DE2FB771}|Default">
+  <MonoDevelop.Ide.ItemProperties.Gmx.Droid PreferredExecutionTarget="Android.3.7" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="PrutechGMX12dic17 Status">
     <Files>
-      <File FileName="examenPrutech/ViewModels/VMCotizar.cs" Line="366" Column="1" />
-      <File FileName="examenPrutech/ViewModels/VMDatosBancarios.cs" Line="248" Column="49" />
-      <File FileName="examenPrutech/Services/cobertura.cs" Line="27" Column="48" />
-      <File FileName="../../../../../Volumes/KINGSTON/GMX/EmisionPolizaPVLMedicos.cs" Line="55" Column="58" />
+      <File FileName="examenPrutech/ViewModels/Emails.cs" Line="1117" Column="157" />
+      <File FileName="PrutechGMX12dic17 Status" />
     </Files>
   </MonoDevelop.Ide.Workbench>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|iPhoneSimulator" />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore>
-      <Breakpoint file="/Users/jazz/Projects/jazminewrooman/PrutechGMX/examenPrutech/ViewModels/VMCotizar.cs" relfile="examenPrutech/ViewModels/VMCotizar.cs" line="364" column="1" />
-      <Breakpoint file="/Users/jazz/Projects/jazminewrooman/PrutechGMX/examenPrutech/ViewModels/VMCotizar.cs" relfile="examenPrutech/ViewModels/VMCotizar.cs" line="366" column="1" />
-      <Breakpoint file="/Users/jazz/Projects/jazminewrooman/PrutechGMX/examenPrutech/ViewModels/VMCotizar.cs" relfile="examenPrutech/ViewModels/VMCotizar.cs" line="384" column="1" />
-      <Breakpoint file="/Users/jazz/Projects/jazminewrooman/PrutechGMX/examenPrutech/ViewModels/VMCotizar.cs" relfile="examenPrutech/ViewModels/VMCotizar.cs" line="230" column="31" />
+      <Breakpoint file="/Users/jazz/Projects/jazminewrooman/PrutechGMX12dic17/examenPrutech/ViewModels/VMDatosProfesionales.cs" relfile="examenPrutech/ViewModels/VMDatosProfesionales.cs" line="152" column="1" />
+      <Breakpoint file="/Users/jazz/Projects/jazminewrooman/PrutechGMX12dic17/examenPrutech/ViewModels/VMCotizar.cs" relfile="examenPrutech/ViewModels/VMCotizar.cs" line="156" column="1" />
+      <Breakpoint file="/Users/jazz/Projects/jazminewrooman/PrutechGMX12dic17/examenPrutech/ViewModels/VMCotizar.cs" relfile="examenPrutech/ViewModels/VMCotizar.cs" line="357" column="1" />
+      <Breakpoint file="/Users/jazz/Projects/jazminewrooman/PrutechGMX12dic17/examenPrutech/ViewModels/VMCotizar.cs" relfile="examenPrutech/ViewModels/VMCotizar.cs" line="329" column="1" />
+      <Breakpoint file="/Users/jazz/Projects/jazminewrooman/PrutechGMX12dic17/examenPrutech/ViewModels/VMDatosGenerales.cs" relfile="examenPrutech/ViewModels/VMDatosGenerales.cs" line="51" column="1" />
+      <Breakpoint file="/Users/jazz/Projects/jazminewrooman/PrutechGMX12dic17/examenPrutech/ViewModels/VMResumenDatos.cs" relfile="examenPrutech/ViewModels/VMResumenDatos.cs" line="221" column="1" />
+      <Breakpoint file="/Users/jazz/Projects/jazminewrooman/PrutechGMX12dic17/examenPrutech/ViewModels/VMDetallePoliza.cs" relfile="examenPrutech/ViewModels/VMDetallePoliza.cs" line="41" column="1" />
+      <Breakpoint file="/Users/jazz/Projects/jazminewrooman/PrutechGMX12dic17/examenPrutech/ViewModels/VMDetallePoliza.cs" relfile="examenPrutech/ViewModels/VMDetallePoliza.cs" line="63" column="1" />
+      <Breakpoint file="/Users/jazz/Projects/jazminewrooman/PrutechGMX12dic17/examenPrutech/ViewModels/VMResumenDatos.cs" relfile="examenPrutech/ViewModels/VMResumenDatos.cs" line="289" column="1" />
+      <Breakpoint file="/Users/jazz/Projects/jazminewrooman/PrutechGMX12dic17/examenPrutech/ViewModels/VMResumenDatos.cs" relfile="examenPrutech/ViewModels/VMResumenDatos.cs" line="67" column="1" />
+      <Breakpoint file="/Users/jazz/Projects/jazminewrooman/PrutechGMX12dic17/examenPrutech/ViewModels/VMCotizar.cs" relfile="examenPrutech/ViewModels/VMCotizar.cs" line="519" column="1" />
+      <Breakpoint file="/Users/jazz/Projects/jazminewrooman/PrutechGMX12dic17/examenPrutech/ViewModels/VMResumenDatos.cs" relfile="examenPrutech/ViewModels/VMResumenDatos.cs" line="70" column="1" />
+      <Breakpoint file="/Users/jazz/Projects/jazminewrooman/PrutechGMX12dic17/examenPrutech/ViewModels/VMResumenDatos.cs" relfile="examenPrutech/ViewModels/VMResumenDatos.cs" line="310" column="1" />
+      <Breakpoint file="/Users/jazz/Projects/jazminewrooman/PrutechGMX12dic17/examenPrutech/ViewModels/VMCotizar.cs" relfile="examenPrutech/ViewModels/VMCotizar.cs" line="140" column="1" />
+      <Breakpoint file="/Users/jazz/Projects/jazminewrooman/PrutechGMX12dic17/examenPrutech/ViewModels/VMResumenDatos.cs" relfile="examenPrutech/ViewModels/VMResumenDatos.cs" line="73" column="1" />
+      <Breakpoint file="/Users/jazz/Projects/jazminewrooman/PrutechGMX12dic17/examenPrutech/ViewModels/VMCotizar.cs" relfile="examenPrutech/ViewModels/VMCotizar.cs" line="131" column="1" />
+      <Breakpoint file="/Users/jazz/Projects/jazminewrooman/PrutechGMX12dic17/examenPrutech/ViewModels/Emails.cs" relfile="examenPrutech/ViewModels/Emails.cs" line="1286" column="1" />
     </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
-  <MonoDevelop.Ide.ItemProperties.Gmx.iOS PreferredExecutionTarget="MonoDevelop.IPhone.IPhoneSimulatorTarget.FC6EBC55-4EBF-471C-A3DF-128A6F97D265" />
+  <MonoDevelop.Ide.ItemProperties.Gmx.iOS PreferredExecutionTarget="MonoDevelop.IPhone.IPhoneDeviceTarget.8e6e6c3ceb8649f2af44149206769ec9b7a88941" />
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MultiItemStartupConfigurations />
 </Properties>

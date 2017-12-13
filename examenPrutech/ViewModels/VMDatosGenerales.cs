@@ -100,7 +100,11 @@ namespace GMX
                         return true;
                     }
                 }
-                return true;
+                else
+                {
+                    llenaModelo();
+                    return true;
+                }
             }
         }
 

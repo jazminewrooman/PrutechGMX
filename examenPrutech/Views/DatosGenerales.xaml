@@ -53,7 +53,9 @@
                     </Entry>
 
     				<Label Text="Calle, número exterior, número interior"  Style="{StaticResource labels}"/>
-    				<Editor x:Name="edtDirecc" HeightRequest="50" Text="{Binding Direccion, Mode=TwoWay}"/>
+                    <StackLayout BackgroundColor="#cccccc" Padding="1">
+    				    <Editor x:Name="edtDirecc" HeightRequest="50" Text="{Binding Direccion, Mode=TwoWay}"/>
+                    </StackLayout>
 
     				<Label Text="Teléfono (con lada)"  Style="{StaticResource labels}"/>
     				<Entry Text="{Binding Telefono, Mode=TwoWay}">

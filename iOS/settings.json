@@ -3,11 +3,15 @@
     "clave" : "AdKGEpIxQTR1XvtEpQLDYA==",
     "llave" : "PJUZpGkDfHaEca6I1kdw0iuSYJP8cJIw3F6L4a94uQo=",
     "APIUsuarios" : "http://148.243.230.134/wsUserAdmin/security.asmx",
+    //"APIUsuarios": "https://agentes.gmx.com.mx/wsuseradmin/security.asmx",
     "APIIntegracion": "http://desa.gmx.com.mx/IntegrationService/EmissionService.svc",
     "APIBD": "http://desa.gmx.com.mx/WS_Database_Access_PVLs/Service.asmx",
     "APIPayment": "http://desa.gmx.com.mx/wsPagoTB/PaymentCenter.asmx",
+    //"APIPayment": "http: //172.16.40.38/wsPayCenter/paymentcenter.asmx",
     "APIGMXIT": "http://desa.gmx.com.mx/WSMail/GMXITService.svc",
+    //"APIGMXIT": "http: //webservices.gmx.com.mx/GMXITServices/GMXITService.svc",
     "APIDocs": "http://desa.gmx.com.mx/WSMail/GMXDocumentRepository.svc",
+    //"APIDocs": "http://webservices.gmx.com.mx/GMXITServices/GMXDocumentRepository.svc",
     "EmailNicho": "daniel.celis@gmx.com.mx",
     "MIT_Currency": "MXN"
 }

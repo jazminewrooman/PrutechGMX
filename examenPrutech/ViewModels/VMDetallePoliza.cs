@@ -59,8 +59,23 @@ namespace GMX
                 {
                     Ocupado = true;
                     b.IniciaWS();
-                    var recibo = await b.getPolicy(res.Poliza, "recibo");
-                    await DependencyService.Get<ISaveAndOpen>().OpenFile("recibo.pdf", recibo.Result);
+                    byte[] doc = null;
+                    if (!String.IsNullOrEmpty(res.Tarjeta))
+                    {
+                        /*b.IniciaWS(api: config.Config["APIGMXIT"]);
+                        GMXHelper.EmisionPago datosMit = new EmisionPago();
+                        datosMit.Poliza = $"{res.Poliza}-Voucher";
+                        var recibo = await b.GenerateRecibo(datosMit);
+                        doc = recibo.Result;*/
+                        var recibo = await b.getPolicy(res.Poliza, $"{res.Poliza}-Voucher");
+                        doc = recibo.Result;
+                    }
+                    else
+                    {
+                        var recibo = await b.getPolicy(res.Poliza, "recibo");
+                        doc = recibo.Result;
+                    }
+                    await DependencyService.Get<ISaveAndOpen>().OpenFile("recibo.pdf", doc);
                     Ocupado = false;
                 });
                 ParticularesCommand = new Command(async () =>
@@ -150,7 +165,11 @@ namespace GMX
                         length = caratula.Result.Length
                     };
 
-                    var recibo = await b.getPolicy(res.Poliza, "recibo");
+                    getPolicyCompletedEventArgs recibo = null;
+                    if (!String.IsNullOrEmpty(res.Tarjeta))
+                        recibo = await b.getPolicy(res.Poliza, $"{res.Poliza}-Voucher");
+                    else
+                        recibo = await b.getPolicy(res.Poliza, "recibo");
                     var file_recibo = new FilePropertiesManager
                     {
                         stream = recibo.Result,

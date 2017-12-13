@@ -68,8 +68,11 @@ namespace GMX
                 string jsonpolizas = ws.get_catalogos("GetEmisionMedicoByIdAgenteAndEmision", $"@UserId={App.usr.UserId},@Emision_Low='{fini}',@Emision_Hgh='{ffin}'");
                 datospolizaemitida lst = JsonConvert.DeserializeObject<datospolizaemitida>(jsonpolizas);
                 ListaDatos = lst.Table.ToList(); //.Select(x => new resultado { Nombre = x.Nombre_Cliente, Poliza = x.Poliza, Emision = x.Emision, PrimaNeta = x.PrimaNeta, Derechos = x.Derechos, Iva = x.Iva, PrimaTotal = x.PrimaTotal, polizasante = (!String.IsNullOrEmpty(x.PolizasAnt) ? true : false) }).ToList();
+                var cc = ListaDatos.Where(x => x.Tarjeta != "");
             }
-            catch { }
+            catch (Exception ex)
+            {
+            }
             Ocupado = false;
         }
 

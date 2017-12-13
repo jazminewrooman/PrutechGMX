@@ -134,21 +134,39 @@ namespace GMX
                 string nombre = $"{App.agent.txt_nombre} {App.agent.txt_apellido1} {App.agent.txt_apellido2}";
                 string nombrecliente = $"{DatosGrales.Nombre} {DatosGrales.APaterno} {DatosGrales.AMaterno}";
                 string formapago = (DatosBank != null ? (!String.IsNullOrEmpty(DatosBank.FormaPago) ? DatosBank.FormaPago : "") : "");
-
+                string Estatus_Transaccion = (TransBanco != null ? (!String.IsNullOrEmpty(TransBanco.response) ? TransBanco.response : "") : "");
+                int Tipo_Negocio = (IdPlan == "1" ? 1 : 0);
+                string polizasant = ""; string haypolizasant = "";
+                if (IdTipo == "1")
+                {
+                    haypolizasant = "NO";
+                    polizasant = "";
+                }
+                if (IdTipo == "2")
+                {
+                    haypolizasant = "SI";
+                    if (Antecedentes.poliza1 != null && !String.IsNullOrEmpty(Antecedentes.poliza1.poliza))
+                        polizasant = $"{Antecedentes.poliza1.oficina}-{Antecedentes.poliza1.producto}-{Antecedentes.poliza1.poliza}-{Antecedentes.poliza1.endoso}-{Antecedentes.poliza1.renovacion}";
+                    if (Antecedentes.poliza2 != null && !String.IsNullOrEmpty(Antecedentes.poliza2.poliza))
+                        polizasant += $",{Antecedentes.poliza2.oficina}-{Antecedentes.poliza2.producto}-{Antecedentes.poliza2.poliza}-{Antecedentes.poliza2.endoso}-{Antecedentes.poliza2.renovacion}";
+                    if (Antecedentes.poliza3 != null && !String.IsNullOrEmpty(Antecedentes.poliza3.poliza))
+                        polizasant += $",{Antecedentes.poliza3.oficina}-{Antecedentes.poliza3.producto}-{Antecedentes.poliza3.poliza}-{Antecedentes.poliza3.endoso}-{Antecedentes.poliza3.renovacion}";
+                }
+                                    
                 var res = bd.insert_Emision(int.Parse(App.agent.cod_agente), nombre, DatosGrales.RFC, nombrecliente, DatosGrales.Direccion, "",
                                   "", DatosGrales.Telefono, DatosGrales.CP, DatosGrales.ColoniaStr, DatosGrales.EstadoStr, DatosGrales.MunicipioStr,
-                                            DatosGrales.Correo, PolizaGenerada.PolizaGenerada, TransBanco.reference, TransBanco.response, (TransBanco.response == "approved" ? TransBanco.foliocpagos : ""), (TransBanco.response == "approved" ? TransBanco.auth : ""), (TransBanco.response == "approved" ? TransBanco.cc_number : ""), StrTransBanco, "0",
-                                            DatosProf.Descripcion, DatosProf.Especialidad.ToString(), DatosProf.CedulaProf, DatosProf.CedulaEsp, DatosProf.Diplomados,
+                                            DatosGrales.Correo, PolizaGenerada.PolizaGenerada, TransBanco.reference, Estatus_Transaccion, (TransBanco.response == "approved" ? TransBanco.foliocpagos : ""), (TransBanco.response == "approved" ? TransBanco.auth : ""), (TransBanco.response == "approved" ? TransBanco.cc_number : ""), StrTransBanco, "0",
+                                            DatosProf.Descripcion, DatosProf.StrEspecialidad, DatosProf.CedulaProf, DatosProf.CedulaEsp, DatosProf.Diplomados,
                                             suma, (Adicional ? 1 : 0), IniVig, FinVig, DateTime.Now, PrimaNeta, Derechos, Iva, PrimaTotal, App.usr.UserId,
-                                  1, "", "", "", "", "", "",
-                                            34650, formapago, "", "", "NO", "", "", "", "", "", IniVig, "", "", "", "", "", "", 1);
+                                            Tipo_Negocio, "", "", "", "", "", "",
+                                            34650, formapago, "", "", haypolizasant, polizasant, "", "", "", "", IniVig, "", "", "", "", "", "", 1);
                 var resbit = bd.insert_emision_Bitacora(int.Parse(App.agent.cod_agente), nombre, DatosGrales.RFC, nombrecliente, DatosGrales.Direccion, "",
                                   "", DatosGrales.Telefono, DatosGrales.CP, DatosGrales.ColoniaStr, DatosGrales.EstadoStr, DatosGrales.MunicipioStr,
-                                                        DatosGrales.Correo, PolizaGenerada.PolizaGenerada, TransBanco.reference, TransBanco.response, (TransBanco.response == "approved" ? TransBanco.foliocpagos : ""), (TransBanco.response == "approved" ? TransBanco.auth : ""), (TransBanco.response == "approved" ? TransBanco.cc_number : ""), StrTransBanco, "0",
-                                  DatosProf.Descripcion, DatosProf.Especialidad.ToString(), DatosProf.CedulaProf, DatosProf.CedulaEsp, DatosProf.Diplomados,
+                                                        DatosGrales.Correo, PolizaGenerada.PolizaGenerada, TransBanco.reference, Estatus_Transaccion, (TransBanco.response == "approved" ? TransBanco.foliocpagos : ""), (TransBanco.response == "approved" ? TransBanco.auth : ""), (TransBanco.response == "approved" ? TransBanco.cc_number : ""), StrTransBanco, "0",
+                                                        DatosProf.Descripcion, DatosProf.StrEspecialidad, DatosProf.CedulaProf, DatosProf.CedulaEsp, DatosProf.Diplomados,
                                                         suma, (Adicional ? 1 : 0), IniVig, FinVig, DateTime.Now, PrimaNeta, Derechos, Iva, PrimaTotal, App.usr.UserId,
-                                  1, "", "", "", "", "", "",
-                                                        34650, formapago, "", "", "NO", "", "", "", "", "", IniVig, "", "", "", "", "", "", 1);
+                                                        Tipo_Negocio, "", "", "", "", "", "",
+                                                        34650, formapago, "", "", haypolizasant, polizasant, "", "", "", "", IniVig, "", "", "", "", "", "", 1);
             }
             catch (Exception ex)
             {
@@ -311,7 +329,7 @@ namespace GMX
                 IntegrationServiceEntity.Cliente clientegrales = new IntegrationServiceEntity.Cliente()
                 {
                     tipoPersona = "F",
-                    codItem = 0,
+                    codItem = ((DatosFiscales != null && !String.IsNullOrEmpty(DatosFiscales.RFC)) ? 1 : 0),
                     apPat = DatosGrales.APaterno,
                     apMat = DatosGrales.AMaterno,
                     nombre = DatosGrales.Nombre,
@@ -341,7 +359,7 @@ namespace GMX
                     IntegrationServiceEntity.Cliente clientefiscal = new IntegrationServiceEntity.Cliente()
                     {
                         tipoPersona = (DatosFiscales.Persona == TipoPersona.Fisica ? "F" : "J"),
-                        codItem = 1,
+                        codItem = 0,
                         apPat = DatosFiscales.APaterno,
                         apMat = DatosFiscales.AMaterno,
                         nombre = DatosFiscales.Nombre,
