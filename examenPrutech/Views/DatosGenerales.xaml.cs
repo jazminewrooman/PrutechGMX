@@ -27,12 +27,27 @@ namespace GMX.Views
 
             edtDirecc.TextChanged += (sender, e) => edtDirecc.UpdateLayout();
 
-            seg.ValueChanged += (sender, e) => {
+            seg.ValueChanged += (sender, e) =>
+            {
                 if (seg.SelectedSegment == 0)
+                {
                     vm.Persona = TipoPersona.Fisica;
-				if (seg.SelectedSegment == 1)
+                    lblNombre.IsVisible = true;
+                    txtNombre.IsVisible = true;
+                    lblAMaterno.IsVisible = true;
+                    txtAMaterno.IsVisible = true;
+                    lblAPaterno.Text = "Apellido paterno";
+                }
+                if (seg.SelectedSegment == 1)
+                {
                     vm.Persona = TipoPersona.Moral;
-			};
+                    lblNombre.IsVisible = false;
+                    txtNombre.IsVisible = false;
+                    lblAMaterno.IsVisible = false;
+                    txtAMaterno.IsVisible = false;
+                    lblAPaterno.Text = "Razón social";
+                }
+            };
 
             if (dg != null)
             {
@@ -47,6 +62,8 @@ namespace GMX.Views
                 //Title = "Datos Fiscales";
                 seg.IsVisible = true;
                 btnFiscales.IsVisible = false;
+                lblEmail.IsVisible = false;
+                txtEmail.IsVisible = false;
             }
             else
             {
@@ -56,6 +73,8 @@ namespace GMX.Views
                     btnFiscales.IsVisible = true;
                 if (modo == Modo.Edicion)
                     btnFiscales.IsVisible = false;
+                lblEmail.IsVisible = true;
+                txtEmail.IsVisible = true;
             }
         }
     }

@@ -31,22 +31,22 @@
                         </Entry.Behaviors>
                     </Entry>
 
-    				<Label Text="Nombre"  Style="{StaticResource labels}"/>
-    				<Entry Text="{Binding Nombre, Mode=TwoWay}">
+    				<Label x:Name="lblNombre" Text="Nombre" Style="{StaticResource labels}"/>
+    				<Entry x:Name="txtNombre" Text="{Binding Nombre, Mode=TwoWay}">
                         <Entry.Behaviors>
                             <local:MaxLengthValidator MaxLength="100"/>
                         </Entry.Behaviors>
                     </Entry>
 
-    				<Label Text="Apellido paterno"  Style="{StaticResource labels}"/>
+    				<Label x:Name="lblAPaterno" Text="Apellido paterno"  Style="{StaticResource labels}"/>
     				<Entry Text="{Binding APaterno, Mode=TwoWay}">
                         <Entry.Behaviors>
                             <local:MaxLengthValidator MaxLength="50"/>
                         </Entry.Behaviors>
                     </Entry>
 
-    				<Label Text="Apellido materno"  Style="{StaticResource labels}"/>
-    				<Entry Text="{Binding AMaterno, Mode=TwoWay}">
+    				<Label x:Name="lblAMaterno" Text="Apellido materno"  Style="{StaticResource labels}"/>
+    				<Entry x:Name="txtAMaterno" Text="{Binding AMaterno, Mode=TwoWay}">
                         <Entry.Behaviors>
                             <local:MaxLengthValidator MaxLength="50"/>
                         </Entry.Behaviors>
@@ -83,8 +83,8 @@
     				<Label Text="Colonia"  Style="{StaticResource labels}"/>
     				<Picker SelectedIndex="{Binding Colonia, Mode=TwoWay}" ItemsSource="{Binding Colonias}"/>
 
-    				<Label Text="Correo electrónico"  Style="{StaticResource labels}"/>
-    				<Entry Text="{Binding Correo}" Keyboard="Email">
+    				<Label x:Name="lblEmail" Text="Correo electrónico"  Style="{StaticResource labels}"/>
+    				<Entry x:Name="txtEmail" Text="{Binding Correo}" Keyboard="Email">
                         <Entry.Behaviors>
                             <local:MaxLengthValidator MaxLength="50" />
                             <local:EmailValidationBehavior IsValid="{Binding CorreoValido, Mode=TwoWay}"/>

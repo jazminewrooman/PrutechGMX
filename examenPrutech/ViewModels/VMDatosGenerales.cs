@@ -86,10 +86,15 @@ namespace GMX
             if (String.IsNullOrEmpty(RFC) || String.IsNullOrEmpty(APaterno)
                 || String.IsNullOrEmpty(Direccion) || String.IsNullOrEmpty(CP)
                 || Estado < 0 || Municipio < 0 || Ciudad < 0 || Colonia < 0
-                || String.IsNullOrEmpty(Correo) || !RFCValido || !CorreoValido)
+                || !RFCValido)
                 return false;
             else
             {
+                if (tipo == TipoDatos.Generales)
+                {
+                    if (String.IsNullOrEmpty(Correo) || !CorreoValido)
+                        return false;
+                }
                 if ((tipo == TipoDatos.Generales) || (tipo == TipoDatos.Fiscales && Persona == TipoPersona.Fisica))
                 {
                     if (String.IsNullOrEmpty(Nombre) || String.IsNullOrEmpty(AMaterno))
