@@ -51,8 +51,9 @@ namespace GMX
                 {
                     Ocupado = true;
                     b.IniciaWS(apidoc: config.Config["APIDocs"]);
-                    var condgen = await b.ReturnDocument("W_RCMedML_Ind_20.07.2016.2.pdf", false);
-                    await DependencyService.Get<ISaveAndOpen>().OpenFile("W_RCMedML_Ind_20.07.2016.2.pdf", condgen.Result);
+                    var condgen = await b.ReturnDocument("W_RCMed_Ind_01.07.17.pdf", false);
+                    if (condgen.Result != null)
+                        await DependencyService.Get<ISaveAndOpen>().OpenFile("W_RCMed_Ind_01.07.17.pdf", condgen.Result);
                     Ocupado = false;
                 });
                 ControlCommand = new Command(async () =>
@@ -80,33 +81,36 @@ namespace GMX
                 });
                 ParticularesCommand = new Command(async () =>
                 {
+                    string[] polant = new string[] { "", "", "" };
+                    if (!String.IsNullOrEmpty(res.PolAnt1))
+                        polant = res.PolAnt1.Split(',');
+
                     Ocupado = true;
+                    string polizagenerada = "";
+                    string[] numpol = res.Poliza.Split('_');
+                    if (numpol.Length > 0 && numpol.Length >= 3)
+                        polizagenerada = numpol[2];
+                    string numpoliza = $"{App.agent.cod_suc.PadLeft(3, '0')}-66-{polizagenerada.PadLeft(8, '0')}-0000-01";
+
                     try
                     {
                         b.IniciaWS(apidoc: config.Config["APIDocs"]);
                         var waterm = await b.ReturnDocument("Watermark.jpg", false);
 
-                        if (!String.IsNullOrEmpty(res.PolizasAnt) && res.PolizasAnt == "NO")//nueva
-                            GMX.ViewModels.Emails.SlipTradicional(res.Poliza, res.Arrendatario, res.Nombre_Cliente, res.Especialidad, res.Especialidad2, res.NoCedulaPro, res.NoCedulaEsp, res.Otros, res.Suma_Asegurada.ToString("c"));
-                        if (!String.IsNullOrEmpty(res.PolizasAnt) && res.PolizasAnt == "SI")//renovacion
-                            GMX.ViewModels.Emails.SlipTradicionalRenov(res.Poliza, res.Arrendatario, res.Nombre_Cliente, res.Especialidad, res.Especialidad2, res.NoCedulaPro, res.NoCedulaEsp, res.Otros, res.Suma_Asegurada.ToString("c"), res.fecRetroactiva.ToString("dd/MM/yyyy"), res.PolAnt1, res.PolAnt2, "");
-
-                        /*if (vmcotizar.IdPlan == "1") //tradicional
-                {
-                    if (vmcotizar.IdTipo == "1")//nueva
-                        GMX.ViewModels.Emails.SlipTradicional(vmcotizar.PolizaGenerada.NumPoliza, vmcotizar.Adicional, $"{vmcotizar.DatosGrales.Nombre} {vmcotizar.DatosGrales.APaterno} {vmcotizar.DatosGrales.AMaterno}", vmcotizar.DatosProf.Descripcion, vmcotizar.DatosProf.Especialidad.ToString(), vmcotizar.DatosProf.CedulaProf, vmcotizar.DatosProf.CedulaEsp, vmcotizar.DatosProf.Diplomados, vmcotizar.SumaAseg);
-                    if (vmcotizar.IdTipo == "2")//renovacion
-                        GMX.ViewModels.Emails.SlipTradicionalRenov(vmcotizar.PolizaGenerada.NumPoliza, vmcotizar.Adicional, $"{vmcotizar.DatosGrales.Nombre} {vmcotizar.DatosGrales.APaterno} {vmcotizar.DatosGrales.AMaterno}", vmcotizar.DatosProf.Descripcion, vmcotizar.DatosProf.Especialidad.ToString(), vmcotizar.DatosProf.CedulaProf, vmcotizar.DatosProf.CedulaEsp, vmcotizar.DatosProf.Diplomados, vmcotizar.SumaAseg, $"{vmcotizar.Antecedentes.dia}/{vmcotizar.Antecedentes.mes}/{vmcotizar.Antecedentes.anno}", (vmcotizar.Antecedentes.poliza1 != null ? vmcotizar.Antecedentes.poliza1.poliza : String.Empty), (vmcotizar.Antecedentes.poliza2 != null ? vmcotizar.Antecedentes.poliza2.poliza : String.Empty), (vmcotizar.Antecedentes.poliza3 != null ? vmcotizar.Antecedentes.poliza3.poliza : String.Empty));
-                }
-                if (vmcotizar.IdPlan == "2") //angeles
-                {
-                    if (vmcotizar.IdTipo == "1")//nueva
-                        GMX.ViewModels.Emails.SlipAngeles(vmcotizar.PolizaGenerada.NumPoliza, $"{vmcotizar.DatosGrales.Nombre} {vmcotizar.DatosGrales.APaterno} {vmcotizar.DatosGrales.AMaterno}", vmcotizar.DatosProf.Descripcion, vmcotizar.DatosProf.Especialidad.ToString(), vmcotizar.DatosProf.CedulaProf, vmcotizar.DatosProf.CedulaEsp, vmcotizar.DatosProf.Diplomados, sumaasegdec);
-                    if (vmcotizar.IdTipo == "2")//renovacion
-                        GMX.ViewModels.Emails.SlipAngelesReov(vmcotizar.PolizaGenerada.NumPoliza, $"{vmcotizar.DatosGrales.Nombre} {vmcotizar.DatosGrales.APaterno} {vmcotizar.DatosGrales.AMaterno}", vmcotizar.DatosProf.Descripcion, vmcotizar.DatosProf.Especialidad.ToString(), vmcotizar.DatosProf.CedulaProf, vmcotizar.DatosProf.CedulaEsp, vmcotizar.DatosProf.Diplomados, sumaasegdec, $"{vmcotizar.Antecedentes.dia}/{vmcotizar.Antecedentes.mes}/{vmcotizar.Antecedentes.anno}", (vmcotizar.Antecedentes.poliza1 != null ? vmcotizar.Antecedentes.poliza1.poliza : String.Empty), (vmcotizar.Antecedentes.poliza2 != null ? vmcotizar.Antecedentes.poliza2.poliza : String.Empty), (vmcotizar.Antecedentes.poliza3 != null ? vmcotizar.Antecedentes.poliza3.poliza : String.Empty));
-                }*/
-
-
+                        if (res.Tipo_Negocio == 1) //tradicional
+                        {
+                            if (res.PolizasAnt == "NO")//nueva
+                                GMX.ViewModels.Emails.SlipTradicional(numpoliza, res.Arrendatario, res.Nombre_Cliente, res.Especialidad, res.SubEspecialidad, res.NoCedulaPro, res.NoCedulaEsp, res.Otros, $"{res.Suma_Asegurada.ToString("c")} M.N.");
+                            if (!String.IsNullOrEmpty(res.PolizasAnt) && res.PolizasAnt == "SI")//renovacion
+                                GMX.ViewModels.Emails.SlipTradicionalRenov(numpoliza, res.Arrendatario, res.Nombre_Cliente, res.Especialidad, res.SubEspecialidad, res.NoCedulaPro, res.NoCedulaEsp, res.Otros, $"{res.Suma_Asegurada.ToString("c")} M.N.", res.fecRetroactiva.ToString("dd/MM/yyyy"), (polant.Length > 0 ? polant[0] : ""), (polant.Length > 1 ? polant[1] : ""), (polant.Length > 2 ? polant[2] : ""));
+                        }
+                        else //Angeles
+                        {
+                            if (res.PolizasAnt == "NO")//nueva
+                                GMX.ViewModels.Emails.SlipAngeles(numpoliza, res.Nombre_Cliente, res.Especialidad, res.SubEspecialidad, res.NoCedulaPro, res.NoCedulaEsp, res.Otros, (decimal)res.Suma_Asegurada);
+                            if (!String.IsNullOrEmpty(res.PolizasAnt) && res.PolizasAnt == "SI")//renovacion
+                                GMX.ViewModels.Emails.SlipAngelesReov(numpoliza, res.Nombre_Cliente, res.Especialidad, res.SubEspecialidad, res.NoCedulaPro, res.NoCedulaEsp, res.Otros, (decimal)res.Suma_Asegurada, res.fecRetroactiva.ToString("dd/MM/yyyy"), (polant.Length > 0 ? polant[0] : ""), (polant.Length > 1 ? polant[1] : ""), (polant.Length > 2 ? polant[2] : ""));
+                        }
 
                         GMX.ViewModels.Emails.docPDF.Watermark = waterm.Result;
                         b.IniciaWS(api: config.Config["APIGMXIT"]);
@@ -130,24 +134,32 @@ namespace GMX
                 });
                 ReenviarCommand = new Command(async () =>
                 {
+                    string[] polant = new string[] { "", "", "" };
+                    if (!String.IsNullOrEmpty(res.PolAnt1))
+                        polant = res.PolAnt1.Split(',');
+
+                    FilePropertiesManager file_condi_gral = null;
                     List<FilePropertiesManager> fileAttach = new List<FilePropertiesManager>();
                     Ocupado = true;
                     string polizagenerada = "";
                     string[] numpol = res.Poliza.Split('_');
                     if (numpol.Length > 0 && numpol.Length >= 3)
                         polizagenerada = numpol[2];
-                    string numpoliza = $"01-66-{polizagenerada.PadLeft(8, '0')}-0000-01";
+                    string numpoliza = $"{App.agent.cod_suc.PadLeft(3, '0')}-66-{polizagenerada.PadLeft(8, '0')}-0000-01";
 
                     b.IniciaWS(apidoc: config.Config["APIDocs"]);
                     var waterm = await b.ReturnDocument("Watermark.jpg", false);
 
-                    var condgen = await b.ReturnDocument("W_RCMedML_Ind_20.07.2016.2.pdf", false);
-                    var file_condi_gral = new FilePropertiesManager
+                    var condgen = await b.ReturnDocument("W_RCMed_Ind_01.07.17.pdf", false);
+                    if (condgen.Result != null)
                     {
-                        stream = condgen.Result,
-                        fileName = "W_RCMedML_Ind_20.07.2016.2.pdf",
-                        length = condgen.Result.Length
-                    };
+                        file_condi_gral = new FilePropertiesManager
+                        {
+                            stream = condgen.Result,
+                            fileName = "W_RCMed_Ind_01.07.17.pdf",
+                            length = condgen.Result.Length
+                        };
+                    }
 
                     var folleto = await b.ReturnDocument("PLAN_LEGAL_MEDICOS.pdf", false);
                     var filefolleto = new FilePropertiesManager
@@ -177,10 +189,21 @@ namespace GMX
                         length = recibo.Result.Length
                     };
 
-                    if (!String.IsNullOrEmpty(res.PolizasAnt) && res.PolizasAnt == "NO")//nueva
-                        GMX.ViewModels.Emails.SlipTradicional(numpoliza, res.Arrendatario, res.Nombre_Cliente, res.Especialidad, res.Especialidad2, res.NoCedulaPro, res.NoCedulaEsp, res.Otros, res.Suma_Asegurada.ToString("c"));
-                    if (!String.IsNullOrEmpty(res.PolizasAnt) && res.PolizasAnt == "SI")//renovacion
-                        GMX.ViewModels.Emails.SlipTradicionalRenov(numpoliza, res.Arrendatario, res.Nombre_Cliente, res.Especialidad, res.Especialidad2, res.NoCedulaPro, res.NoCedulaEsp, res.Otros, res.Suma_Asegurada.ToString("c"), res.fecRetroactiva.ToString("dd/MM/yyyy"), res.PolAnt1, res.PolAnt2, "");
+                    if (res.Tipo_Negocio == 1) //tradicional
+                    {
+                        if (res.PolizasAnt == "NO")//nueva
+                            GMX.ViewModels.Emails.SlipTradicional(numpoliza, res.Arrendatario, res.Nombre_Cliente, res.Especialidad, res.SubEspecialidad, res.NoCedulaPro, res.NoCedulaEsp, res.Otros, $"{res.Suma_Asegurada.ToString("c")} M.N.");
+                        if (!String.IsNullOrEmpty(res.PolizasAnt) && res.PolizasAnt == "SI")//renovacion
+                            GMX.ViewModels.Emails.SlipTradicionalRenov(numpoliza, res.Arrendatario, res.Nombre_Cliente, res.Especialidad, res.SubEspecialidad, res.NoCedulaPro, res.NoCedulaEsp, res.Otros, $"{res.Suma_Asegurada.ToString("c")} M.N.", res.fecRetroactiva.ToString("dd/MM/yyyy"), (polant.Length > 0 ? polant[0] : ""), (polant.Length > 1 ? polant[1] : ""), (polant.Length > 2 ? polant[2] : ""));
+                    }
+                    else //Angeles
+                    {
+                        if (res.PolizasAnt == "NO")//nueva
+                            GMX.ViewModels.Emails.SlipAngeles(numpoliza, res.Nombre_Cliente, res.Especialidad, res.SubEspecialidad, res.NoCedulaPro, res.NoCedulaEsp, res.Otros, (decimal)res.Suma_Asegurada);
+                        if (!String.IsNullOrEmpty(res.PolizasAnt) && res.PolizasAnt == "SI")//renovacion
+                            GMX.ViewModels.Emails.SlipAngelesReov(numpoliza, res.Nombre_Cliente, res.Especialidad, res.SubEspecialidad, res.NoCedulaPro, res.NoCedulaEsp, res.Otros, (decimal)res.Suma_Asegurada, res.fecRetroactiva.ToString("dd/MM/yyyy"), (polant.Length > 0 ? polant[0] : ""), (polant.Length > 1 ? polant[1] : ""), (polant.Length > 2 ? polant[2] : ""));
+                    }
+
                     GMX.ViewModels.Emails.docPDF.Watermark = waterm.Result;
                     b.IniciaWS(api: config.Config["APIGMXIT"]);
                     var condpart = await b.GenerateDocument(GMX.ViewModels.Emails.Sections.ToArray(), GMX.ViewModels.Emails.docPDF);
@@ -201,7 +224,7 @@ namespace GMX
 
         public void cargaDatos(polizaemitida res)
         {
-            Emision = res.Emision;
+            Emision = res.Emision.ToString("dd/MM/yyyy");
             PrimaNeta = res.PrimaNeta;
             Derechos = res.Derechos;
             IVA = res.Iva;
@@ -221,8 +244,8 @@ namespace GMX
             }
         }
 
-        DateTime emision;
-        public DateTime Emision
+        string emision;
+        public string Emision
         {
             get => emision;
             set 

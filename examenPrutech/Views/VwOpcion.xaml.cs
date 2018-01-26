@@ -94,27 +94,29 @@ namespace GMX.Views
 			await obj.Navigation.PushPopupAsync(obj.lo, true);
         }
 
-        private void muestraopciones(object sender, ListaOpciones.OpcionSeleccionadaEventArgs ea){
-			Detail = ea.sel.opc;
-			IdDetail = ea.sel.idopc;
-			TitleColor = Color.Black;
-			foreach (opciones o in Lst)
-			{
-				if (o.idopc == ea.sel.idopc)
-					o.sel = true;
-				else
-					o.sel = false;
-			}
-		}
+        private void muestraopciones(object sender, ListaOpciones.OpcionSeleccionadaEventArgs ea)
+        {
+            Detail = ea.sel.opc;
+            IdDetail = ea.sel.idopc;
+            TitleColor = Color.Black;
+            foreach (opciones o in Lst)
+            {
+                if (o.idopc == ea.sel.idopc)
+                    o.sel = true;
+                else
+                    o.sel = false;
+            }
+        }
 
-        private async Task Clicka(){
-			lo = new ListaOpciones(Lst, Title, SubTxt);
-			stack.BackgroundColor = Color.FromHex("#e5e5e5");
-			await Task.Delay(100);
-			stack.BackgroundColor = Color.Transparent;
+        private async Task Clicka()
+        {
+            lo = new ListaOpciones(Lst, Title, SubTxt);
+            stack.BackgroundColor = Color.FromHex("#e5e5e5");
+            await Task.Delay(100);
+            stack.BackgroundColor = Color.Transparent;
             lo.OpcionSeleccionada += muestraopciones;
-			//await Navigation.PushAsync(lo, true);
-			await Navigation.PushPopupAsync(lo, true);
+            //await Navigation.PushAsync(lo, true);
+            await Navigation.PushPopupAsync(lo, true);
         }
 
         public VwOpcion()

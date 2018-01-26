@@ -128,6 +128,7 @@ namespace GMX
             Ocupado = true;
             try
             {
+                DateTime retro = DateTime.Now;;
                 wsbd.Service bd = new wsbd.Service();
                 decimal suma = decimal.Parse(SumaAseg, NumberStyles.AllowCurrencySymbol | NumberStyles.Number);
                 DatosGralesModel fisc = (DatosFiscales != null ? DatosFiscales : DatosGrales);
@@ -167,6 +168,7 @@ namespace GMX
                         polizasant += $",{Antecedentes.poliza2.oficina}-{Antecedentes.poliza2.producto}-{Antecedentes.poliza2.poliza}-{Antecedentes.poliza2.endoso}-{Antecedentes.poliza2.renovacion}";
                     if (Antecedentes.poliza3 != null && !String.IsNullOrEmpty(Antecedentes.poliza3.poliza))
                         polizasant += $",{Antecedentes.poliza3.oficina}-{Antecedentes.poliza3.producto}-{Antecedentes.poliza3.poliza}-{Antecedentes.poliza3.endoso}-{Antecedentes.poliza3.renovacion}";
+                    retro = new DateTime(Antecedentes.anno, Antecedentes.mes, Antecedentes.dia);
                 }
                                     
                 var res = bd.insert_Emision(int.Parse(App.agent.cod_agente), nombre, DatosGrales.RFC, nombrecliente, DatosGrales.Direccion, "",
@@ -175,14 +177,14 @@ namespace GMX
                                             DatosProf.Descripcion, DatosProf.StrEspecialidad, DatosProf.CedulaProf, DatosProf.CedulaEsp, DatosProf.Diplomados,
                                             suma, (Adicional ? 1 : 0), IniVig, FinVig, DateTime.Now, PrimaNeta, Derechos, Iva, PrimaTotal, App.usr.UserId,
                                             Tipo_Negocio, "", "", "", nombrefiscal, rfcfiscal, domfiscal,
-                                            mov, formapago, "", "", haypolizasant, polizasant, "", "", "", "", IniVig, "", "", "", "", "", "", 1);
+                                            mov, formapago, "", "", haypolizasant, polizasant, "", "", "", "", retro, "", "", "", "", "", "", 1);
                 var resbit = bd.insert_emision_Bitacora(int.Parse(App.agent.cod_agente), nombre, DatosGrales.RFC, nombrecliente, DatosGrales.Direccion, "",
                                   "", DatosGrales.Telefono, DatosGrales.CP, DatosGrales.ColoniaStr, DatosGrales.EstadoStr, DatosGrales.MunicipioStr,
                                                         DatosGrales.Correo, PolizaGenerada.PolizaGenerada, TransBanco.reference, statustrans, (TransBanco.response == "approved" ? TransBanco.foliocpagos : ""), (TransBanco.response == "approved" ? TransBanco.auth : ""), (TransBanco.response == "approved" ? TransBanco.cc_number : ""), StrTransBanco, "0",
                                                         DatosProf.Descripcion, DatosProf.StrEspecialidad, DatosProf.CedulaProf, DatosProf.CedulaEsp, DatosProf.Diplomados,
                                                         suma, (Adicional ? 1 : 0), IniVig, FinVig, DateTime.Now, PrimaNeta, Derechos, Iva, PrimaTotal, App.usr.UserId,
                                                         Tipo_Negocio, "", "", "", nombrefiscal, rfcfiscal, domfiscal,
-                                                        mov, formapago, "", "", haypolizasant, polizasant, "", "", "", "", IniVig, "", "", "", "", "", "", 1);
+                                                        mov, formapago, "", "", haypolizasant, polizasant, "", "", "", "", retro, "", "", "", "", "", "", 1);
             }
             catch (Exception ex)
             {
@@ -453,7 +455,7 @@ namespace GMX
                 {
                     intentosdepago = 0;
                     PolizaGenerada = JsonConvert.DeserializeObject<resultadopoliza>(jsonpoliza.Result);
-                    PolizaGenerada.NumPoliza = $"001-{PolizaGenerada.Ramo.PadLeft(2, '0')}-{PolizaGenerada.NumPoliza.PadLeft(8, '0')}-{PolizaGenerada.Endoso.PadLeft(4, '0')}-{PolizaGenerada.Renovacion.PadLeft(2, '0')}";
+                    PolizaGenerada.NumPoliza = $"{App.agent.cod_suc.PadLeft(3, '0')}-{PolizaGenerada.Ramo.PadLeft(2, '0')}-{PolizaGenerada.NumPoliza.PadLeft(8, '0')}-{PolizaGenerada.Endoso.PadLeft(4, '0')}-{PolizaGenerada.Renovacion.PadLeft(2, '0')}";
                 }
                 Ocupado = false;
                 MsgOcupado = "";
@@ -701,7 +703,8 @@ namespace GMX
 			}
 		}
 
-        private void ValidarMuestroCuestionario(){
+        private void ValidarMuestroCuestionario()
+        {
             if (!String.IsNullOrEmpty(IdPlan) && !String.IsNullOrEmpty(IdTipo))
                 VerCuestionario = true;
             else
@@ -766,21 +769,23 @@ namespace GMX
         private void CargaFechas(ListaFechaCotiz fechas)
         {
             FechaCotizacion f = fechas.Table.FirstOrDefault();
-            if (f.numMesesPost > -1 && f.numMesesRetro > -1)
-            {
+            if (f.numMesesRetro > -1)
                 FRetroactiva = DateTime.Now.AddMonths(f.numMesesRetro * -1);
-                FPosterior = DateTime.Now.AddMonths(f.numMesesPost);
-            }
-            else if (f.diasPosteriores > -1 && f.diasRetroactivos > -1)
-            {
+            else if (f.diasRetroactivos > -1)
                 FRetroactiva = DateTime.Now.AddDays(f.diasRetroactivos * -1).Date;
-                FPosterior = DateTime.Now.AddDays(f.diasPosteriores).Date;
-            }
             else
-            {
                 FRetroactiva = (f.fecRetroactiva == null ? DateTime.MinValue : (DateTime)f.fecRetroactiva);
+            if (FRetroactiva == DateTime.MinValue)
+                FRetroactiva = DateTime.Now;
+
+            if (f.numMesesPost > -1)
+                FPosterior = DateTime.Now.AddMonths(f.numMesesPost);
+            else if (f.diasPosteriores > -1)
+                FPosterior = DateTime.Now.AddDays(f.diasPosteriores).Date;
+            else
                 FPosterior = (f.fecPosterior == null ? DateTime.MinValue : (DateTime)f.fecPosterior);
-            }
+            if (FPosterior == DateTime.MinValue)
+                FPosterior = FRetroactiva.AddDays(30);
         }
 
         private async Task CargaSumas(){

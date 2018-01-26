@@ -1,6 +1,7 @@
 ﻿using System;
 using GMXHelper;
 using System.Collections.Generic;
+using System.Globalization;
 
 namespace GMX.ViewModels
 {
@@ -1014,10 +1015,10 @@ namespace GMX.ViewModels
             Sections = new List<Section>();
 
             docPDF.IsCotizacion = true;
-            string Header = "<center><table><tr><td><br/><h2>ESPECIFICACIÓN QUE SE ADHIERE Y FORMA PARTE INTEGRANTE DE LA PÓLIZA</h2><h2></h2><br/><br/></td></tr></table></center><br/><br/>";
+            string Header = "<center><table><tr><td><br/><h1>COTIZACIÓN</h1><h2>Seguro de Responsabilidad Civil Profesional Para Profesiones Médicas, Auxiliares y Técnicas</h2><br/><br/></td></tr></table></center><br/><br/>";
             docPDF.StaticText = Header;
-            docPDF.StaticCSS = "h2{ font-family: 'Segoe UI'; font-size: small; text-align: center; color: #9c9c9c; } h3{ font-family: 'Segoe UI'; font-size: xx-small; text-align: center; color: #9c9c9c; } table{border: 0px solid #d0d0d0;  margin: auto; width:100 %; }";
-            docPDF.StaticXPosition = 110;
+            docPDF.StaticCSS = "h1{ font-family: 'Arial'; font-size: 20; text-align: center; color: #9c9c9c; } h2{ font-family: Arial; font-size: 13; text-align: center; color: #9c9c9c; } table{border: 0px solid #d0d0d0;  margin: auto; width:100 %; }";
+            docPDF.StaticXPosition = 64;//110;
             docPDF.StaticYPosition = 700;
 
             //Pie de Pagina
@@ -1031,7 +1032,8 @@ namespace GMX.ViewModels
             docPDF.mRight = 58;
             docPDF.mLeft = 58;
 
-            string Today = String.Format("{0:d}", DateTime.Today);
+            CultureInfo ci = new CultureInfo("es-MX");
+            string Today = $"México, D.F. a {DateTime.Now.ToString("dd 'de' MMMM 'de' yyyy", ci)}"; //String.Format("{0:d}", DateTime.Today);
             string SumaAseg = vm.SumaAseg;
             string pNeta = vm.PrimaNeta.ToString("c");
             string recargos = 0.ToString("c");
@@ -1133,10 +1135,10 @@ namespace GMX.ViewModels
             Sections = new List<Section>();
 
             docPDF.IsCotizacion = true;
-            string Header = "<center><table><tr><td><br/><h2>ESPECIFICACIÓN QUE SE ADHIERE Y FORMA PARTE INTEGRANTE DE LA PÓLIZA</h2><h2></h2><br/><br/></td></tr></table></center><br/><br/>";
+            string Header = "<center><table><tr><td><br/><h1>COTIZACIÓN</h1><h2>Seguro de Responsabilidad Civil Profesional Para Profesiones Médicas, Auxiliares y Técnicas</h2><br/><br/></td></tr></table></center><br/><br/>";
             docPDF.StaticText = Header;
-            docPDF.StaticCSS = "h2{ font-family: 'Segoe UI'; font-size: small; text-align: center; color: #9c9c9c; } h3{ font-family: 'Segoe UI'; font-size: xx-small; text-align: center; color: #9c9c9c; } table{border: 0px solid #d0d0d0;  margin: auto; width:100 %; }";
-            docPDF.StaticXPosition = 110;
+            docPDF.StaticCSS = "h1{ font-family: 'Arial'; font-size: 20; text-align: center; color: #9c9c9c; } h2{ font-family: Arial; font-size: 13; text-align: center; color: #9c9c9c; } table{border: 0px solid #d0d0d0;  margin: auto; width:100 %; }";
+            docPDF.StaticXPosition = 64;//110;
             docPDF.StaticYPosition = 700;
 
             //Pie de Pagina
@@ -1150,14 +1152,16 @@ namespace GMX.ViewModels
             docPDF.mRight = 58;
             docPDF.mLeft = 58;
 
-            string Today = String.Format("{0:d}", DateTime.Today);
-            string SumaAseg = vm.SumaAseg;
-            string pNeta = vm.PrimaNeta.ToString("c");
-            string recargos = 0.ToString("c");
-            string derechos = vm.Derechos.ToString("c");
-            string sTotal = vm.SubTotal.ToString("c");
-            string iva = vm.Iva.ToString("c");
-            string pTotal = vm.PrimaTotal.ToString("c");
+            CultureInfo ci = new CultureInfo("es-MX");
+            string Today = $"México, D.F. a {DateTime.Now.ToString("dd 'de' MMMM 'de' yyyy", ci)}"; //String.Format("{0:d}", DateTime.Today);
+            string SumaAseg = $"{vm.SumaAseg} M.N.";
+            string pNeta = $"{vm.PrimaNeta.ToString("c")} M.N.";
+            string recargos = $"{0.ToString("c")} M.N.";
+            string derechos = $"{vm.Derechos.ToString("c")} M.N.";
+            string sTotal = $"{vm.SubTotal.ToString("c")} M.N.";
+            string iva = $"{vm.Iva.ToString("c")} M.N.";
+            string pTotal = $"{vm.PrimaTotal.ToString("c")} M.N.";
+            string cober_rcArrend = vm.Adicional ? "<li><b>Responsabilidad Civil Arrendatario</b></li>" : string.Empty;
 
             #region Sections Fecha Expedicion
             Sections.Add(new Section
@@ -1192,7 +1196,7 @@ namespace GMX.ViewModels
                                          "<li><b>Responsabilidad Civil Profesional.</b></li>" +
                                          "<li><b>Responsabilidad Civil por el uso de objetos peligrosos (objetiva)</b></li>" +
                                          "<li><b>Suministros de medicamentos y materiales de curación</b></li>" +
-                                         "<li><b>Responsabilidad Civil por sus inmuebles y Responsabilidad Civil por sus Actividades </b></li>" +
+                    "<li><b>Responsabilidad Civil por sus inmuebles y Responsabilidad Civil por sus Actividades </b></li>" + cober_rcArrend +
                                          "</ul>" +
                                    "</p>" +
                                    "</td>" +

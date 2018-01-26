@@ -82,7 +82,7 @@ namespace GMX.Views
                 if (Fini != DateTime.MinValue)
                     cfg.MinimumDate = Fini.Date;
                 if (Ffin != DateTime.MinValue)
-                    cfg.MaximumDate = Ffin.Date.AddDays(1);
+                    cfg.MaximumDate = Ffin.Date; //.AddDays(1);
                 var result = await UserDialogs.Instance.DatePromptAsync(cfg);
                 Detail = result.SelectedDate.ToString("dd/MM/yyyy");
                 DateSel = result.SelectedDate;

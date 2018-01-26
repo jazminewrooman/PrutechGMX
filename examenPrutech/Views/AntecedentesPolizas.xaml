@@ -45,7 +45,7 @@
     				<Label Grid.Row="0" Grid.Column="2" Text="Póliza"  Style="{StaticResource labels}"/>
     				<Entry Grid.Row="1" Grid.Column="2" Text="{Binding poliza1.poliza, Mode=TwoWay}" Keyboard="Numeric">
                             <Entry.Behaviors>
-                                <local:IntValidationBehavior MaxLength="7"/>
+                                <local:IntValidationBehavior MaxLength="8"/>
                             </Entry.Behaviors>
                     </Entry>
                         
@@ -55,8 +55,7 @@
     				<Label Grid.Row="2" Grid.Column="1" Text="Renovación"  Style="{StaticResource labels}"/>
     				<Entry Grid.Row="3" Grid.Column="1" Text="{Binding poliza1.renovacion, Mode=TwoWay}" Keyboard="Numeric">
                         <Entry.Behaviors>
-                            <local:MaxLengthValidator MaxLength="2"/>
-                            <local:IntValidationBehavior/>
+                            <local:IntValidationBehavior MaxLength="2"/>
                         </Entry.Behaviors>
                     </Entry>
 
@@ -83,7 +82,7 @@
                     <Label Grid.Row="0" Grid.Column="2" Text="Póliza"  Style="{StaticResource labels}"/>
                     <Entry Grid.Row="1" Grid.Column="2" Text="{Binding poliza2.poliza, Mode=TwoWay}" Keyboard="Numeric">
                             <Entry.Behaviors>
-                                <local:IntValidationBehavior MaxLength="7"/>
+                                <local:IntValidationBehavior MaxLength="8"/>
                             </Entry.Behaviors>
                     </Entry>
 
@@ -93,8 +92,7 @@
                     <Label Grid.Row="2" Grid.Column="1" Text="Renovación"  Style="{StaticResource labels}"/>
                     <Entry Grid.Row="3" Grid.Column="1" Text="{Binding poliza2.renovacion, Mode=TwoWay}" Keyboard="Numeric">
                         <Entry.Behaviors>
-                            <local:MaxLengthValidator MaxLength="2"/>
-                            <local:IntValidationBehavior/>
+                            <local:IntValidationBehavior MaxLength="2"/>
                         </Entry.Behaviors>
                     </Entry>
                 </Grid>
@@ -120,7 +118,7 @@
                     <Label Grid.Row="0" Grid.Column="2" Text="Póliza"  Style="{StaticResource labels}"/>
                     <Entry Grid.Row="1" Grid.Column="2" Text="{Binding poliza3.poliza, Mode=TwoWay}" Keyboard="Numeric">
                             <Entry.Behaviors>
-                                <local:IntValidationBehavior MaxLength="7"/>
+                                <local:IntValidationBehavior MaxLength="8"/>
                             </Entry.Behaviors>
                     </Entry>
 
@@ -130,8 +128,7 @@
                     <Label Grid.Row="2" Grid.Column="1" Text="Renovación"  Style="{StaticResource labels}"/>
                     <Entry Grid.Row="3" Grid.Column="1" Text="{Binding poliza3.renovacion, Mode=TwoWay}" Keyboard="Numeric">
                         <Entry.Behaviors>
-                            <local:MaxLengthValidator MaxLength="2"/>
-                            <local:IntValidationBehavior/>
+                            <local:IntValidationBehavior MaxLength="2"/>
                         </Entry.Behaviors>
                     </Entry>
                 </Grid>

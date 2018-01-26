@@ -50,7 +50,7 @@ namespace GMX
             {
 				poliza1 = new NumPoliza()
 				{
-                    oficina = App.agent.cod_suc.PadRight(2, '0'),
+                    oficina = App.agent.cod_suc.PadLeft(2, '0'),
 					producto = "66",
 					endoso = "0000"
 				};
@@ -123,29 +123,32 @@ namespace GMX
         private bool Validar()
         {
             bool ret = false;
-            if (String.IsNullOrEmpty(Anno) || String.IsNullOrEmpty(polizas.poliza1.poliza) || String.IsNullOrEmpty(polizas.poliza1.renovacion))
+            if (String.IsNullOrEmpty(Anno) || String.IsNullOrEmpty(polizas.poliza1.poliza) || String.IsNullOrEmpty(polizas.poliza1.renovacion) || polizas.poliza1.poliza.Length < 8 || polizas.poliza1.renovacion.Length < 2)
                 ret = false;
             else
             {
+                polizas.poliza1.fullpoliza = $"{polizas.poliza1.oficina}-{polizas.poliza1.producto}-{polizas.poliza1.poliza}-{polizas.poliza1.endoso}-{polizas.poliza1.renovacion}";
                 ret = true;
                 polizas.anno = int.Parse(Anno);
                 if (Muestra2)
                 {
-                    if (String.IsNullOrEmpty(poliza2.poliza) || String.IsNullOrEmpty(poliza2.renovacion))
+                    if (String.IsNullOrEmpty(poliza2.poliza) || String.IsNullOrEmpty(poliza2.renovacion) || poliza2.poliza.Length < 8 || poliza2.renovacion.Length < 2)
                         ret = false;
                     else
                     {
                         polizas.poliza2 = poliza2;
+                        polizas.poliza2.fullpoliza = $"{polizas.poliza2.oficina}-{polizas.poliza2.producto}-{polizas.poliza2.poliza}-{polizas.poliza2.endoso}-{polizas.poliza2.renovacion}";
                         //return true;
                     }
                 }
                 if (Muestra3)
                 {
-                    if (String.IsNullOrEmpty(poliza3.poliza) || String.IsNullOrEmpty(poliza3.renovacion))
+                    if (String.IsNullOrEmpty(poliza3.poliza) || String.IsNullOrEmpty(poliza3.renovacion) || poliza3.poliza.Length < 8 || poliza3.renovacion.Length < 2)
                         ret = false;
                     else
                     {
                         polizas.poliza3 = poliza3;
+                        polizas.poliza3.fullpoliza = $"{polizas.poliza3.oficina}-{polizas.poliza3.producto}-{polizas.poliza3.poliza}-{polizas.poliza3.endoso}-{polizas.poliza3.renovacion}";
                         //return true;
                     }
                 }
@@ -241,7 +244,7 @@ namespace GMX
                 {
                     poliza2 = new NumPoliza()
                     {
-                        oficina = App.agent.cod_suc,
+                        oficina = App.agent.cod_suc.PadLeft(2, '0'),
                         producto = "66",
                         endoso = "0000"
                     };
@@ -258,7 +261,7 @@ namespace GMX
                 {
                     poliza2 = new NumPoliza()
                     {
-                        oficina = App.agent.cod_suc,
+                        oficina = App.agent.cod_suc.PadLeft(2, '0'),
                         producto = "66",
                         endoso = "0000"
                     };
@@ -267,7 +270,7 @@ namespace GMX
                 {
                     poliza3 = new NumPoliza()
                     {
-                        oficina = App.agent.cod_suc,
+                        oficina = App.agent.cod_suc.PadLeft(2, '0'),
                         producto = "66",
                         endoso = "0000"
                     };

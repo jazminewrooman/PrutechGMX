@@ -6,23 +6,38 @@
     <StackLayout>
         
             <ScrollView VerticalOptions="FillAndExpand" Padding="20">
-        <StackLayout Spacing="10">        
+        <StackLayout Spacing="0">        
+                <Label Text="Tipo de Negocio:" Style="{StaticResource labels}" FontSize="Medium" FontAttributes="Bold" TextColor="#04b5b5"/>
+                <Label x:Name="lblTiponegocio" Style="{StaticResource labels}" FontSize="Medium"/>
+
                 <Label Text="Emisión:"  Style="{StaticResource labels}" FontSize="Medium" FontAttributes="Bold" TextColor="#04b5b5"/>
                 <Label Text="{Binding Emision}"  Style="{StaticResource labels}" FontSize="Medium"/>
                  
                 <Label Text="Prima Neta"  Style="{StaticResource labels}" FontSize="Medium" FontAttributes="Bold" TextColor="#04b5b5"/>
-                <Label Text="{Binding PrimaNeta}"  Style="{StaticResource labels}" FontSize="Medium"/>
+                <Label Text="{Binding PrimaNeta, StringFormat='{0:C} M.N.'}"  Style="{StaticResource labels}" FontSize="Medium"/>
 
                 <Label Text="Derechos:"  Style="{StaticResource labels}" FontSize="Medium" FontAttributes="Bold" TextColor="#04b5b5"/>
-                <Label Text="{Binding Derechos}"  Style="{StaticResource labels}" FontSize="Medium"/>
+                <Label Text="{Binding Derechos, StringFormat='{0:C} M.N.'}"  Style="{StaticResource labels}" FontSize="Medium"/>
 
                 <Label Text="IVA:"  Style="{StaticResource labels}" FontSize="Medium" FontAttributes="Bold" TextColor="#04b5b5"/>
-                <Label Text="{Binding Iva}"  Style="{StaticResource labels}" FontSize="Medium"/>
+                <Label Text="{Binding IVA, StringFormat='{0:C} M.N.'}"  Style="{StaticResource labels}" FontSize="Medium"/>
 
                 <Label Text="Prima Total:"  Style="{StaticResource labels}" FontSize="Medium" FontAttributes="Bold" TextColor="#04b5b5"/>
-                <Label Text="{Binding PrimaTotal}"  Style="{StaticResource labels}" FontSize="Medium"/>
+                <Label Text="{Binding PrimaTotal, StringFormat='{0:C} M.N.'}"  Style="{StaticResource labels}" FontSize="Medium"/>
 
+                <Label Text="Nombre Asegurado:" Style="{StaticResource labels}" FontSize="Medium" FontAttributes="Bold" TextColor="#04b5b5"/>
+                <Label x:Name="lblNombre" Style="{StaticResource labels}" FontSize="Medium"/>
+                <Label Text="No de Póliza:" Style="{StaticResource labels}" FontSize="Medium" FontAttributes="Bold" TextColor="#04b5b5"/>
+                <Label x:Name="lblPoliza" Style="{StaticResource labels}" FontSize="Medium"/>
+                <Label Text="Suma Asegurada:" Style="{StaticResource labels}" FontSize="Medium" FontAttributes="Bold" TextColor="#04b5b5"/>
+                <Label x:Name="lblSuma" Style="{StaticResource labels}" FontSize="Medium"/>
+                <Label Text="Inicio de Vigencia:" Style="{StaticResource labels}" FontSize="Medium" FontAttributes="Bold" TextColor="#04b5b5"/>
+                <Label x:Name="lblInicio" Style="{StaticResource labels}" FontSize="Medium"/>
+                <Label Text="Fin de Vigencia:" Style="{StaticResource labels}" FontSize="Medium" FontAttributes="Bold" TextColor="#04b5b5"/>
+                <Label x:Name="lblFin" Style="{StaticResource labels}" FontSize="Medium"/>
 
+                    
+                <BoxView BackgroundColor="Transparent" HeightRequest="10"/>
                 <BoxView BackgroundColor="Gray" HeightRequest="5"/>
                 
                 <Label Text="Descargar Documentos" Style="{StaticResource labels}" FontSize="Medium" FontAttributes="Bold" TextColor="#04b5b5"/>

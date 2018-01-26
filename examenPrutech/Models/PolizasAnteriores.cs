@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace GMX.Models
 {
@@ -17,12 +18,38 @@ namespace GMX.Models
         public int anno { get; set; }
     }
 
-    public class NumPoliza
+    public class NumPoliza : INotifyPropertyChanged
     {
+        public event PropertyChangedEventHandler PropertyChanged;
+
         public string oficina { get; set; }
         public string producto { get; set; }
         public string poliza { get; set; }
         public string endoso { get; set; }
-        public string renovacion { get; set; }
+
+        private string renov;
+        public string renovacion
+        {
+            get => renov;
+            set
+            {
+                if (renov != value)
+                {
+                    renov = value;
+                    NotifyPropertyChanged("renovacion");
+                }
+            }
+        }
+
+        public string fullpoliza { get; set; }
+
+        private void NotifyPropertyChanged(String info)
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(info));
+            }
+        }
     }
+
 }
