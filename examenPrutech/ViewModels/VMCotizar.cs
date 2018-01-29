@@ -133,7 +133,7 @@ namespace GMX
                 decimal suma = decimal.Parse(SumaAseg, NumberStyles.AllowCurrencySymbol | NumberStyles.Number);
                 DatosGralesModel fisc = (DatosFiscales != null ? DatosFiscales : DatosGrales);
                 string nombre = $"{App.agent.txt_nombre} {App.agent.txt_apellido1} {App.agent.txt_apellido2}";
-                string nombrecliente = $"{DatosGrales.Nombre} {DatosGrales.APaterno} {DatosGrales.AMaterno}";
+                string nombrecliente = $"{DatosGrales.APaterno} {DatosGrales.AMaterno} {DatosGrales.Nombre}";
                 string nombrefiscal = "";   string rfcfiscal = "";  string domfiscal = "";
                 int mov = 0;
                 if (PolizaGenerada != null)
@@ -847,6 +847,10 @@ namespace GMX
 					Derechos = (decimal)lstangeles.Table.Where(x => x.idSumAseg_Angeles == int.Parse(idsuma)).FirstOrDefault().derechos;
 				}
                 Cobertura = "RC Profesional\nRC Actividades e Inmuebles";
+
+                if (idplan == "2") //angeles
+                    Cobertura += "\nRC como arrendado y condominio\nRC Privada y Familiar";
+                
                 if (Adicional)
                 {
                     PrimaNeta = PrimaNeta + (0.10M * PrimaNeta);

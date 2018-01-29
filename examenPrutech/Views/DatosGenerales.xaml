@@ -36,6 +36,9 @@
                         <Entry.Behaviors>
                             <local:MaxLengthValidator MaxLength="100"/>
                         </Entry.Behaviors>
+                        <Entry.Effects>
+                            <effects:EntryCapitalizeKeyboard />
+                        </Entry.Effects>
                     </Entry>
 
     				<Label x:Name="lblAPaterno" Text="Apellido paterno"  Style="{StaticResource labels}"/>

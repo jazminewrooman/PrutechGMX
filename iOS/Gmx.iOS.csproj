@@ -218,6 +218,7 @@
     <Compile Include="Web References\desa.gmx.com.mx\Reference.cs">
       <DependentUpon>Reference.map</DependentUpon>
     </Compile>
+    <Compile Include="Renderers\EntryCapitalizeKeyboard.cs" />
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\logo.png" />

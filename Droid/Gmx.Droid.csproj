@@ -194,6 +194,7 @@
     <Compile Include="loadingAct.cs" />
     <Compile Include="Renderers\MyMasterDetailRenderer.cs" />
     <Compile Include="Dependencies\SaveAndOpen.cs" />
+    <Compile Include="Renderers\EntryCapitalizeKeyboard.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />
