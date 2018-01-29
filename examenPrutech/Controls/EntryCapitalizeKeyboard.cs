@@ -1,6 +1,6 @@
 ﻿using Xamarin.Forms;
 
-namespace GMX
+namespace GMX.EntryCapitalizeKeyboard
 {
     public class EntryCapitalizeKeyboard : RoutingEffect
     {

@@ -132,7 +132,7 @@ namespace GMX
                 wsbd.Service bd = new wsbd.Service();
                 decimal suma = decimal.Parse(SumaAseg, NumberStyles.AllowCurrencySymbol | NumberStyles.Number);
                 DatosGralesModel fisc = (DatosFiscales != null ? DatosFiscales : DatosGrales);
-                string nombre = $"{App.agent.txt_nombre} {App.agent.txt_apellido1} {App.agent.txt_apellido2}";
+                string nombre = $"{App.agent.txt_apellido1} {App.agent.txt_apellido2} {App.agent.txt_nombre}";
                 string nombrecliente = $"{DatosGrales.APaterno} {DatosGrales.AMaterno} {DatosGrales.Nombre}";
                 string nombrefiscal = "";   string rfcfiscal = "";  string domfiscal = "";
                 int mov = 0;
@@ -428,7 +428,7 @@ namespace GMX
 
                 // enviar al servicio
                 IntegrationServiceEntity.Emission emision = new IntegrationServiceEntity.Emission();
-                emision.codSuc = App.suscriptor.Pv;
+                emision.codSuc = int.Parse(App.agent.cod_suc); // App.suscriptor.Pv;
                 emision.llave = config.Config["llave"];
                 emision.producto = App.suscriptor.clave.ToString();
                 emision.clave = App.suscriptor.clave.ToString();

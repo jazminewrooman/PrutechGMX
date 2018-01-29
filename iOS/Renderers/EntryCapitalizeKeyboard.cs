@@ -4,7 +4,7 @@ using UIKit;
 using Foundation;
 using GMX;
 
-[assembly: ExportEffect(typeof(EntryCapitalizeKeyboard), nameof(GMX.EntryCapitalizeKeyboard))]
+[assembly: ExportEffect(typeof(GMX.iOS.EntryCapitalizeKeyboard), nameof(GMX.EntryCapitalizeKeyboard.EntryCapitalizeKeyboard))]
 namespace GMX.iOS
 {
     [Preserve(AllMembers = true)]

@@ -4,6 +4,7 @@
 	x:Class="GMX.Views.DatosGenerales"
     Title = "{Binding Title}"
     xmlns:controls="clr-namespace:GMX.SegmentedControl;"
+    xmlns:effects="clr-namespace:GMX.EntryCapitalizeKeyboard;"
     xmlns:local="clr-namespace:GMX.Helpers;">
     <ContentPage.ToolbarItems> 
         <ToolbarItem Name="Menu1" Command="{Binding NextCommand}" Icon="flecha.png" Order="Primary" Priority="0"/> 
@@ -34,24 +35,21 @@
     				<Label x:Name="lblNombre" Text="Nombre" Style="{StaticResource labels}"/>
     				<Entry x:Name="txtNombre" Text="{Binding Nombre, Mode=TwoWay}">
                         <Entry.Behaviors>
-                            <local:MaxLengthValidator MaxLength="100"/>
+                            <local:MaxLengthValidator MaxLength="100" Upper="true"/>
                         </Entry.Behaviors>
-                        <Entry.Effects>
-                            <effects:EntryCapitalizeKeyboard />
-                        </Entry.Effects>
                     </Entry>
 
     				<Label x:Name="lblAPaterno" Text="Apellido paterno"  Style="{StaticResource labels}"/>
     				<Entry Text="{Binding APaterno, Mode=TwoWay}">
                         <Entry.Behaviors>
-                            <local:MaxLengthValidator MaxLength="50"/>
+                            <local:MaxLengthValidator MaxLength="50" Upper="true"/>
                         </Entry.Behaviors>
                     </Entry>
 
     				<Label x:Name="lblAMaterno" Text="Apellido materno"  Style="{StaticResource labels}"/>
     				<Entry x:Name="txtAMaterno" Text="{Binding AMaterno, Mode=TwoWay}">
                         <Entry.Behaviors>
-                            <local:MaxLengthValidator MaxLength="50"/>
+                            <local:MaxLengthValidator MaxLength="50" Upper="true"/>
                         </Entry.Behaviors>
                     </Entry>
 
