@@ -100,15 +100,17 @@ namespace GMX.Helpers
 			IsValid = int.TryParse(args.NewTextValue, out result);
 			((Entry)sender).Text = (IsValid ? args.NewTextValue : "");
 
-            if (MaxLength > 0)
+            if (!String.IsNullOrEmpty(args.NewTextValue))
             {
-                IsValid = IsValid && args.NewTextValue.Length == MaxLength;
-                if (args.NewTextValue.Length > MaxLength)
-                    ((Entry)sender).Text = args.OldTextValue;
-            }
-			//((Entry)sender).TextChanged -= OnEntryTextChanged;
+                if (MaxLength > 0)
+                {
+                    IsValid = IsValid && args.NewTextValue.Length == MaxLength;
+                    if (args.NewTextValue.Length > MaxLength)
+                        ((Entry)sender).Text = args.OldTextValue;
+                }
+            //((Entry)sender).TextChanged -= OnEntryTextChanged;
             ((Entry)sender).TextColor = IsValid ? Color.Default : Color.Red;
-
+            }
 		}
 	}
 

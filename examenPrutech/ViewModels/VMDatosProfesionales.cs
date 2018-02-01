@@ -44,7 +44,7 @@ namespace GMX
                     if (modo == Modo.Captura)
                     {
                         if (vmcotizar.IdTipo == "2") //renovacion
-                            await nav.PushAsync(new AntecedentesPolizas(vmcotizar));
+                            await nav.PushAsync(new AntecedentesPolizas(vmcotizar, Modo.Captura));
                         if (vmcotizar.IdTipo == "1") //nueva
                             await nav.PushAsync(new MetodoPago(vmcotizar));
                     }

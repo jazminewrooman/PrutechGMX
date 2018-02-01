@@ -54,6 +54,8 @@ namespace GMX.Views
                     await nav.PushAsync(new DatosProfesionales(vmc, Modo.Edicion));
                 if (tr == TipoResumen.Bancarios)
                     await nav.PushAsync(new DatosBancarios(vmc, Modo.Edicion));
+                if (tr == TipoResumen.Antecedentes)
+                    await nav.PushAsync(new AntecedentesPolizas(vmc, Modo.Edicion));
 			};
         }
     }

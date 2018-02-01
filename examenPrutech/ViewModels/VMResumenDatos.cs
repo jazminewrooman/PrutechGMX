@@ -31,19 +31,21 @@ namespace GMX
             vmcotizar = vmc;
             this.diag = diag;
             ObservableCollection<resum> lst = new ObservableCollection<resum>();
-            lst.Add(new resum { id=1, opc = "Datos Generales" });
-            lst.Add(new resum { id=2, opc = "Datos Fiscales" });
-            lst.Add(new resum { id=3, opc ="Datos Profesionales"});
-            lst.Add(new resum { id=4, opc = "Datos Bancarios"});
+            lst.Add(new resum { id = 1, opc = "Datos Generales" });
+            lst.Add(new resum { id = 2, opc = "Datos Fiscales" });
+            lst.Add(new resum { id = 3, opc = "Datos Profesionales" });
+            lst.Add(new resum { id = 4, opc = "Datos Bancarios" });
+            if (vmc.Antecedentes != null && vmc.Antecedentes.poliza1 != null)
+                lst.Add(new resum { id = 5, opc = "Antecedentes de poliza" });
 
-			ListaDatos = lst;
-			
+            ListaDatos = lst;
+
             VerCotizaCommand = new Command(async () =>
-			{
-				await nav.PushPopupAsync(new VerCotiza(vmcotizar), true);
-			});
-			EmisionCommand = new Command(async () =>
-			{
+            {
+                await nav.PushPopupAsync(new VerCotiza(vmcotizar), true);
+            });
+            EmisionCommand = new Command(async () =>
+            {
                 //string msg = $"Se mandara la emision de la siguiente poliza:{Environment.NewLine}Prima Neta: {vmcotizar.PrimaNeta.ToString("c")}{Environment.NewLine}Derechos: {vmcotizar.Derechos.ToString("c")}{Environment.NewLine}Subtotal:{vmcotizar.SubTotal.ToString("c")}{Environment.NewLine}IVA:{vmcotizar.Iva.ToString("c")}{Environment.NewLine}Total:{vmcotizar.PrimaTotal.ToString("c")}{Environment.NewLine}{Environment.NewLine}¿Desea continuar?";
                 //var result = await diag.ConfirmAsync(msg, "Aviso", "Ok", "Cancelar");
                 var confirma = new VerConfirma(vmcotizar);
@@ -54,16 +56,16 @@ namespace GMX
                     await vmcotizar.MandarEmision();
                     if (vmcotizar.PolizaGenerada != null && !String.IsNullOrEmpty(vmcotizar.PolizaGenerada.NumPoliza))
                     {
-						// default siempre va la referencia, los demas en blanco
+                        // default siempre va la referencia, los demas en blanco
                         vmcotizar.StrTransBanco = String.Empty;
-						vmcotizar.TransBanco = new wspago.MITResponse
-						{
-							reference = vmcotizar.PolizaGenerada.Referencia,
-							response = String.Empty,
-							foliocpagos = String.Empty,
-							auth = String.Empty,
-							cc_number = String.Empty
-						};
+                        vmcotizar.TransBanco = new wspago.MITResponse
+                        {
+                            reference = vmcotizar.PolizaGenerada.Referencia,
+                            response = String.Empty,
+                            foliocpagos = String.Empty,
+                            auth = String.Empty,
+                            cc_number = String.Empty
+                        };
                         if (vmcotizar.DatosBank != null && vmcotizar.DatosBank.TipoTarj != CreditCardValidator.CardIssuer.Unknown)
                             vmcotizar.MandarPagar();
 
@@ -72,29 +74,29 @@ namespace GMX
 
                         vmcotizar.GuardarBD();
 
-						var conf = new Confirmacion(vmcotizar);
-						var MainP = new NavigationPage(conf)
-						{
-							BarTextColor = Color.FromHex("#04b5b5"),
-							BarBackgroundColor = Color.White,
-						};
-						var md = new MasterDetailPage();
-						md.Master = new menu();
-						md.Detail = MainP;
-						App.Current.MainPage = md;
-						await nav.PopToRootAsync(true);
+                        var conf = new Confirmacion(vmcotizar);
+                        var MainP = new NavigationPage(conf)
+                        {
+                            BarTextColor = Color.FromHex("#04b5b5"),
+                            BarBackgroundColor = Color.White,
+                        };
+                        var md = new MasterDetailPage();
+                        md.Master = new menu();
+                        md.Detail = MainP;
+                        App.Current.MainPage = md;
+                        await nav.PopToRootAsync(true);
                     }
                 }
-			});
+            });
 
-            SelectList = new Command( (e) =>
-            {
+            SelectList = new Command((e) =>
+           {
                 /*if (e.SelectedItem == null)
                     return;
                 OnOpcionSeleccionada(new SelectedOptionEventArgs() {sel = (e.SelectedItem as resum)});
                 SeleccionaLista(e.SelectedItem);*/
-            });
-		}
+           });
+        }
 
         private async Task EnviaAvisoVenta()
         {
@@ -395,6 +397,10 @@ namespace GMX
 					//Para Datos Bancarios
                     await nav.PushPopupAsync(new VerResumen(vmcotizar, vmcotizar.DatosBancarios, TipoResumen.Bancarios, nav), true);
 					break;
+                case 5:
+                    //Para antecedentes poliza
+                    await nav.PushPopupAsync(new VerResumen(vmcotizar, vmcotizar.DatosAntecedentes, TipoResumen.Antecedentes, nav), true);
+                    break;
 			}
 		}
 

@@ -35,6 +35,7 @@ namespace GMX
         Generales = 1,
         Fiscales = 2,
         Profesionales = 3,
-        Bancarios = 4
+        Bancarios = 4,
+        Antecedentes = 5,
     }
 }

@@ -1202,8 +1202,22 @@ namespace GMX
             }
         }
 
-        FormattedString datosfiskles;
+        FormattedString datosantecedentes;
+        public FormattedString DatosAntecedentes
+        {
+            get { return datosantecedentes; }
+            set
+            {
+                if (datosantecedentes != value)
+                {
+                    datosantecedentes = value;
+                    OnPropertyChanged("DatosAntecedentes");
+                }
 
+            }
+        }
+
+        FormattedString datosfiskles;
 		public FormattedString DatosFiskles
 		{
 			get { return datosfiskles; }

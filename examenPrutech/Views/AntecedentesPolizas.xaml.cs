@@ -7,7 +7,7 @@ namespace GMX.Views
 {
 	public partial class AntecedentesPolizas : ContentPage
 	{
-        public AntecedentesPolizas(VMCotizar vmcot)
+        public AntecedentesPolizas(VMCotizar vmcot, Modo modo)
         {
             try
             {
@@ -17,7 +17,7 @@ namespace GMX.Views
             {
 
             }
-            var vm = new VMAntecedentesPolizas(UserDialogs.Instance, Navigation, vmcot);
+            var vm = new VMAntecedentesPolizas(UserDialogs.Instance, Navigation, vmcot, modo);
             BindingContext = vm;
             Title = "Antecedentes pólizas";
 

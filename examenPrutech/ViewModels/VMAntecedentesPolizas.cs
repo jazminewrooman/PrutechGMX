@@ -22,22 +22,26 @@ namespace GMX
         public ICommand NextCommand { get; private set; }
         public ICommand VerCotizaCommand { get; private set; }
 
-        public VMAntecedentesPolizas(IUserDialogs diag, INavigation n, VMCotizar vmcot) : base(diag)
+        public VMAntecedentesPolizas(IUserDialogs diag, INavigation n, VMCotizar vmcot, Modo modo) : base(diag)
         {
             nav = n;
             vmcotizar = vmcot;
-			VerCotizaCommand = new Command(async () =>
-			{
-				await nav.PushPopupAsync(new VerCotiza(vmcot), true);
-			});
-			NextCommand = new Command(async () =>
+            VerCotizaCommand = new Command(async () =>
+            {
+                await nav.PushPopupAsync(new VerCotiza(vmcot), true);
+            });
+            NextCommand = new Command(async () =>
             {
                 if (!Validar())
                     await Diag.AlertAsync(Resources.FaltanOb, "Error", "Ok");
                 else
                 {
+                    vmcotizar.DatosAntecedentes = FormatText();
                     vmcotizar.Antecedentes = polizas;
-                    await nav.PushAsync(new MetodoPago(vmcotizar));
+                    if (modo == Modo.Captura)
+                        await nav.PushAsync(new MetodoPago(vmcotizar));
+                    if (modo == Modo.Edicion)
+                        await nav.PopAsync();
                 }
             });
             List<string> temp = new List<string>();
@@ -48,13 +52,13 @@ namespace GMX
                 CargaDatos();
             else
             {
-				poliza1 = new NumPoliza()
-				{
+                poliza1 = new NumPoliza()
+                {
                     oficina = App.agent.cod_suc.PadLeft(2, '0'),
-					producto = "66",
-					endoso = "0000"
-				};
-				polizas = new PolizasAnteriores()
+                    producto = "66",
+                    endoso = "0000"
+                };
+                polizas = new PolizasAnteriores()
                 {
                     poliza1 = poliza1,
                     dia = vmcotizar.IniVig.Day,
@@ -62,6 +66,35 @@ namespace GMX
                 };
                 OnPropertyChanged("polizas");
             }
+        }
+
+        private void CargaDatosAntec(PolizasAnteriores pol)
+        {
+            
+        }
+
+        private FormattedString FormatText()
+        {
+            var fs = new FormattedString();
+            fs.Spans.Add(new Span { Text = "Antecedentes de Poliza" + Environment.NewLine, ForegroundColor = Color.Red, FontSize = 18 });
+            fs.Spans.Add(new Span { Text = "Fecha: ", ForegroundColor = Color.Black, FontAttributes = FontAttributes.Bold });
+            fs.Spans.Add(new Span { Text = $"{polizas.dia.ToString().PadLeft(2, '0')}/{polizas.mes.ToString().PadLeft(2, '0')}/{polizas.anno.ToString()}"  + Environment.NewLine, ForegroundColor = Color.Black });
+            if (poliza1 != null && !String.IsNullOrWhiteSpace(poliza1.fullpoliza))
+            {
+                fs.Spans.Add(new Span { Text = "Poliza 1: ", ForegroundColor = Color.Black, FontAttributes = FontAttributes.Bold });
+                fs.Spans.Add(new Span { Text = poliza1.fullpoliza + Environment.NewLine, ForegroundColor = Color.Black });
+            }
+            if (poliza2 != null && !String.IsNullOrWhiteSpace(poliza2.fullpoliza))
+            {
+                fs.Spans.Add(new Span { Text = "Poliza 2: ", ForegroundColor = Color.Black, FontAttributes = FontAttributes.Bold });
+                fs.Spans.Add(new Span { Text = poliza2.fullpoliza + Environment.NewLine, ForegroundColor = Color.Black });
+            }
+            if (poliza3 != null && !String.IsNullOrWhiteSpace(poliza3.fullpoliza))
+            {
+                fs.Spans.Add(new Span { Text = "Poliza 3: ", ForegroundColor = Color.Black, FontAttributes = FontAttributes.Bold });
+                fs.Spans.Add(new Span { Text = poliza3.fullpoliza + Environment.NewLine, ForegroundColor = Color.Black });
+            }
+            return fs;
         }
 
         private void CargaDatos(){
@@ -141,6 +174,8 @@ namespace GMX
                         //return true;
                     }
                 }
+                else
+                    polizas.poliza2 = null;
                 if (Muestra3)
                 {
                     if (String.IsNullOrEmpty(poliza3.poliza) || String.IsNullOrEmpty(poliza3.renovacion) || poliza3.poliza.Length < 8 || poliza3.renovacion.Length < 2)
@@ -152,6 +187,8 @@ namespace GMX
                         //return true;
                     }
                 }
+                else
+                    polizas.poliza3 = null;
             }
             return (ret);
         }
