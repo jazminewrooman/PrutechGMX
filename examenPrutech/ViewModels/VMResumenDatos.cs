@@ -177,8 +177,8 @@ namespace GMX
                 b.IniciaWS(apidoc: config.Config["APIDocs"]);
                 var waterm = await b.ReturnDocument("Watermark.jpg", false);
 
-                var condgen = await b.ReturnDocument("W_RCMedML_Ind_20.07.2016.2.pdf", false);
-                //var condgen = await b.ReturnDocument("W_RCMed_Ind_01.07.17.pdf", false);
+                //var condgen = await b.ReturnDocument("W_RCMedML_Ind_20.07.2016.2.pdf", false);
+                var condgen = await b.ReturnDocument("W_RCMed_Ind_01.07.17.pdf", false);
                 var file_condi_gral = new FilePropertiesManager
                 {
                     stream = condgen.Result,
