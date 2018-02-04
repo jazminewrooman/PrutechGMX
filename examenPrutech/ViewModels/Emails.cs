@@ -2,6 +2,9 @@
 using GMXHelper;
 using System.Collections.Generic;
 using System.Globalization;
+using GMX.Services;
+using Newtonsoft.Json;
+using GMX.Services.DTOs;
 
 namespace GMX.ViewModels
 {
@@ -1011,6 +1014,19 @@ namespace GMX.ViewModels
         #region Cotizacion
         public static void GetSlipCotizacionAng(VMCotizar vm)
         {
+            string tblLimites = "";
+            wsbd.Service ws = new wsbd.Service(config.Config["APIBD"]);
+            string json = ws.get_catalogos("GetAllSumaAseg_Angeles", "");
+            ListaSumaAngeles lstangeles = JsonConvert.DeserializeObject<ListaSumaAngeles>(json);
+            int num = 0;
+            foreach (SumaAsegAngeles s in lstangeles.Table)
+            {
+                tblLimites += "<tr> ";
+                tblLimites += "<td class='ctd'><p> " + (num += 1) + ". " + $"{s.SumaAsegurada.ToString("c")} M.N." + "</p></td>";
+                tblLimites += "<td class='ctd'><p>" + $"{s.PrimaUnica.ToString("c")} M.N." + "</p></td>";
+                tblLimites += "</tr>";
+            }
+
             docPDF = new DocumentPDF();
             Sections = new List<Section>();
 
@@ -1115,7 +1131,7 @@ namespace GMX.ViewModels
             });
             Sections.Add(new Section
             {
-                Text = "<br/><table cellpadding='5' class='ctable'><tr class='ctr'><td class='ctd'><p><b>Límite de responsabilidad:</b></p></td><td class='ctd'><p><b>Prima NETA:</b></p></td></tr> " + vm.PrimaNeta.ToString("c") + "  </table>"
+                Text = "<br/><table cellpadding='5' class='ctable'><tr class='ctr'><td class='ctd'><p><b>Límite de responsabilidad:</b></p></td><td class='ctd'><p><b>Prima NETA:</b></p></td></tr> " + tblLimites + "  </table>"
                         + "<p><b>Nota: A las primas anteriores se debe de agregar los derechos de póliza ($350.00 M.N.) e IVA correspondiente.</b></p><br/>"
                         + "<p><b>Se especifica que la entrada en vigor del presente comunicado es a partir del 04 de Julio de 2016.</b></p><br/>"
                         + "<p><i>De acuerdo a los términos, condiciones particulares y generales del texto de GMX Seguro, definidos para este proyecto.</i></p>"
